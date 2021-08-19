@@ -45,8 +45,8 @@ const fetchSellerProducts = (seller_id) =>
   });
 
 /**
- * Upload the image file to Google Storage
- * @param {File} file object that will be uploaded to Google Storage
+ * Upload the image file to Firebase Storage
+ * @param {File} file object that will be uploaded to Firebase Storage
  */
 const uploadImageToStorage = (file) => {
   return new Promise((resolve, reject) => {
