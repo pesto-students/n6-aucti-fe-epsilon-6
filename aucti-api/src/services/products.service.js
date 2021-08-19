@@ -79,7 +79,6 @@ const uploadImageToStorage = (file) => {
 
 exports.addProduct = async (req) => {
 	const product_picture = req.file;
-
 	let url = null;
 	if (product_picture) {
 		try {
