@@ -19,7 +19,15 @@ exports.fetchAllUsers = () =>
 			});
 	});
 
-exports.addSeller = (createdAt, account_status, alias_name, address, phone_number, role, rating) =>
+exports.addSeller = (
+	createdAt,
+	account_status,
+	alias_name,
+	address,
+	phone_number,
+	role,
+	rating
+) =>
 	new Promise((resolve, reject) => {
 		const data = {
 			createdAt: admin.firestore().FieldValue.serverTimestamp(),
@@ -39,7 +47,15 @@ exports.addSeller = (createdAt, account_status, alias_name, address, phone_numbe
 			});
 	});
 
-exports.addBuyer = (createdAt, account_status, alias_name, address, phone_number, role, rating) =>
+exports.addBuyer = (
+	createdAt,
+	account_status,
+	alias_name,
+	address,
+	phone_number,
+	role,
+	rating
+) =>
 	new Promise((resolve, reject) => {
 		const data = {
 			createdAt: admin.firestore().FieldValue.serverTimestamp(),
@@ -59,7 +75,15 @@ exports.addBuyer = (createdAt, account_status, alias_name, address, phone_number
 			});
 	});
 
-exports.addAdmin = (createdAt, account_status, alias_name, address, phone_number, role, rating) =>
+exports.addAdmin = (
+	createdAt,
+	account_status,
+	alias_name,
+	address,
+	phone_number,
+	role,
+	rating
+) =>
 	new Promise((resolve, reject) => {
 		const data = {
 			createdAt: admin.firestore().FieldValue.serverTimestamp(),

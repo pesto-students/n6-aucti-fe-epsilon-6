@@ -8,7 +8,7 @@ const {
 	addAdmin,
 	deleteUser,
 	updateUser,
-} = require('../services/users');
+} = require('../services/users.service');
 
 router.get('/', (req, res) => {
 	fetchAllUsers()
