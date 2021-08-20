@@ -8,6 +8,7 @@ const {
 	addAdmin,
 	deleteUser,
 	updateUser,
+	fetchUser,
 } = require('../services/users.service');
 
 router.get('/', (req, res) => {
@@ -16,22 +17,29 @@ router.get('/', (req, res) => {
 		.catch((err) => res.status(500).send(err));
 });
 
-router.post('/seller', (req, res) => {
-	addSeller(req.body)
-		.then((id) => res.status(201).send(id))
+router.get('/:userId', (req, res) => {
+	const { userId } = req.params;
+	fetchUser(userId)
+		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
+});
+
+router.post('/seller', (req, res) => {
+	addSeller(req)
+		.then((data) => res.status(201).send(data))
+		.catch((err) => res.status(500).json(err));
 });
 
 router.post('/buyer', (req, res) => {
-	addBuyer(req.body)
+	addBuyer(req)
 		.then((id) => res.status(201).send(id))
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => res.status(500).json(err));
 });
 
 router.post('/admin', (req, res) => {
-	addAdmin(req.body)
+	addAdmin(req)
 		.then((id) => res.status(201).send(id))
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => res.status(500).json(err));
 });
 
 router.delete('/:userId', (req, res) => {
@@ -45,7 +53,7 @@ router.put('/', (req, res) => {
 	const { user } = req.body;
 	updateUser(user)
 		.then(() => res.status(200).send('User updated'))
-		.catch((err) => res.status(500).send(err));
+		.catch((err) => res.status(500).json(err));
 });
 
 module.exports = router;

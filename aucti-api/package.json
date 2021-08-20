@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/firestore": "^4.14.1",
+    "algoliasearch": "^4.10.3",
+    "busboy": "^0.3.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -21,6 +23,7 @@
     "netlify-cli": "^6.5.8",
     "netlify-lambda": "^2.0.14",
     "serverless-http": "^2.7.0",
+    "uuid-v4": "^0.1.0",
     "webpack-node-externals": "^3.0.0"
   },
   "devDependencies": {
