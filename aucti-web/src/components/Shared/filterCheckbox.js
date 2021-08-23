@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Filter() {
+function FilterCheckbox() {
     return (
-        <div className="w-1/5 h-full p-3 flex-col justify-center rounded hover:shadow-lg">
+        <div className="w-full h-auto p-3 flex-col justify-center rounded hover:shadow-lg">
             <div className="align-center font-sofia text-3xl p-2">Filter Title</div>
             <div className="align-center font-sofia text-xl ml-2">
             <ul className="font-sofia">
@@ -17,4 +17,4 @@ function Filter() {
     )
 }
 
-export default Filter
+export default FilterCheckbox
