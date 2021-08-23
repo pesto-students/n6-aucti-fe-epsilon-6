@@ -1,5 +1,5 @@
 import React from "react";
-import { Route,Switch,Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 //-----router
 import Button from "./components/Shared/button";
 import Card from "./components/Shared/card";
@@ -15,35 +15,26 @@ import LandingPage from "./components/Pages/LandingPage/LandingPage";
 import PageNotFound from "./components/Pages/PageNotFound";
 
 import { Star } from "./components/Shared/star";
-import Layout from "./components/Layouts/layout";
-
+import Layout from "./components/Pages/Dashboards/Layout";
+import Login from "./components/Pages/Auth/Login/Login";
+import Signup from "./components/Pages/Auth/Signup/Signup";
+import UserRoute from "./routes/UserRoute";
+import RegisterForm from "./components/Pages/Auth/Signup/RegisterForm";
 
 function App() {
-  function onClick(){
-    console.log('btn clicked')
-  }
-  return (
-    <div >
-     {/* <Card onClick={onClick}/>
-     <Button text="Click Me" onClick={onClick} />
-     <Favourite onClick={onClick}/>
-     <Tag/>
-     <Person/>
-     <Notification/>
-     <Productpage onClick={onClick}/>
-     <Filter/>
-     <Quicklink/>
-     <Searchbar/> */}
-   
-     <Layout>
-     <Switch>
-       <Route exact path="/" component={LandingPage} />
-       <Route path="/login" component={Tag} />
-       <Route path="/**" component={PageNotFound} />
-     </Switch>
-     </Layout>
-    </div>
-  );
+	return (
+		<div>
+			<Switch>
+				<Route exact path="/" render={() => <Redirect to="/home" />} />
+				<Route path="/login" component={Login} />
+				<Route path="/signup" component={Signup} />
+				<Route path="/home" component={LandingPage} />
+				<UserRoute path="/register" component={RegisterForm} />
+				<Route path="/buyer" component={Layout} />
+				<Route path="/**" component={PageNotFound} />
+			</Switch>
+		</div>
+	);
 }
 
 export default App;

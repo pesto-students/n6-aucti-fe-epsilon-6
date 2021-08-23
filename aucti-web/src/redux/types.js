@@ -1,5 +1,16 @@
-export const  GET_PRODUCTS = 'GET_PRODUCTS'   
-export const  PRODUCTS_LOADED = 'PRODUCTS_LOADED'   
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const PRODUCTS_LOADED = "PRODUCTS_LOADED";
 
+export const AUTH = {
+	LOGIN_USER: "LOGIN_USER",
+	USER_LOGGEDIN: "USER_LOGGEDIN",
+	LOGOUT_USER: "LOGOUT_USER",
+	USER_LOGGEDOUT: "USER_LOGGEDOUT",
+	SET_ALERT: "SET_ALERT",
+	RESET_ALERT: "RESET_ALERT",
+};
 
-//add a group and put it into an object
+export const NOTIFICATION = {
+	SET_ALERT: "SET_ALERT",
+	RESET_ALERT: "RESET_ALERT",
+};
