@@ -1,5 +1,5 @@
-const { admin, db } = require('../util/admin');
-const wishlist = db.collection('wishlist');
+const { admin, db } = require("../util/admin");
+const wishlist = db.collection("wishlist");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -11,14 +11,14 @@ const querySnapshotData = (querySnapshot) => {
 exports.fetchAllWishlist = () =>
 	new Promise((resolve, reject) => {
 		wishlist
-			.orderBy('createdAt', 'desc')
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve wishlist data';
+				let msg = "Unable to retrieve wishlist data";
 				reject(msg);
 			});
 	});
@@ -26,19 +26,19 @@ exports.fetchAllWishlist = () =>
 exports.fetchUserWishlist = (user_id) =>
 	new Promise((resolve, reject) => {
 		if (!user_id) {
-			let msg = 'User id is empty';
+			let msg = "User id is empty";
 			reject(msg);
 		}
 		wishlist
-			.where('user_id', '==', user_id)
-			.orderBy('createdAt', 'desc')
+			.where("user_id", "==", user_id)
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve User wishlist';
+				let msg = "Unable to retrieve User wishlist";
 				reject(msg);
 			});
 	});
@@ -56,7 +56,7 @@ exports.addWishlist = async (req) =>
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch(() => {
-				let msg = 'Unable to add the product to wishlist';
+				let msg = "Unable to add the product to wishlist";
 				reject(msg);
 			});
 	});
@@ -68,7 +68,7 @@ exports.deleteWishlist = (wishlistID) =>
 			.delete()
 			.then(() => resolve())
 			.catch(() => {
-				let msg = 'Unable to delete the wishlist';
+				let msg = "Unable to delete the wishlist";
 				reject(msg);
 			});
 	});

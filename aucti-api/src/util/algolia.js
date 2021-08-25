@@ -1,4 +1,4 @@
-const algoliasearch = require('algoliasearch');
+const algoliasearch = require("algoliasearch");
 
 const client = algoliasearch(
 	process.env.APLLICATION_ID,

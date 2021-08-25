@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 const {
@@ -7,38 +7,38 @@ const {
 	fetchAllNotifications,
 	fetchUserNotification,
 	updateNotification,
-} = require('../services/notifications.service');
+} = require("../services/notifications.service");
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
 	fetchAllNotifications()
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
 
-router.get('/:user', (req, res) => {
+router.get("/:user", (req, res) => {
 	const { user } = req.params;
 	fetchUserNotification(user)
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
 
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
 	addNotification(req)
 		.then((id) => res.status(201).send(id))
 		.catch((err) => res.status(500).json(err));
 });
 
-router.delete('/:notificationId', (req, res) => {
+router.delete("/:notificationId", (req, res) => {
 	const { notificationId } = req.params;
 	deleteNotification(notificationId)
-		.then(() => res.status(200).send('Deleted successfully'))
+		.then(() => res.status(200).send("Deleted successfully"))
 		.catch((err) => res.status(500).send(err));
 });
 
-router.put('/', (req, res) => {
+router.put("/", (req, res) => {
 	const { notification } = req.body;
 	updateNotification(notification)
-		.then(() => res.status(200).send('Notification updated successfully'))
+		.then(() => res.status(200).send("Notification updated successfully"))
 		.catch((err) => res.status(500).json(err));
 });
 

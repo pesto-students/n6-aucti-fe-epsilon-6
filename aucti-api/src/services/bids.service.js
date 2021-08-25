@@ -1,5 +1,5 @@
-const { admin, db } = require('../util/admin');
-const bids = db.collection('bids');
+const { admin, db } = require("../util/admin");
+const bids = db.collection("bids");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -11,14 +11,14 @@ const querySnapshotData = (querySnapshot) => {
 exports.fetchAllBids = () =>
 	new Promise((resolve, reject) => {
 		bids
-			.orderBy('createdAt', 'desc')
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve Bids';
+				let msg = "Unable to retrieve Bids";
 				reject(msg);
 			});
 	});
@@ -26,19 +26,19 @@ exports.fetchAllBids = () =>
 exports.fetchUserBids = (user_id) =>
 	new Promise((resolve, reject) => {
 		if (!user_id) {
-			let msg = 'User id is empty';
+			let msg = "User id is empty";
 			reject(msg);
 		}
 		bids
-			.where('user_id', '==', user_id)
-			.orderBy('createdAt', 'desc')
+			.where("user_id", "==", user_id)
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve User bids';
+				let msg = "Unable to retrieve User bids";
 				reject(msg);
 			});
 	});
@@ -53,7 +53,7 @@ exports.addBid = async (req) =>
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 		};
 		if (!bid_price) {
-			let msg = 'Bid price must not be empty';
+			let msg = "Bid price must not be empty";
 			reject(msg);
 		}
 
@@ -61,7 +61,7 @@ exports.addBid = async (req) =>
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch(() => {
-				let msg = 'Unable to add the task';
+				let msg = "Unable to add the task";
 				reject(msg);
 			});
 	});
@@ -73,7 +73,7 @@ exports.deleteBid = (bidId) =>
 			.delete()
 			.then(() => resolve())
 			.catch(() => {
-				let msg = 'Unable to delete the Bid';
+				let msg = "Unable to delete the Bid";
 				reject(msg);
 			});
 	});
@@ -81,7 +81,7 @@ exports.deleteBid = (bidId) =>
 exports.updateBid = (bid) =>
 	new Promise((resolve, reject) => {
 		if (!bid.bid_price) {
-			let msg = 'Bid price must not be empty';
+			let msg = "Bid price must not be empty";
 			reject(msg);
 		}
 		bids
@@ -89,7 +89,7 @@ exports.updateBid = (bid) =>
 			.set({ ...bid }, { merge: true })
 			.then(resolve())
 			.catch(() => {
-				let msg = 'Unable to update the bid';
+				let msg = "Unable to update the bid";
 				reject(msg);
 			});
 	});

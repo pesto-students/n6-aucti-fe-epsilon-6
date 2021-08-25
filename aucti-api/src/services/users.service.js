@@ -1,8 +1,8 @@
-const { admin, db } = require('../util/admin');
-const { validateAddUser, validateUser } = require('../util/validators');
-const users = db.collection('users');
+const { admin, db } = require("../util/admin");
+const { validateAddUser, validateUser } = require("../util/validators");
+const users = db.collection("users");
 
-const { account_status, role } = require('../util/constants');
+const { account_status, role } = require("../util/constants");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -14,14 +14,14 @@ const querySnapshotData = (querySnapshot) => {
 exports.fetchAllUsers = () =>
 	new Promise((resolve, reject) => {
 		users
-			.orderBy('createdAt', 'desc')
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve categories';
+				let msg = "Unable to retrieve categories";
 				reject(msg);
 			});
 	});
@@ -29,19 +29,19 @@ exports.fetchAllUsers = () =>
 exports.fetchUser = (userId) =>
 	new Promise((resolve, reject) => {
 		if (!userId) {
-			let msg = 'userId is empty';
+			let msg = "userId is empty";
 			reject(msg);
 		}
 		users
-			.where('id', '==', userId)
-			.orderBy('createdAt', 'desc')
+			.where("id", "==", userId)
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve user';
+				let msg = "Unable to retrieve user";
 				reject(msg);
 			});
 	});
@@ -64,7 +64,7 @@ exports.addSeller = (req) =>
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch(() => {
-				let msg = 'Unable to add the Seller';
+				let msg = "Unable to add the Seller";
 				reject(msg);
 			});
 	});
@@ -87,7 +87,7 @@ exports.addBuyer = (req) =>
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch(() => {
-				let msg = 'Unable to add the Buyer';
+				let msg = "Unable to add the Buyer";
 				reject(msg);
 			});
 	});
@@ -110,7 +110,7 @@ exports.addAdmin = (req) =>
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch(() => {
-				let msg = 'Unable to add the Admin';
+				let msg = "Unable to add the Admin";
 				reject(msg);
 			});
 	});
@@ -122,7 +122,7 @@ exports.deleteUser = (id) =>
 			.delete()
 			.then(() => resolve())
 			.catch(() => {
-				let msg = 'Unable to delete the User';
+				let msg = "Unable to delete the User";
 				reject(msg);
 			});
 	});
@@ -136,7 +136,7 @@ exports.updateUser = (user) =>
 			.set({ ...user }, { merge: true })
 			.then(() => resolve())
 			.catch(() => {
-				let msg = 'Unable to update the User';
+				let msg = "Unable to update the User";
 				reject(msg);
 			});
 	});

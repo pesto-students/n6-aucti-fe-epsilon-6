@@ -1,7 +1,7 @@
-const { admin, db } = require('../util/admin');
-const notifications = db.collection('notifications');
+const { admin, db } = require("../util/admin");
+const notifications = db.collection("notifications");
 
-const { notification_status } = require('../util/constants');
+const { notification_status } = require("../util/constants");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -13,14 +13,14 @@ const querySnapshotData = (querySnapshot) => {
 exports.fetchAllNotifications = () =>
 	new Promise((resolve, reject) => {
 		notifications
-			.orderBy('createdAt', 'desc')
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve notification data';
+				let msg = "Unable to retrieve notification data";
 				reject(msg);
 			});
 	});
@@ -28,20 +28,20 @@ exports.fetchAllNotifications = () =>
 exports.fetchUserNotification = (user_id) =>
 	new Promise((resolve, reject) => {
 		if (!user_id) {
-			let msg = 'User id is empty';
+			let msg = "User id is empty";
 			reject(msg);
 		}
 		notifications
-			.where('user_id', '==', user_id)
-			.where('status', '==', notification_status.UNREAD)
-			.orderBy('createdAt', 'desc')
+			.where("user_id", "==", user_id)
+			.where("status", "==", notification_status.UNREAD)
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve User notifications';
+				let msg = "Unable to retrieve User notifications";
 				reject(msg);
 			});
 	});
@@ -60,7 +60,7 @@ exports.addNotification = async (req) =>
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch(() => {
-				let msg = 'Unable to add the notification';
+				let msg = "Unable to add the notification";
 				reject(msg);
 			});
 	});
@@ -72,7 +72,7 @@ exports.deleteNotification = (notificationId) =>
 			.delete()
 			.then(() => resolve())
 			.catch(() => {
-				let msg = 'Unable to delete the notification';
+				let msg = "Unable to delete the notification";
 				reject(msg);
 			});
 	});
@@ -85,7 +85,7 @@ exports.updateNotification = (notification) =>
 			.set({ ...notification }, { merge: true })
 			.then(() => resolve())
 			.catch(() => {
-				let msg = 'Unable to update the notification status';
+				let msg = "Unable to update the notification status";
 				reject(msg);
 			});
 	});
