@@ -28,7 +28,6 @@ const routes = [
 		path: "/buyer/profile",
 		icon: "UserIcon",
 		name: "Profile",
-		profile: true,
 	},
 ];
 

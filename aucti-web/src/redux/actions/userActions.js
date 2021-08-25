@@ -1,8 +1,9 @@
 import { AUTH } from "../../redux/types";
 
-export const loginUserAction = () => {
+export const loginUserAction = (role) => {
 	return {
 		type: AUTH.LOGIN_USER,
+		role,
 	};
 };
 

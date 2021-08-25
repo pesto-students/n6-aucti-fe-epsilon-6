@@ -37,7 +37,7 @@ function Header() {
 	}
 
 	return (
-		<header className="z-40 py-4 bg-white shadow-bottom dark:bg-gray-800">
+		<header className="z-50 py-4 bg-white shadow-bottom dark:bg-gray-800">
 			<div className="container flex items-center justify-between h-full px-3 mx-auto text-grey-900 dark:text-purple-300">
 				<ActiIcon className="fill-current h-10"></ActiIcon>
 				{/* <!-- Mobile hamburger --> */}

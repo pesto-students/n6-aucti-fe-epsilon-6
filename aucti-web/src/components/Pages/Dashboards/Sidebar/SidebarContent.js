@@ -2,8 +2,6 @@ import React from "react";
 import routes from "./Routes/BuyerSidebarRoutes";
 import { NavLink, Route } from "react-router-dom";
 import * as Icons from "../../../../assets/icons";
-// import SidebarSubmenu from "./SidebarSubmenu";
-// import { Button } from '@windmill/react-ui'
 
 function Icon({ icon, ...props }) {
 	const Icon = Icons[icon];
@@ -13,10 +11,6 @@ function Icon({ icon, ...props }) {
 function SidebarContent() {
 	return (
 		<div className="py-4  text-gray-900 dark:text-gray-400">
-			<a
-				className="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
-				href="#"
-			></a>
 			<ul className="mt-6">
 				{routes.map((route) => (
 					<li className="relative px-6 py-3" key={route.name}>
@@ -34,7 +28,7 @@ function SidebarContent() {
 							<span className="ml-4 z-10">{route.name}</span>
 							<Route path={route.path} exact={route.exact}>
 								<span
-									className="absolute inset-y-0 left-0 w-11/12 bg-white bg-opacity-50 rounded-tr-lg rounded-br-lg"
+									className="absolute inset-y-0 left-0 w-11/12 bg-white bg-opacity-60 rounded-tr-lg rounded-br-lg"
 									aria-hidden="true"
 								></span>
 							</Route>
@@ -42,14 +36,6 @@ function SidebarContent() {
 					</li>
 				))}
 			</ul>
-			{/* <div className="px-6 my-6">
-				<button>
-					Create account
-					<span className="ml-2" aria-hidden="true">
-						+
-					</span>
-				</button>
-			</div> */}
 		</div>
 	);
 }

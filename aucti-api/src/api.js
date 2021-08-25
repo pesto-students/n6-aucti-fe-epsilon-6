@@ -1,11 +1,11 @@
-require('dotenv').config();
-const express = require('express');
-let cors = require('cors');
-const serverless = require('serverless-http');
-const bodyParser = require('body-parser');
+require("dotenv").config();
+const express = require("express");
+let cors = require("cors");
+const serverless = require("serverless-http");
+const bodyParser = require("body-parser");
 
-const productsRouter = require('./routes/products.routes');
-const usersRouter = require('./routes/users.routes');
+const productsRouter = require("./routes/products.routes");
+const usersRouter = require("./routes/users.routes");
 
 const app = express();
 const router = express.Router();
@@ -17,16 +17,16 @@ const corsOptions = {
 		if (allowedOrigin !== origin) {
 			callback(null, true);
 		} else {
-			callback(new Error('Not allowed by CORS'));
+			callback(new Error("Not allowed by CORS"));
 		}
 	},
 };
 
-router.use('/products', productsRouter);
-router.use('/users', usersRouter);
+router.use("/products", productsRouter);
+router.use("/users", usersRouter);
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.use('/.netlify/functions/api', router);
+app.use("/.netlify/functions/api", router);
 
 module.exports.handler = serverless(app);

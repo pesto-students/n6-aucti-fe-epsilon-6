@@ -1,7 +1,10 @@
-import { firebase, auth } from "../../config/firebase";
+import { firebase, auth, firestore } from "../../config/firebase";
 
-export const login = () => {
+export const login = (role) => {
 	return new Promise((resolve, reject) => {
+		if (!role) {
+			reject("No role selected");
+		}
 		const provider = new firebase.auth.GoogleAuthProvider();
 		firebase
 			.auth()
@@ -17,9 +20,20 @@ export const login = () => {
 					user,
 					token,
 				};
-				localStorage.setItem("user", JSON.stringify(userData));
-
-				resolve(result);
+				const uid = user.uid;
+				const userCollection = firestore.collection("users");
+				userCollection
+					.doc(uid)
+					.set({
+						name: user.displayName,
+						email: user.email,
+						role: role,
+					})
+					.then(() => {
+						localStorage.setItem("user", JSON.stringify(userData));
+						resolve(result);
+					})
+					.catch((err) => reject(err));
 			})
 			.catch((error) => {
 				// Handle Errors here.
@@ -43,5 +57,6 @@ export const logout = () => {
 };
 
 export const checkUser = () => {
-	return JSON.parse(localStorage.getItem("user"));
+	const UserData = JSON.parse(localStorage.getItem("user"));
+	return UserData?.user;
 };

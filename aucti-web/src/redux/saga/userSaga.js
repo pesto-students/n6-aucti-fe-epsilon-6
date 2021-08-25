@@ -5,34 +5,36 @@ import history from "../../routes/history";
 import { AUTH } from "../types";
 import * as service from "../services/userService";
 import * as actions from "../actions/userActions";
-// import * as alert from "../actions/alertActions";
+import * as alert from "../actions/alertActions";
 
-function* login() {
+function* login({ role }) {
 	try {
-		const result = yield call(service.login);
+		const result = yield call(service.login, role);
 		const user = result.user;
 		yield put(actions.userLoggedIn(user));
-		// yield put(
-		// 	alert.setAlertAction({
-		// 		text: "User Logged In!",
-		// 		color: "success",
-		// 	})
-		// );
-
-		if (result?.additionalUserInfo?.isNewUser) {
-			console.log("new user");
-			console.log(history);
-			history.push("/register");
-		} else {
-			history.push("/");
-		}
+		yield put(
+			alert.setAlertAction({
+				text: "User Logged In!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+		history.push("/");
+		// if (result?.additionalUserInfo?.isNewUser) {
+		// 	console.log("new user");
+		// 	console.log(history);
+		// 	history.push("/register");
+		// } else {
+		// 	history.push("/");
+		// }
 	} catch (e) {
-		// yield put(
-		// 	alert.setAlertAction({
-		// 		text: e.msg,
-		// 		color: "danger",
-		// 	})
-		// );
+		yield put(
+			alert.setAlertAction({
+				text: e.msg,
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
 		console.log(e);
 	}
 }

@@ -16,6 +16,10 @@ const Wishlist = lazy(() =>
 	import("../components/Pages/Dashboards/Buyer/BuyerWishlist")
 );
 
+const Profile = lazy(() =>
+	import("../components/Pages/Dashboards/Buyer/BuyerProfile")
+);
+
 const BuyerRoutes = [
 	{
 		path: "/dashboard",
@@ -36,6 +40,10 @@ const BuyerRoutes = [
 	{
 		path: "/notifications",
 		component: Notifications,
+	},
+	{
+		path: "/profile",
+		component: Profile,
 	},
 ];
 

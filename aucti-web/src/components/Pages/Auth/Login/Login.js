@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { GoogleIcon, ActiIcon } from "../../../../assets/icons";
 import { loginUserAction } from "../../../../redux/actions/userActions";
 
 const Login = (props) => {
-	const handleSignIn = () => {
-		props.login();
+	const [role, SetRole] = useState("");
+	const [roleErr, SetRoleErr] = useState("");
+
+	const handleUser = (role) => {
+		SetRole(role);
+	};
+
+	const handleSignIn = (e) => {
+		e.preventDefault();
+		if (!role) {
+			SetRoleErr("Please select either one role!");
+		} else {
+			props.login(role);
+			SetRoleErr("");
+		}
 	};
 
 	return (
@@ -38,7 +51,41 @@ const Login = (props) => {
 										<h1 className="text-xl font-semibold align-middle text-gray-700 dark:text-gray-200 m-4">
 											Welcome to Aucti!
 										</h1>
-
+										<div className="flex flex-row items-center">
+											<button
+												className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center mr-4 focus:outline-none focus:ring-2 focus:ring-purple-600"
+												onClick={() => handleUser("buyer")}
+											>
+												<span>Buyer</span>
+												<svg
+													className="w-4 h-4 ml-3 fill-current"
+													viewBox="0 0 20 20"
+												>
+													<path
+														d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+														clipRule="evenodd"
+														fillRule="evenodd"
+													></path>
+												</svg>
+											</button>
+											<p className="mr-4">or</p>
+											<button
+												className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center focus:outline-none focus:ring-2 focus:ring-purple-600"
+												onClick={() => handleUser("seller")}
+											>
+												<span>Seller</span>
+												<svg
+													className="w-4 h-4 ml-3 fill-current"
+													viewBox="0 0 20 20"
+												>
+													<path
+														d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+														clipRule="evenodd"
+														fillRule="evenodd"
+													></path>
+												</svg>
+											</button>
+										</div>
 										<button
 											className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center m-4"
 											onClick={handleSignIn}
@@ -46,19 +93,13 @@ const Login = (props) => {
 											<GoogleIcon className="fill-current w-7 h-7 mr-2"></GoogleIcon>
 											<span>Sign in with Google</span>
 										</button>
-									</div>
-
-									<hr className="m-6" />
-
-									<div className="w-full flex flex-col items-center">
-										<p className="">
-											<Link
-												className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-												to="/signup"
-											>
-												{"Don't have an account? Sign up for free"}
-											</Link>
-										</p>
+										<span
+											id="descriptionErr"
+											className="text-red-400"
+											role="alert"
+										>
+											{roleErr}
+										</span>
 									</div>
 								</div>
 							</main>
@@ -72,8 +113,8 @@ const Login = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		login: () => {
-			dispatch(loginUserAction());
+		login: (role) => {
+			dispatch(loginUserAction(role));
 		},
 	};
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-function SuspensePage() {
+function Loading() {
 	return (
 		<div className="w-full h-screen p-6 text-lg font-medium text-gray-600 dark:text-gray-400 dark:bg-gray-900">
 			Loading...
@@ -8,4 +8,4 @@ function SuspensePage() {
 	);
 }
 
-export default SuspensePage;
+export default Loading;

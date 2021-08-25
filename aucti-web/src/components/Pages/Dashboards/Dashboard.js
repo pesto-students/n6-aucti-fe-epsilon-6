@@ -1,29 +1,22 @@
-import React, { useContext, useState, Suspense, useEffect, lazy } from "react";
+import React, { useState, Suspense, useEffect, lazy } from "react";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import routes from "../../../routes/BuyerRoutes";
 
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header";
 import Main from "./Main";
-import LandingPage from "../LandingPage/LandingPage";
-import Buyer from "./Buyer/BuyerHome";
-import Seller from "./Seller/SellerHome";
-import Login from "../Auth/Login/Login";
-import Signup from "../Auth/Signup/Signup";
-import SuspensePage from "./SuspensePage";
-import PageNotFound from "../PageNotFound";
-// import ThemedSuspense from "../components/ThemedSuspense";
+import Loading from "./Loading";
+const Page404 = lazy(() => import("../PageNotFound"));
+
 // import { SidebarContext } from "../context/SidebarContext";
 
-const Page404 = lazy(() => import("../../Pages/PageNotFound"));
-
-function Layout() {
-	const { isSidebarOpen, closeSidebar } = useState(false);
+function Dashboard() {
+	const [isSidebarOpen, closeSidebar] = useState(false);
 	let location = useLocation();
 
-	// useEffect(() => {
-	// 	closeSidebar(true);
-	// }, [location]);
+	useEffect(() => {
+		closeSidebar(true);
+	}, [location]);
 
 	return (
 		<div
@@ -35,7 +28,7 @@ function Layout() {
 			<div className="flex flex-row flex-1 w-full">
 				<Sidebar />
 				<Main>
-					<Suspense fallback={<SuspensePage />}>
+					<Suspense fallback={<Loading />}>
 						<Switch>
 							{routes.map((route, i) => {
 								return route.component ? (
@@ -57,4 +50,4 @@ function Layout() {
 	);
 }
 
-export default Layout;
+export default Dashboard;
