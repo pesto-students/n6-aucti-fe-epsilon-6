@@ -1,4 +1,5 @@
 const { admin, db } = require("../util/admin");
+
 const { validateAddUser, validateUser } = require("../util/validators");
 const users = db.collection("users");
 
@@ -14,7 +15,7 @@ const querySnapshotData = (querySnapshot) => {
 exports.fetchAllUsers = () =>
 	new Promise((resolve, reject) => {
 		users
-			.orderBy("createdAt", "desc")
+			// .orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);

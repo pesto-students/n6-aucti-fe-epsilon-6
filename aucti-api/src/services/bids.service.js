@@ -11,10 +11,11 @@ const querySnapshotData = (querySnapshot) => {
 exports.fetchAllBids = () =>
 	new Promise((resolve, reject) => {
 		bids
-			.orderBy("createdAt", "desc")
+			// .orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
+				console.log(data);
 				resolve(data);
 			})
 			.catch((err) => {
@@ -39,19 +40,22 @@ exports.fetchUserBids = (user_id) =>
 			})
 			.catch((err) => {
 				let msg = "Unable to retrieve User bids";
+				console.log(err);
 				reject(msg);
 			});
 	});
 
-exports.addBid = async (req) =>
-	await new Promise((resolve, reject) => {
+exports.addBid = (req) =>
+	new Promise((resolve, reject) => {
 		const { user_id, product_id, bid_price } = req.body;
+		console.log("here");
 		const data = {
 			user_id,
 			product_id,
 			bid_price,
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 		};
+		console.log(data);
 		if (!bid_price) {
 			let msg = "Bid price must not be empty";
 			reject(msg);
@@ -60,8 +64,9 @@ exports.addBid = async (req) =>
 		bids
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
-			.catch(() => {
-				let msg = "Unable to add the task";
+			.catch((err) => {
+				let msg = "Unable to add the bid";
+				console.log(err);
 				reject(msg);
 			});
 	});

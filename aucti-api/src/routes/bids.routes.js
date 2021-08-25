@@ -23,7 +23,7 @@ router.get("/:user", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-	addBid(req.body)
+	addBid(req)
 		.then((id) => res.status(201).send(id))
 		.catch((err) => res.status(500).json(err));
 });
