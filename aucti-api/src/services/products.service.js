@@ -1,7 +1,7 @@
 const { admin, db } = require("../util/admin");
 const { index } = require("../util/algolia");
 const products = db.collection("products");
-
+const { productServiceAlerts } = require("../util/alerts");
 const bucket = admin.storage().bucket("gs://auctiweb.appspot.com/");
 const uuid = require("uuid-v4");
 
@@ -33,27 +33,31 @@ exports.fetchAllProducts = () =>
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = "Unable to retrieve Products!";
+				let msg = productServiceAlerts.UNABLE_TO_RETRIVE_PRODUCTS;
 				reject(msg);
 			});
 	});
 
 exports.fetchProduct = (productId) =>
 	new Promise((resolve, reject) => {
+		console.log("productId", productId);
 		if (!productId) {
 			let msg = "productId is empty";
 			reject(msg);
 		}
-		products
-			.where("id", "==", productId)
-			.orderBy("createdAt", "desc")
+		db.doc(`/products/${productId}`)
+			// .where("id", "==", productId)
+			// .orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshotData(querySnapshot);
-				resolve(data);
+				let product = querySnapshot.data();
+				product.id = querySnapshot.id;
+				// const data = querySnapshotData(querySnapshot);
+				console.log("product", product);
+				resolve(product);
 			})
 			.catch((err) => {
-				let msg = "Unable to retrieve  product";
+				let msg = productServiceAlerts.UNABLE_TO_RETRIVE_PRODUCT;
 				reject(msg);
 			});
 	});
@@ -61,7 +65,7 @@ exports.fetchProduct = (productId) =>
 exports.fetchSellerProducts = (seller_id) =>
 	new Promise((resolve, reject) => {
 		if (!seller_id) {
-			let msg = "seller_id is empty";
+			let msg = productServiceAlerts.SELLER_ID_EMPTY;
 			reject(msg);
 		}
 		products
@@ -73,7 +77,7 @@ exports.fetchSellerProducts = (seller_id) =>
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = "Unable to retrieve Seller products";
+				let msg = productServiceAlerts.UNABLE_TO_RETRIVE_SELLER_PRODUCTS;
 				reject(msg);
 			});
 	});
@@ -103,7 +107,7 @@ const uploadImageToStorage = (file) =>
 		});
 
 		blobStream.on("error", () => {
-			reject("Something is wrong! Unable to upload at the moment.");
+			reject(productServiceAlerts.IMAGE_UPLOAD_ERROR);
 		});
 
 		blobStream.on("finish", () => {
@@ -153,12 +157,12 @@ exports.addProduct = async (req) =>
 							});
 					})
 					.catch(() => {
-						let msg = "Unable to add the Product";
+						let msg = productServiceAlerts.UNABLE_TO_ADD_PRODUCT;
 						reject(msg);
 					});
 			})
 			.catch(() => {
-				let msg = "Unable to add the Product";
+				let msg = productServiceAlerts.UNABLE_TO_ADD_PRODUCT;
 				reject(msg);
 			});
 	});
@@ -174,7 +178,7 @@ exports.deleteProduct = (productId) =>
 				});
 			})
 			.catch(() => {
-				let msg = "Unable to delete the product";
+				let msg = productServiceAlerts.UNABLE_TO_DELETE_PRODUCT;
 				reject(msg);
 			});
 	});
@@ -187,10 +191,10 @@ exports.updateProduct = (product) =>
 			.doc(product.id)
 			.set({ ...product }, { merge: true })
 			.then(() => {
-				index.partialUpdateObject(product).then(() => resolve());
+				index.partialUpdateObject(product).then((product) => resolve(product));
 			})
 			.catch(() => {
-				let msg = "Unable to update product";
+				let msg = productServiceAlerts.UNABLE_TO_UPDATE_PRODUCT;
 				reject(msg);
 			});
 	});

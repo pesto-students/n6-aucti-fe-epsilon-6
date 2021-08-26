@@ -1,6 +1,8 @@
 const { admin, db } = require("../util/admin");
 const bids = db.collection("bids");
 
+const { fetchProduct } = require("../services/products.service.js");
+
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
 		...doc.data(),
@@ -26,23 +28,60 @@ exports.fetchAllBids = () =>
 
 exports.fetchUserBids = (user_id) =>
 	new Promise((resolve, reject) => {
-		if (!user_id) {
-			let msg = "User id is empty";
+		try {
+			if (!user_id) {
+				let msg = "User id is empty";
+				reject(msg);
+			}
+			bids
+				.where("user_id", "==", user_id)
+				// .orderBy("createdAt", "desc")
+				.get()
+				.then((querySnapshot) => {
+					const data = querySnapshotData(querySnapshot);
+					console.log(data);
+
+					Promise.all(
+						data.map((bid) =>
+							fetchProduct(bid.product_id)
+								.then((product) => {
+									console.log(product);
+									return {
+										...bid,
+										product: {
+											title: product.title,
+											base_price: product.base_price,
+											auction_status: product.auction_status,
+										},
+									};
+								})
+								.catch((err) => {
+									let msg = "Unable to retrieve User bids";
+									console.log(err);
+									reject(msg);
+								})
+						)
+					)
+						.then((list) => {
+							console.log(list);
+							resolve(list);
+						})
+						.catch((err) => {
+							let msg = "Unable to retrieve User bids";
+							console.log(err);
+							reject(msg);
+						});
+				})
+				.catch((err) => {
+					let msg = "Unable to retrieve User bids";
+					console.log(err);
+					reject(msg);
+				});
+		} catch (error) {
+			let msg = "Unable to retrieve User bids";
+			console.log(error);
 			reject(msg);
 		}
-		bids
-			.where("user_id", "==", user_id)
-			.orderBy("createdAt", "desc")
-			.get()
-			.then((querySnapshot) => {
-				const data = querySnapshotData(querySnapshot);
-				resolve(data);
-			})
-			.catch((err) => {
-				let msg = "Unable to retrieve User bids";
-				console.log(err);
-				reject(msg);
-			});
 	});
 
 exports.addBid = (req) =>
@@ -92,7 +131,7 @@ exports.updateBid = (bid) =>
 		bids
 			.doc(bid.id)
 			.set({ ...bid }, { merge: true })
-			.then(resolve())
+			.then((bid) => resolve(bid))
 			.catch(() => {
 				let msg = "Unable to update the bid";
 				reject(msg);
