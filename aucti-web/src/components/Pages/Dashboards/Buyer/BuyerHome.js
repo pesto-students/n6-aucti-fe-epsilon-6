@@ -14,12 +14,14 @@ import ConfirmModal from "../../../Shared/ConfirmModal";
 import Modal from "../../../Shared/Modal";
 
 const BuyerHome = (props) => {
+	const [currentPage, setSurrentPage] = React.useState(0);
+	const [itemsPerPage, setItemsPerPage] = React.useState(10);
 	const { buyerBids, user } = props;
 	const [showModal, setShowModal] = React.useState(false);
 	const [showModalDelete, setShowModalDelete] = React.useState(false);
 
 	useEffect(() => {
-		props.loadBuyerBids(user.uid);
+		props.loadBuyerBids(user.uid, currentPage, itemsPerPage);
 	}, []);
 
 	const handleEdit = () => {
@@ -152,7 +154,7 @@ const BuyerHome = (props) => {
 														{n.product?.base_price}
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-														{n.bid_price}
+														{n.product?.highest_bid}
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
 														{n.bid_price}
@@ -199,103 +201,7 @@ const BuyerHome = (props) => {
 					</div>
 				</div>
 			</div>
-			{/* <div className="overflow-x-auto pr-8 pl-8 rounded-lg">
-				<table className="min-w-full divide-y divide-gray-200 sm:rounded-lg">
-					<thead className="bg-gray-900">
-						<tr>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Auction ID
-							</th>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Product
-							</th>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Base price
-							</th>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Highest Bid
-							</th>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Your Bid
-							</th>
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Auction Status
-							</th>
 
-							<th
-								scope="col"
-								className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-							>
-								Action
-							</th>
-						</tr>
-					</thead>
-					<tbody className="bg-white divide-y divide-gray-200">
-						{buyerBids != null &&
-							buyerBids.map((n, i) => {
-								return (
-									<tr key={n.id}>
-										<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
-											{i + 1}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-											{n.product?.title}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-											{n.product?.base_price}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-											{n.bid_price}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
-											{n.bid_price}
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-											<div className="flex justify-center items-center space-x-4">
-												<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-													{n.product.auction_status}
-												</span>
-											</div>
-										</td>
-										<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-											<div className="flex items-center space-x-4">
-												<button
-													layout="link"
-													size="icon"
-													aria-label="Edit"
-													onClick={handleEdit}
-												>
-													<EditIcon className="w-5 h-5" aria-hidden="true" />
-												</button>
-												<button layout="link" size="icon" aria-label="Delete">
-													<TrashIcon className="w-5 h-5" aria-hidden="true" />
-												</button>
-											</div>
-										</td>
-									</tr>
-								);
-							})}
-					</tbody>
-				</table>
-			</div> */}
 			{buyerBids != null && buyerBids.length > 0 && (
 				<div className="grid justify-items-end px-8 pt-8">
 					<nav aria-label="Page navigation">
@@ -440,7 +346,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadBuyerBids: (id) => dispatch(loadBuyerBidAction(id)),
+		loadBuyerBids: (id, currentPage, itemsPerPage) =>
+			dispatch(loadBuyerBidAction(id, currentPage, itemsPerPage)),
 	};
 };
 

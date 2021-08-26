@@ -13,10 +13,12 @@ export const bidLoadedAction = (bids) => {
 	};
 };
 
-export const loadBuyerBidAction = (id) => {
+export const loadBuyerBidAction = (id, currentPage, itemsPerPage) => {
 	return {
 		type: BID.LOAD_BUYER_BIDS,
 		id,
+		currentPage,
+		itemsPerPage,
 	};
 };
 
