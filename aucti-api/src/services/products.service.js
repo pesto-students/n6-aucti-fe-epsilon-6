@@ -1,21 +1,59 @@
-const { admin, db } = require('../util/admin');
-const products = db.collection('products');
-const bucket = admin.storage().bucket('gs://auctiweb.appspot.com/');
+const { admin, db } = require("../util/admin");
+const { index } = require("../util/algolia");
+const products = db.collection("products");
+
+const bucket = admin.storage().bucket("gs://auctiweb.appspot.com/");
+const uuid = require("uuid-v4");
+
+const {
+	product_transaction_status,
+	product_approval_status,
+	auction_status,
+} = require("../util/constants");
+
+const {
+	validateAddProductData,
+	validateUpdateProductData,
+} = require("../util/validators");
+
+const querySnapshotData = (querySnapshot) => {
+	return querySnapshot?.docs?.map((doc) => ({
+		...doc.data(),
+		id: doc.id,
+	}));
+};
 
 exports.fetchAllProducts = () =>
 	new Promise((resolve, reject) => {
 		products
-			.orderBy('createdAt', 'desc')
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshot?.docs?.map((doc) => ({
-					...doc.data(),
-					id: doc.id,
-				}));
+				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve categories';
+				let msg = "Unable to retrieve Products!";
+				reject(msg);
+			});
+	});
+
+exports.fetchProduct = (productId) =>
+	new Promise((resolve, reject) => {
+		if (!productId) {
+			let msg = "productId is empty";
+			reject(msg);
+		}
+		products
+			.where("id", "==", productId)
+			.orderBy("createdAt", "desc")
+			.get()
+			.then((querySnapshot) => {
+				const data = querySnapshotData(querySnapshot);
+				resolve(data);
+			})
+			.catch((err) => {
+				let msg = "Unable to retrieve  product";
 				reject(msg);
 			});
 	});
@@ -23,22 +61,19 @@ exports.fetchAllProducts = () =>
 exports.fetchSellerProducts = (seller_id) =>
 	new Promise((resolve, reject) => {
 		if (!seller_id) {
-			let msg = 'seller_id is empty';
+			let msg = "seller_id is empty";
 			reject(msg);
 		}
 		products
-			.where('seller_id', '==', seller_id)
-			//   .orderBy("createdAt", "asc")
+			.where("seller_id", "==", seller_id)
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshot?.docs?.map((doc) => ({
-					...doc.data(),
-					id: doc.id,
-				}));
+				const data = querySnapshotData(querySnapshot);
 				resolve(data);
 			})
 			.catch((err) => {
-				let msg = 'Unable to retrieve Seller products';
+				let msg = "Unable to retrieve Seller products";
 				reject(msg);
 			});
 	});
@@ -47,27 +82,31 @@ exports.fetchSellerProducts = (seller_id) =>
  * Upload the image file to Firebase Storage
  * @param {File} file object that will be uploaded to Firebase Storage
  */
-const uploadImageToStorage = (file) => {
-	return new Promise((resolve, reject) => {
+const uploadImageToStorage = (file) =>
+	new Promise((resolve, reject) => {
 		if (!file) {
-			reject('No image file');
+			reject("No image file");
 		}
 
-		let newFileName = `${file.originalname.replace(/\s/g, '')}_${Date.now()}`;
+		let newFileName = `${Date.now()}_${file.originalname.replace(/\s/g, "")}`;
 
 		let fileUpload = bucket.file(`images/${newFileName}`);
 
 		const blobStream = fileUpload.createWriteStream({
+			uploadType: "media",
 			metadata: {
-				contentType: file.mimetype,
+				metadata: {
+					firebaseStorageDownloadTokens: uuid(),
+					contentType: file.mimetype,
+				},
 			},
 		});
 
-		blobStream.on('error', (error) => {
-			reject('Something is wrong! Unable to upload at the moment.');
+		blobStream.on("error", () => {
+			reject("Something is wrong! Unable to upload at the moment.");
 		});
 
-		blobStream.on('finish', () => {
+		blobStream.on("finish", () => {
 			// The public URL can be used to directly access the file via HTTP.
 			const url = `https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`;
 			resolve(url);
@@ -75,62 +114,83 @@ const uploadImageToStorage = (file) => {
 
 		blobStream.end(file.buffer);
 	});
-};
 
-exports.addProduct = async (req) => {
-	const product_picture = req.file;
-	let url = null;
-	if (product_picture) {
-		try {
-			url = await uploadImageToStorage(product_picture);
-		} catch (err) {
-			console.log(err);
-		}
-	} else {
-		throw Error('Product picture not available');
-	}
-
-	let id = await new Promise((resolve, reject) => {
+exports.addProduct = async (req) =>
+	await new Promise((resolve, reject) => {
+		const product_picture = req.file;
+		const { title, seller_id, base_price, product_document, description } =
+			req.body;
 		const data = {
-			...req.body,
+			title,
+			seller_id,
+			base_price,
+			product_picture,
+			product_document,
+			description,
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
-			product_picture: url,
-			product_approval_status: 'pending',
-			auction_status: 'draft',
-			product_transaction_status: 'pending',
+			product_approval_status: product_approval_status.PENDING,
+			auction_status: auction_status.DRAFT,
+			product_transaction_status: product_transaction_status.PENDING,
 		};
-		console.log('data', data);
-		products
-			.add(data)
-			.then((docRef) => resolve({ ...data, id: docRef.id }))
+		const { valid, errors } = validateAddProductData(data);
+		if (!valid) resolve(errors);
+
+		uploadImageToStorage(product_picture)
+			.then((url) => {
+				data.product_picture = url;
+				products
+					.add(data)
+					.then((docRef) => {
+						index
+							.saveObject({
+								title,
+								base_price,
+								description,
+								objectID: docRef.id,
+							})
+							.then(({ objectID }) => {
+								resolve({ ...data, id: objectID });
+							});
+					})
+					.catch(() => {
+						let msg = "Unable to add the Product";
+						reject(msg);
+					});
+			})
 			.catch(() => {
-				let msg = 'Unable to add the task';
+				let msg = "Unable to add the Product";
 				reject(msg);
 			});
 	});
-	return id;
-};
 
-exports.deleteProduct = (id) =>
+exports.deleteProduct = (productId) =>
 	new Promise((resolve, reject) => {
 		products
-			.doc(id)
+			.doc(productId)
 			.delete()
-			.then(() => resolve())
+			.then(() => {
+				index.deleteObject(productId).then(() => {
+					resolve();
+				});
+			})
 			.catch(() => {
-				let msg = 'Unable to delete the category';
+				let msg = "Unable to delete the product";
 				reject(msg);
 			});
 	});
 
 exports.updateProduct = (product) =>
 	new Promise((resolve, reject) => {
+		const { valid, errors } = validateUpdateProductData(product);
+		if (!valid) resolve(errors);
 		products
 			.doc(product.id)
 			.set({ ...product }, { merge: true })
-			.then(() => resolve())
+			.then(() => {
+				index.partialUpdateObject(product).then(() => resolve());
+			})
 			.catch(() => {
-				let msg = 'Unable to update category';
+				let msg = "Unable to update product";
 				reject(msg);
 			});
 	});
