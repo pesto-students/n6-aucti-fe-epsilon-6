@@ -25,7 +25,7 @@ function Dashboard() {
 		>
 			<Header />
 
-			<div className="flex flex-row flex-1 w-full">
+			<div className="flex flex-row flex w-full">
 				<Sidebar />
 				<Main>
 					<Suspense fallback={<Loading />}>

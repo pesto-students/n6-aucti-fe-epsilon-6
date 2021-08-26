@@ -3,8 +3,8 @@ import Alert from "../../Shared/Alert";
 
 function Main({ children }) {
 	return (
-		<main className="h-full w-full overflow-y-auto overflow-x-auto  ">
-			<div>
+		<main className="h-screen w-full overflow-y-auto">
+			<div className="container grid px-6 mx-auto">
 				<Alert />
 				{children}
 			</div>
