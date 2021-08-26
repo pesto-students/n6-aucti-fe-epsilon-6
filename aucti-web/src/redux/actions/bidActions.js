@@ -28,3 +28,31 @@ export const buyerBidLoadedAction = (buyerBids) => {
 		buyerBids,
 	};
 };
+
+export const overrideBidAction = (bid) => {
+	return {
+		type: BID.OVERRIDE_BID,
+		bid,
+	};
+};
+
+export const bidOverridedAction = (buyerBid) => {
+	return {
+		type: BID.BID_OVERRIDED,
+		buyerBid,
+	};
+};
+
+export const deleteBidAction = (id) => {
+	return {
+		type: BID.DELETE_BID,
+		id,
+	};
+};
+
+export const bidDeletedAction = (id) => {
+	return {
+		type: BID.BID_DELETED,
+		id,
+	};
+};

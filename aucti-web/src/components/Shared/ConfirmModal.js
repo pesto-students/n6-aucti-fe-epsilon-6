@@ -24,10 +24,13 @@ const ConfirmModal = (props) => {
 									</button>
 								</div> */}
 								{/*body*/}
-								<div className="relative p-6 flex-auto">
+								{/* <div className="relative p-6 flex-auto">
 									<p className="my-4 text-blueGray-500 text-lg leading-relaxed">
 										{props.children}
 									</p>
+								</div> */}
+								<div className="relative p-6 flex-auto my-4">
+									{props.children}
 								</div>
 								{/*footer*/}
 								{/* <div className="flex items-center justify-center">

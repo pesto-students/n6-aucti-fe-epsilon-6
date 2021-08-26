@@ -5,14 +5,14 @@ import { resetAlertAction } from "../../redux/actions/alertActions";
 const Alert = (props) => {
 	const { text, text_color, bg_color } = props.alert;
 
-	setTimeout(() => props.dispatch(resetAlertAction()), 3000);
+	setTimeout(() => props.dispatch(resetAlertAction()), 5000);
 
 	if (text === "") {
 		return <></>;
 	}
 	return (
 		<div
-			className={`px-4 py-3 w-10/12 leading-normal ${text_color} ${bg_color} rounded-lg`}
+			className={`pt-4 px-4 py-4 w-full leading-normal ${text_color} ${bg_color} rounded-lg`}
 			role="alert"
 		>
 			<p>{text}</p>
