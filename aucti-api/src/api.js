@@ -10,7 +10,8 @@ const usersRouter = require('./routes/users.routes');
 const app = express();
 const router = express.Router();
 
-const allowedOrigin = process.env.ALLOWED_ORIGIN_URL;
+const allowedOrigin ='http:// localhost:9000'
+// process.env.ALLOWED_ORIGIN_URL;
 
 const corsOptions = {
 	origin: function (origin, callback) {

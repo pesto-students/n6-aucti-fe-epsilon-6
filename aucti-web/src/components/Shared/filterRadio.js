@@ -3,8 +3,8 @@ import React from 'react'
 const FilterRadio = () => {
     return (
         <>
-         <div className="w-full h-auto p-3 flex-col justify-center rounded hover:shadow-lg">
-            <div className="align-center font-sofia text-3xl p-2">Pricing</div>
+         <div className="w-full h-auto p-3 flex-col justify-center rounded ">
+            <div className="align-center font-sofia text-3xl p-2 border-b-2">Pricing</div>
 
             <div className="align-center font-sofia text-xl ml-2">
             <ul className="font-sofia">

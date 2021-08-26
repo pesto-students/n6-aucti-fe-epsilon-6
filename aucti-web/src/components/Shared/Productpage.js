@@ -70,9 +70,11 @@ function Productpage(props) {
               <Button onClick={props.onClick} text={"Add to Wishlist"} />
             </div>
           </div>
-
-          <Rating sellername={"Symphony of the Seas"} rating={4.5} />
-
+          <div className=" py-2">
+          <span className="text-seller_light">Seller </span>
+                  <span className="text-2xl text-seller_dark px-1">{props.seller_name}</span>
+                  <Rating rating={4.5} />
+          </div>
           <div className="font-sofia ml-1 py-2 text-xl  ">
             {props.product_description}
           </div>

@@ -1,1 +1,1 @@
-export const baseURL = "https://jsonplaceholder.typicode.com/users"
+export const baseURL = 'http://localhost:9000/.netlify/functions/api/products'

@@ -2,8 +2,8 @@ import React from "react";
 
 function Searchbar() {
   return (
-    <div className="flex-col justify-center p-2">
-      <div className="flex font-sofia text-xl hover:shadow-lg  m-2 mx-2   inline-block ">
+    <div className="flex-col justify-center pt-3">
+      <div className="flex font-sofia text-xlm-2 mx-2   inline-block ">
         <input
           className="font-sofia px-4 w-2/3"
           type="text"
