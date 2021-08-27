@@ -15,7 +15,7 @@ const Modal = (props) => {
 										{props.title}
 									</h3>
 									<button
-										className="p-1 ml-auto bg-transparent border-0 text-gray-500 opacity-5 float-right text-xl leading-none font-semibold outline-none focus:outline-none"
+										className="p-1 ml-auto bg-transparent border-0 text-gray-500 hover:text-black float-right text-xl leading-none font-semibold outline-none focus:outline-none"
 										onClick={() => props.setShowModal(false)}
 									>
 										<span className="bg-transparent text-gray-500 hover:text-black h-6 w-6 text-xl block outline-none focus:outline-none">

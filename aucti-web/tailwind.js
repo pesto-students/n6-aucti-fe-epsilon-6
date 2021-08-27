@@ -31,6 +31,12 @@ module.exports = {
 			auctiHover: "#F8D12F",
 			auctiLight: "#Fade87",
 		},
+		extend: {
+			animation: {
+				bounce200: "bounce 1s infinite 200ms",
+				bounce400: "bounce 1s infinite 400ms",
+			},
+		},
 		spacing: {
 			px: "1px",
 			0: "0px",

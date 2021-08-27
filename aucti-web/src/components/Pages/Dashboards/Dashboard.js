@@ -5,7 +5,8 @@ import routes from "../../../routes/BuyerRoutes";
 import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header";
 import Main from "./Main";
-import Loading from "./Loading";
+
+import Loader from "../../Shared/Loader";
 const Page404 = lazy(() => import("../PageNotFound"));
 
 // import { SidebarContext } from "../context/SidebarContext";
@@ -28,7 +29,7 @@ function Dashboard() {
 			<div className="flex flex-row flex w-full">
 				<Sidebar />
 				<Main>
-					<Suspense fallback={<Loading />}>
+					<Suspense fallback={<Loader />}>
 						<Switch>
 							{routes.map((route, i) => {
 								return route.component ? (

@@ -14,11 +14,11 @@ const routes = [
 		icon: "HistoryIcon",
 		name: "History",
 	},
-	{
-		path: "/buyer/ratings",
-		icon: "StarIcon",
-		name: "Ratings",
-	},
+	// {
+	// 	path: "/buyer/ratings",
+	// 	icon: "StarIcon",
+	// 	name: "Ratings",
+	// },
 	{
 		path: "/buyer/notifications",
 		icon: "BellIconOutLined",

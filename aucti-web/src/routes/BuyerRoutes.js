@@ -33,10 +33,10 @@ const BuyerRoutes = [
 		path: "/history",
 		component: History,
 	},
-	{
-		path: "/ratings",
-		component: Ratings,
-	},
+	// {
+	// 	path: "/ratings",
+	// 	component: Ratings,
+	// },
 	{
 		path: "/notifications",
 		component: Notifications,

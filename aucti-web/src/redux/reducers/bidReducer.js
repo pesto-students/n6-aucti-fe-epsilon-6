@@ -1,10 +1,10 @@
-import { BID } from "../types";
+import { BUYER } from "../types";
 
 const initialState = [];
 
 export const bidReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case BID.BIDS_LOADED:
+		case BUYER.BIDS_LOADED:
 			return action.bids;
 
 		default:

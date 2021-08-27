@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import {
 	CartIcon,
@@ -8,32 +8,30 @@ import {
 } from "../../../../assets/icons";
 import {
 	deleteBidAction,
-	loadBidAction,
 	loadBuyerBidAction,
+	loadBuyerInsightAction,
 	overrideBidAction,
-} from "../../../../redux/actions/bidActions";
-import Alert from "../../../Shared/Alert";
+} from "../../../../redux/actions/buyerActions";
 import ConfirmModal from "../../../Shared/ConfirmModal";
+import Loader from "../../../Shared/Loader";
 import Modal from "../../../Shared/Modal";
+import Pagination from "../../../Shared/Pagination/Pagination";
+
+let PageSize = 5;
 
 const BuyerHome = (props) => {
-	const [currentPage, setSurrentPage] = useState(0);
-	const [itemsPerPage, setItemsPerPage] = useState(10);
 	const [bidAmount, setBidAmount] = useState("");
-	const { buyerBids, user } = props;
+	const { buyerBids, user, insights } = props;
+
 	const [showModal, setShowModal] = useState(false);
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedBidForOverride, setSelectedBidForOverride] = useState("");
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
 
 	useEffect(() => {
-		props.loadBuyerBids(user.uid, currentPage, itemsPerPage);
+		props.loadBuyerBids(user.uid);
+		props.loadBuyerInsights(user.uid);
 	}, []);
-
-	// const [buyerBidsFinal, setBuyerBidsFinal] = useState(buyerBids);
-	// useEffect(() => {
-	// 	setBuyerBidsFinal(buyerBids);
-	// }, [buyerBids]);
 
 	const handleEdit = (bid) => {
 		setSelectedBidForOverride(bid);
@@ -61,11 +59,21 @@ const BuyerHome = (props) => {
 		setSelectedBidForDelete("");
 		setShowModalDelete(false);
 	};
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const currentTableData = () => {
+		const firstPageIndex = (currentPage - 1) * PageSize;
+		const lastPageIndex = firstPageIndex + PageSize;
+
+		return buyerBids.slice(firstPageIndex, lastPageIndex);
+	};
+	if (!buyerBids && !insights) {
+		return <Loader></Loader>;
+	}
 
 	return (
 		<>
-			{/* <Alert></Alert> */}
-			<div className="overflow-y-auto flex-1">
+			<div className="pb-16">
 				<h1 className="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 px-5 pb-4">
 					{"Welcome, " + user?.displayName}
 				</h1>
@@ -78,9 +86,14 @@ const BuyerHome = (props) => {
 									<div className="flex-auto p-4">
 										<div className="flex flex-wrap">
 											<div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-												<span className="font-bold text-xl text-gray-900">
-													350,897
-												</span>
+												{insights !== null && insights.total_bids === null ? (
+													""
+												) : (
+													<span className="font-bold text-xl text-gray-900">
+														{insights?.total_bids}
+													</span>
+												)}
+
 												<div className="text-sm font-medium text-gray-900">
 													Bids
 												</div>
@@ -99,9 +112,14 @@ const BuyerHome = (props) => {
 									<div className="flex-auto p-4">
 										<div className="flex flex-wrap">
 											<div className="relative w-full pr-4 max-w-full flex-grow flex-1">
-												<span className="font-bold text-xl text-gray-900">
-													{"₹ " + "350,897"}
-												</span>
+												{insights !== null &&
+												insights.total_worth_items == null ? (
+													""
+												) : (
+													<span className="font-bold text-xl text-gray-900">
+														{"₹ " + insights?.total_worth_items}
+													</span>
+												)}
 												<div className="text-sm font-medium text-gray-900">
 													worth items bought
 												</div>
@@ -172,12 +190,12 @@ const BuyerHome = (props) => {
 										</tr>
 									</thead>
 									<tbody className="bg-white divide-y divide-gray-200">
-										{buyerBids != null &&
-											buyerBids.map((n, i) => {
+										{currentTableData() != null &&
+											currentTableData().map((n, index) => {
 												return (
 													<tr key={n.id}>
 														<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
-															{i + 1}
+															{(currentPage - 1) * PageSize + index + 1}
 														</td>
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
 															{n.product?.title}
@@ -229,56 +247,26 @@ const BuyerHome = (props) => {
 											})}
 									</tbody>
 								</table>
+								{currentTableData() !== null &&
+									currentTableData().length === 0 && (
+										<div className="w=full flex justify-center items-center p-8">
+											No bid data available!
+										</div>
+									)}
 							</div>
 						</div>
 					</div>
 				</div>
 
-				{buyerBids != null && buyerBids.length > 0 && (
-					<div className="flex justify-items-end px-8 pt-8">
-						<nav aria-label="Page navigation">
-							<ul className="inline-flex space-x-2">
-								<li>
-									<button className="flex items-center justify-center w-10 h-10 text-gray-900 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-auctiLight">
-										<svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-											<path
-												d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-												clipRule="evenodd"
-												fillRule="evenodd"
-											></path>
-										</svg>
-									</button>
-								</li>
-								<li>
-									<button className="w-10 h-10 text-gray-900 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-auctiLight">
-										1
-									</button>
-								</li>
-								<li>
-									<button className="w-10 h-10 text-gray-900 transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-auctiLight">
-										2
-									</button>
-								</li>
-								<li>
-									<button className="w-10 h-10 text-white transition-colors duration-150 bg-gray-900 border border-r-0 border-gray-900 rounded-full focus:shadow-outline">
-										3
-									</button>
-								</li>
-								<li>
-									<button className="flex items-center justify-center w-10 h-10 text-gray-900 transition-colors duration-150 bg-white rounded-full focus:shadow-outline hover:bg-auctiLight">
-										<svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-											<path
-												d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-												clipRule="evenodd"
-												fillRule="evenodd"
-											></path>
-										</svg>
-									</button>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				)}
+				<div className="grid justify-items-end px-8 pt-8 pb-8">
+					<Pagination
+						currentPage={currentPage}
+						totalCount={buyerBids.length}
+						pageSize={PageSize}
+						onPageChange={(page) => setCurrentPage(page)}
+					/>
+				</div>
+
 				<Modal
 					showModal={showModal}
 					title={"Bid Again"}
@@ -379,17 +367,17 @@ const BuyerHome = (props) => {
 };
 
 const mapStateToProps = (state) => {
-	//store.getState()
 	return {
 		buyerBids: state.buyerBids,
 		user: state.user,
+		insights: state.insights,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadBuyerBids: (id, currentPage, itemsPerPage) =>
-			dispatch(loadBuyerBidAction(id, currentPage, itemsPerPage)),
+		loadBuyerBids: (id) => dispatch(loadBuyerBidAction(id)),
+		loadBuyerInsights: (userId) => dispatch(loadBuyerInsightAction(userId)),
 		overrideBid: (bid) => dispatch(overrideBidAction(bid)),
 		deleteBid: (id) => dispatch(deleteBidAction(id)),
 	};

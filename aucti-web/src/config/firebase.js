@@ -3,14 +3,13 @@ import "firebase/firestore";
 import "firebase/auth";
 
 firebase.initializeApp({
-	apiKey: "AIzaSyDxDJuEkr5AEB2JCJw9-6v9O1pbGD30dBA",
-	authDomain: "auctiweb.firebaseapp.com",
-	databaseURL: "https://auctiweb-default-rtdb.firebaseio.com",
-	projectId: "auctiweb",
-	storageBucket: "auctiweb.appspot.com",
-	messagingSenderId: "797580451115",
-	appId: "1:797580451115:web:3e2f5d6e0e1972a6dab96e",
-	measurementId: "G-4DE6QT4G67",
+	apiKey: "AIzaSyCznJ0uo3gJBZmHZSzUYeSqrWuZDh_VDU8",
+	authDomain: "aucti-web.firebaseapp.com",
+	projectId: "aucti-web",
+	storageBucket: "aucti-web.appspot.com",
+	messagingSenderId: "1022704681512",
+	appId: "1:1022704681512:web:76f47e165f7490d58cab1d",
+	measurementId: "G-XMV74E570W",
 });
 
 const auth = firebase.auth();

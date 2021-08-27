@@ -30,7 +30,8 @@ export const login = (role) => {
 						role: role,
 					})
 					.then(() => {
-						localStorage.setItem("user", JSON.stringify(userData));
+						localStorage.setItem("user", JSON.stringify({ user, token, role }));
+						console.log({ user, token, role });
 						resolve(result);
 					})
 					.catch((err) => reject(err));
@@ -58,5 +59,5 @@ export const logout = () => {
 
 export const checkUser = () => {
 	const UserData = JSON.parse(localStorage.getItem("user"));
-	return UserData?.user;
+	return { ...UserData?.user, role: UserData.role };
 };
