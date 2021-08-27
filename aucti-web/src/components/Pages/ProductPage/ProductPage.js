@@ -1,15 +1,15 @@
 import React from "react";
-import Filter from "../../Shared/filterCheckbox";
-import Productpage from "../../Shared/Productpage";
+import FilterCheckBox from "../../Shared/filterCheckbox";
+import ProductDetail from "../../Shared/ProductDetails";
 
 const ProductPage = () => {
   return (
     <>
       <div class="col-start-1 row-start-2 col-span-1 row-span-4 ">
-        <Filter />
+        <h1></h1>
       </div>
-      <div class="col-start-2 row-start-2 col-span-4 row-span-4 flex justify-center">
-        <Productpage
+      <div class="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
+        <ProductDetail
           title="ParagonRomario's Flamengo Worn and Signed Shirt, 1995"
           base_price={15750}
           highest_bid={27000}

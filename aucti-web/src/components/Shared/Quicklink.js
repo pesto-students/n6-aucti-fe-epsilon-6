@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Quicklink() {
+function Quicklink(props) {
     return (
-      <div class="w-1/3 h-24 overflow-hidden border rounded-xl">
-        <img class="z-1 block h-1/9 w-1/8 bg-cover" src="https://images.pexels.com/photos/1302883/pexels-photo-1302883.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" alt="photobvfjg,"/>
+      <div class="w-full h-24 overflow-hidden border rounded-xl m-1">
+        <img class="z-1 block h-1/9 w-1/8 bg-cover" src={props.image_url} alt="photobvfjg,"/>
       </div>    
     )
 }

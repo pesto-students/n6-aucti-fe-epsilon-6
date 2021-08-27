@@ -6,13 +6,13 @@ import { Star, Halfstar } from "./star";
 
 function Productpage(props) {
   return (
-    <div className="m-3 w-4/5 h-7/10  rounded-2xl border hover:shadow-lg font-sofia">
+    <div className="m-5 p-4 w-4/5 h-7/10   border  font-sofia">
       <div className="flex justify-center">
         <div className="m-auto mt-6  w-2/6">
           <img
             src="https://source.unsplash.com/random"
             alt="img"
-            className="w-full h-1/2 px-2 py-2"
+            className="object-scale-down w-full h-1/2 px-2 py-2"
           />
           <span className="w-24 h-5 flex justify-between  mx-auto">
             <Facebook />

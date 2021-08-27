@@ -5,7 +5,6 @@ import * as actions from "../actions/productActions";
 function* loadProducts() {
   try {
     const products = yield call(service.getProducts);
-    console.log(products);
     yield put(actions.productsLoaded(products));
   } catch (e) {
     console.log(e);
@@ -13,7 +12,7 @@ function* loadProducts() {
 }
 
 function* watchGetProducts() {
-  yield takeEvery(types.GET_PRODUCTS, loadProducts);
+  yield takeEvery(types.PRODUCTS_LOADED, loadProducts);
 }
 
 export function* productSaga() {
