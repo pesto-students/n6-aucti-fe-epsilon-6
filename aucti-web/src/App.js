@@ -14,6 +14,7 @@ import UserRoute from "./routes/UserRoute";
 import RegisterForm from "./components/Pages/Auth/Signup/RegisterForm";
 import { connect } from "react-redux";
 import { logoutUserAction, userLoggedIn } from "./redux/actions/userActions";
+import Nav from "./components/Pages/LandingPage/Nav";
 
 function App() {
 	// useEffect(() => {
@@ -32,7 +33,7 @@ function App() {
 				<Route exact path="/" render={() => <Redirect to="/home" />} />
 				<Route path="/login" component={Login} />
 				{/* <Route path="/signup" component={Signup} /> */}
-				<Route path="/home" component={LandingPage} />
+				<Route path="/home" component={Nav} />
 				{/* <UserRoute path="/register" component={RegisterForm} /> */}
 				<Route path="/buyer" component={Dashboard} />
 				<Route path="/**" component={PageNotFound} />
