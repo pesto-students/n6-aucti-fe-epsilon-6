@@ -83,7 +83,7 @@ exports.updateNotification = (notification) =>
 		notifications
 			.doc(notification.id)
 			.set({ ...notification }, { merge: true })
-			.then(() => resolve())
+			.then((notification) => resolve(notification))
 			.catch(() => {
 				let msg = "Unable to update the notification status";
 				reject(msg);

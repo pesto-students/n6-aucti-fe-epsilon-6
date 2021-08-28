@@ -135,7 +135,7 @@ exports.updateUser = (user) =>
 		users
 			.doc(user.id)
 			.set({ ...user }, { merge: true })
-			.then(() => resolve())
+			.then((user) => resolve(user))
 			.catch(() => {
 				let msg = "Unable to update the User";
 				reject(msg);
