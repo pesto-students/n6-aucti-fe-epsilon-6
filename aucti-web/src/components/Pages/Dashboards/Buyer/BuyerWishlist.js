@@ -112,6 +112,7 @@ const BuyerWishlist = (props) => {
 														<div className="flex items-center space-x-4">
 															<Link to="/">
 																<button
+																	className="hover:text-aucti"
 																	layout="link"
 																	size="icon"
 																	aria-label="Edit"
@@ -144,7 +145,7 @@ const BuyerWishlist = (props) => {
 																aria-label="Delete"
 															>
 																<TrashIcon
-																	className="w-5 h-5"
+																	className="w-5 h-5 hover:text-aucti"
 																	aria-hidden="true"
 																	onClick={() => handleDelete(n)}
 																/>

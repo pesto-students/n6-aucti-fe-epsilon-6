@@ -219,6 +219,7 @@ const BuyerHome = (props) => {
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 															<div className="flex items-center space-x-4">
 																<button
+																	className="hover:text-aucti"
 																	layout="link"
 																	size="icon"
 																	aria-label="Edit"
@@ -235,7 +236,7 @@ const BuyerHome = (props) => {
 																	aria-label="Delete"
 																>
 																	<TrashIcon
-																		className="w-5 h-5"
+																		className="hover:text-aucti w-5 h-5"
 																		aria-hidden="true"
 																		onClick={() => handleDelete(n)}
 																	/>
