@@ -10,11 +10,13 @@ import PageNotFound from "./components/Pages/PageNotFound";
 import Dashboard from "./components/Pages/Dashboards/Dashboard";
 import Login from "./components/Pages/Auth/Login/Login";
 import Signup from "./components/Pages/Auth/Signup/Signup";
-import UserRoute from "./routes/UserRoute";
+
 import RegisterForm from "./components/Pages/Auth/Signup/RegisterForm";
 import { connect } from "react-redux";
 import { logoutUserAction, userLoggedIn } from "./redux/actions/userActions";
 import Nav from "./components/Pages/LandingPage/Nav";
+import BuyerRoute from "./routes/BuyerRoute";
+import SellerRoute from "./routes/SellerRoute";
 
 function App() {
 	// useEffect(() => {
@@ -35,7 +37,8 @@ function App() {
 				{/* <Route path="/signup" component={Signup} /> */}
 				<Route path="/home" component={Nav} />
 				{/* <UserRoute path="/register" component={RegisterForm} /> */}
-				<Route path="/buyer" component={Dashboard} />
+				<BuyerRoute path="/buyer" component={Dashboard} />
+				<SellerRoute path="/seller" component={Dashboard} />
 				<Route path="/**" component={PageNotFound} />
 			</Switch>
 		</div>

@@ -8,6 +8,9 @@ const Pagination = (props) => {
 		siblingCount = 1,
 		currentPage,
 		pageSize,
+		onNext,
+		onPrevious,
+		handlePageSelect,
 	} = props;
 
 	const paginationRange = usePagination({
@@ -17,17 +20,17 @@ const Pagination = (props) => {
 		pageSize,
 	});
 
-	if (currentPage === 0 || paginationRange.length < 2) {
-		return null;
+	if (currentPage === 0 || paginationRange?.length < 2) {
+		return <></>;
 	}
 
-	const onNext = () => {
-		onPageChange(currentPage + 1);
-	};
+	// const onNext = () => {
+	// 	onPageChange(currentPage + 1);
+	// };
 
-	const onPrevious = () => {
-		onPageChange(currentPage - 1);
-	};
+	// const onPrevious = () => {
+	// 	onPageChange(currentPage - 1);
+	// };
 
 	let lastPage = paginationRange[paginationRange.length - 1];
 	return (
@@ -72,7 +75,7 @@ const Pagination = (props) => {
 									pageNumber === currentPage &&
 									"w-10 h-10 text-white transition-colors focus:shadow-outline  bg-gray-900 border border-r-0 border-gray-900 duration-150   rounded-full focus:shadow-outline"
 								}`}
-								onClick={() => onPageChange(pageNumber)}
+								onClick={() => handlePageSelect(pageNumber)}
 							>
 								{pageNumber}
 							</button>

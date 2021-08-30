@@ -5,8 +5,10 @@ export const getBids = () => {
 	return axios.get(bidsURL).then((res) => res.data);
 };
 
-export const getBuyerBids = (userId) => {
-	return axios.get(bidsURL + "/" + userId).then((res) => res.data);
+export const getBuyerBids = (userId, firstPageIndex, lastPageIndex) => {
+	return axios
+		.get(bidsURL + "/" + userId + "," + firstPageIndex + "," + lastPageIndex)
+		.then((res) => res.data);
 };
 
 export const getBuyerHistory = (userId) => {

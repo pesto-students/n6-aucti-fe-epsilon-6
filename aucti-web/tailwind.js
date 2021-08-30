@@ -36,6 +36,10 @@ module.exports = {
 				bounce200: "bounce 1s infinite 200ms",
 				bounce400: "bounce 1s infinite 400ms",
 			},
+			// backgroundImage: (theme) => ({
+			// 	check: "url('/icons/check.svg')",
+			// 	landscape: "url('/images/landscape/2.jpg')",
+			// }),
 		},
 		spacing: {
 			px: "1px",
@@ -1039,6 +1043,12 @@ module.exports = {
 		width: ["responsive"],
 		wordBreak: ["responsive"],
 		zIndex: ["responsive", "focus-within", "focus"],
+		extend: {
+			backgroundColor: ["checked"],
+			borderColor: ["checked"],
+			inset: ["checked"],
+			zIndex: ["hover", "active"],
+		},
 	},
 	plugins: [],
 };

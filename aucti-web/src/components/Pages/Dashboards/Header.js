@@ -41,6 +41,7 @@ function Header() {
 			<div className="container flex items-center justify-between h-full px-3 mx-auto text-grey-900 dark:text-purple-300">
 				<ActiIcon className="fill-current h-10"></ActiIcon>
 				{/* <!-- Mobile hamburger --> */}
+
 				<button
 					className="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-aucti"
 					onClick={toggleSidebar}
@@ -48,6 +49,7 @@ function Header() {
 				>
 					<MenuIcon className="w-6 h-6" aria-hidden="true" />
 				</button>
+
 				{/* <!-- Search input --> */}
 				<div className="flex justify-center flex-1 lg:mr-32">
 					<div className="relative w-full max-w-xl mr-6 focus-within:text-gray-400">
@@ -63,7 +65,7 @@ function Header() {
 				</div>
 				<ul className="flex items-center flex-shrink-0 space-x-6">
 					{/* <!-- Theme toggler --> */}
-					<li className="flex">
+					{/* <li className="flex">
 						<button
 							className="rounded-md focus:outline-none focus:shadow-outline-purple"
 							onClick={toggleMode}
@@ -75,7 +77,7 @@ function Header() {
 								<MoonIcon className="w-5 h-5" aria-hidden="true" />
 							)}
 						</button>
-					</li>
+					</li> */}
 					{/* <!-- Notifications menu --> */}
 					<li className="relative">
 						<button

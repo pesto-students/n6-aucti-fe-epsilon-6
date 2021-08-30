@@ -14,9 +14,14 @@ function* loadBids() {
 		console.log(e);
 	}
 }
-function* loadBuyerBids({ id }) {
+function* loadBuyerBids({ id, firstPageIndex, lastPageIndex }) {
 	try {
-		const BuyerBids = yield call(service.getBuyerBids, id);
+		const BuyerBids = yield call(
+			service.getBuyerBids,
+			id,
+			firstPageIndex,
+			lastPageIndex
+		);
 		yield put(actions.buyerBidLoadedAction(BuyerBids));
 	} catch (e) {
 		console.log(e);

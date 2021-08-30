@@ -12,7 +12,7 @@ export const buyerBidReducer = (state = initialState, action) => {
 			return [action.buyerBid, ...filter];
 		case BUYER.BID_DELETED:
 			const { id } = action;
-			return state.filter((bid) => bid.id !== id);
+			return state.data.filter((bid) => bid.id !== id);
 		default:
 			return state;
 	}

@@ -1,14 +1,26 @@
 import React from "react";
-import routes from "./Routes/BuyerSidebarRoutes";
+import BuyerSidebarRoutes from "./Routes/BuyerSidebarRoutes";
+import SellerSidebarRoutes from "./Routes/SellerSidebarRoutes";
 import { NavLink, Route } from "react-router-dom";
 import * as Icons from "../../../../assets/icons";
+import { connect } from "react-redux";
 
 function Icon({ icon, ...props }) {
 	const Icon = Icons[icon];
 	return <Icon {...props} />;
 }
 
-function SidebarContent() {
+function SidebarContent(props) {
+	const { user } = props;
+
+	let routes = [];
+	if (user && user.role === "buyer") {
+		routes = BuyerSidebarRoutes;
+	} else if (user && user.role === "seller") {
+		routes = SellerSidebarRoutes;
+	} else {
+		routes = BuyerSidebarRoutes;
+	}
 	return (
 		<div className="py-4  text-gray-900 dark:text-gray-400">
 			<ul className="mt-6">
@@ -40,4 +52,14 @@ function SidebarContent() {
 	);
 }
 
-export default SidebarContent;
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarContent);

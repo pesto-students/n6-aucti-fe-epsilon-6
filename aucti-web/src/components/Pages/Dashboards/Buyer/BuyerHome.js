@@ -22,16 +22,19 @@ let PageSize = 5;
 const BuyerHome = (props) => {
 	const [bidAmount, setBidAmount] = useState("");
 	const { buyerBids, user, insights } = props;
-
+	const buyerBidsFiltered = buyerBids?.data;
 	const [showModal, setShowModal] = useState(false);
+
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedBidForOverride, setSelectedBidForOverride] = useState("");
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
+	const [currentPage, setCurrentPage] = useState(1);
 
 	useEffect(() => {
-		props.loadBuyerBids(user.uid);
+		const { firstPageIndex, lastPageIndex } = currentTableData;
+		props.loadBuyerBids(user.uid, firstPageIndex, lastPageIndex);
 		props.loadBuyerInsights(user.uid);
-	}, []);
+	}, [currentPage]);
 
 	const handleEdit = (bid) => {
 		setSelectedBidForOverride(bid);
@@ -51,6 +54,7 @@ const BuyerHome = (props) => {
 		e.preventDefault();
 		props.overrideBid({ ...selectedBidForOverride, bid_price: bidAmount });
 		setBidAmount("");
+		setSelectedBidForOverride("");
 		setShowModal(false);
 	};
 
@@ -59,15 +63,25 @@ const BuyerHome = (props) => {
 		setSelectedBidForDelete("");
 		setShowModalDelete(false);
 	};
-	const [currentPage, setCurrentPage] = useState(1);
 
-	const currentTableData = () => {
+	const onNext = () => {
+		setCurrentPage(currentPage + 1);
+	};
+	const onPrevious = () => {
+		setCurrentPage(currentPage - 1);
+	};
+
+	const handlePageSelect = (page) => {
+		setCurrentPage(page);
+	};
+
+	const currentTableData = useMemo(() => {
 		const firstPageIndex = (currentPage - 1) * PageSize;
 		const lastPageIndex = firstPageIndex + PageSize;
+		return { firstPageIndex, lastPageIndex };
+	}, [currentPage]);
 
-		return buyerBids.slice(firstPageIndex, lastPageIndex);
-	};
-	if (!buyerBids && !insights) {
+	if (!buyerBidsFiltered) {
 		return <Loader></Loader>;
 	}
 
@@ -190,8 +204,8 @@ const BuyerHome = (props) => {
 										</tr>
 									</thead>
 									<tbody className="bg-white divide-y divide-gray-200">
-										{currentTableData() != null &&
-											currentTableData().map((n, index) => {
+										{buyerBidsFiltered != null &&
+											buyerBidsFiltered.map((n, index) => {
 												return (
 													<tr key={n.id}>
 														<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
@@ -248,8 +262,8 @@ const BuyerHome = (props) => {
 											})}
 									</tbody>
 								</table>
-								{currentTableData() !== null &&
-									currentTableData().length === 0 && (
+								{buyerBidsFiltered !== null &&
+									buyerBidsFiltered?.length === 0 && (
 										<div className="w=full flex justify-center items-center p-8">
 											No bid data available!
 										</div>
@@ -262,9 +276,12 @@ const BuyerHome = (props) => {
 				<div className="grid justify-items-end px-8 pt-8 pb-8">
 					<Pagination
 						currentPage={currentPage}
-						totalCount={buyerBids.length}
+						totalCount={buyerBids?.length}
 						pageSize={PageSize}
 						onPageChange={(page) => setCurrentPage(page)}
+						onNext={onNext}
+						onPrevious={onPrevious}
+						handlePageSelect={handlePageSelect}
 					/>
 				</div>
 
@@ -377,7 +394,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadBuyerBids: (id) => dispatch(loadBuyerBidAction(id)),
+		loadBuyerBids: (id, firstPageIndex, lastPageIndex) =>
+			dispatch(loadBuyerBidAction(id, firstPageIndex, lastPageIndex)),
 		loadBuyerInsights: (userId) => dispatch(loadBuyerInsightAction(userId)),
 		overrideBid: (bid) => dispatch(overrideBidAction(bid)),
 		deleteBid: (id) => dispatch(deleteBidAction(id)),
