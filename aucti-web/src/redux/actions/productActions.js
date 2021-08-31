@@ -1,14 +1,14 @@
-import * as types from "../types"; 
+import * as types from "../types";
 
-export const getProducts=()=>{
-return {
-    type:types.GET_PRODUCTS
-}
-}
+export const getProductsAction = () => {
+  return {
+    type: types.GET_PRODUCTS,
+  };
+};
 
-export const productsLoaded=(products)=>{
-    return {
-        type:types.PRODUCTS_LOADED,
-        products
-    }
-    }
+export const productsLoadedAction = (products) => {
+  return {
+    type: types.PRODUCTS_LOADED,
+    products,
+  };
+};

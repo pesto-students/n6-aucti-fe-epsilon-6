@@ -1,29 +1,37 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import Card from "./card";
-const Cardlist = () => {
-  const state = useSelector((state) => state.productReducer);
-  //  const state1 =state.map(item => { if(item !=null) return item})
-  const state1 = state[1];
+import Loader from "./Loader";
+import { Link } from "react-router-dom";
+const Cardlist = (props) => {
+  const state = props.productlist;
+  if (state !== undefined) {
 
-  return (
-    <>
-      {/* {state1.map((item, index) => {
-        return (  
-          <Card
-            key={index}
-            product_title={item.title}
-            img_url={item.product_picture}
-            seller_name={item.seller_id}
-            base_price={item.base_price}
-            start_time={item.createdAt._seconds}
-          />
-        );
-      })}
-  
-      {JSON.stringify(state1)} */}
-    </>
-  );
+    return (
+      <>
+        {state.map((item, index) => {
+          let url = "/product/" + item.id;
+          return (
+            <Link to={url}>
+              <Card
+                key={index}
+                product_title={item.title}
+                img_url={item.product_picture}
+                seller_name={item.seller_id}
+                base_price={item.base_price}
+                start_time={item.createdAt._seconds}
+                id={item.id}
+              />
+            </Link>
+          );
+        })}
+    
+      </>
+    );
+  } 
+  else 
+  {
+    return <Loader/>
+  }
 };
 
 export default Cardlist;

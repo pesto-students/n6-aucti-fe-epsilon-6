@@ -5,14 +5,14 @@ import * as actions from "../actions/productActions";
 function* loadProducts() {
   try {
     const products = yield call(service.getProducts);
-    yield put(actions.productsLoaded(products));
+    yield put(actions.productsLoadedAction(products));
   } catch (e) {
     console.log(e);
   }
 }
 
 function* watchGetProducts() {
-  yield takeEvery(types.PRODUCTS_LOADED, loadProducts);
+  yield takeEvery(types.GET_PRODUCTS, loadProducts);
 }
 
 export function* productSaga() {

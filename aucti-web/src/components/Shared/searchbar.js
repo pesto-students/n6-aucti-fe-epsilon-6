@@ -1,6 +1,21 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 function Searchbar() {
+  const [searchterm, setsearchterm] = useState("");
+  useEffect(() => {
+    axios
+      .get(`http://localhost:9000/.netlify/functions/api/search/`)
+      .then((d) => {
+        console.log(d);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [searchterm]);
+
+  const handlechange = (e) => {
+    setsearchterm(e.target.value);
+  };
   return (
     <div className="flex-col justify-center pt-3">
       <div className="flex font-sofia text-xlm-2 mx-2   inline-block ">
@@ -8,6 +23,8 @@ function Searchbar() {
           className="font-sofia px-4 w-2/3"
           type="text"
           placeholder="enter seach value"
+          value={searchterm}
+          onChange={handlechange}
         />
         <div className="p-2">
           <svg

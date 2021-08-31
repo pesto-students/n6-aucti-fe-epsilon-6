@@ -5,6 +5,11 @@ const { productServiceAlerts } = require("../util/alerts");
 const bucket = admin.storage().bucket("gs://auctiweb.appspot.com/");
 const uuid = require("uuid-v4");
 
+const algoliasearch = require('algoliasearch')
+const client = algoliasearch(process.env.APPLICATION_ID, process.env.ADMIN_API_KEY);
+const index = client.initIndex(process.env.ALGOLIA_INDEX_NAME);
+
+
 const {
 	product_transaction_status,
 	product_approval_status,
@@ -142,6 +147,16 @@ exports.addProduct = async (req) =>
 		uploadImageToStorage(product_picture)
 			.then((url) => {
 				data.product_picture = url;
+                //algolia index added
+                index
+					.saveObjects(data)
+					.then(({ objectIDs }) => {
+						console.log(objectIDs);
+					})
+					.catch(err => {
+						console.log(err);
+					});
+
 				products
 					.add(data)
 					.then((docRef) => {
