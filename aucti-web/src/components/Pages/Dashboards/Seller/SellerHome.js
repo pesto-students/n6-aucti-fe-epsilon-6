@@ -10,6 +10,7 @@ import {
 import {
 	loadSellerAction,
 	loadSellerInsightAction,
+	updateBidAction,
 	updateProductAction,
 } from "../../../../redux/actions/sellerActions";
 import ConfirmModal from "../../../Shared/ConfirmModal";
@@ -41,7 +42,7 @@ const SellerHome = (props) => {
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [product_picture, setProduct_picture] = useState("");
-	const [checked, setChecked] = useState(false);
+	const [checked, setChecked] = useState([]);
 
 	const handleCheck = (product) => {
 		setSelectedProductForStatus(product);
@@ -97,6 +98,21 @@ const SellerHome = (props) => {
 
 	const handlePrice = (e) => {
 		setBidAmount(e.target.value);
+	};
+
+	const handleSelectBid = (id) => {
+		console.log(id);
+		if (checked.indexOf(id) !== -1) {
+			setChecked(checked.filter((checkBox) => checkBox !== id));
+		} else {
+			setChecked([...checked, id]);
+		}
+	};
+
+	const selectHighestBidder = () => {
+		const found = checked.find((n) => n);
+		props.selectBidder(found);
+		setShowModalBids(false);
 	};
 
 	const handleProductOverride = (e) => {
@@ -632,7 +648,37 @@ const SellerHome = (props) => {
 					title={"Bids"}
 					setShowModal={setShowModalBids}
 				>
-					<SellerProductsBids productId={productForBids}></SellerProductsBids>
+					<SellerProductsBids
+						checked={checked}
+						setChecked={setChecked}
+						productId={productForBids}
+						handleSelectBid={(id) => handleSelectBid(id)}
+					></SellerProductsBids>
+					<div className="flex justify-center pb-10">
+						<p className="text-md text-red-500">
+							Please confirm to select the highest bidder!
+						</p>
+					</div>
+
+					<div className="flex items-center justify-between gap-4 w-full">
+						<button
+							type="button"
+							className="py-2 px-4  bg-white hover:bg-gray-100 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
+							onClick={() => {
+								setShowModalBids(false);
+								setChecked([]);
+							}}
+						>
+							Cancel
+						</button>
+						<button
+							type="button"
+							className="py-2 px-4  bg-aucti hover:bg-auctiHover focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
+							onClick={selectHighestBidder}
+						>
+							Confirm
+						</button>
+					</div>
 				</LargeModal>
 				<ConfirmModal
 					showModal={showModalDelete}
@@ -750,6 +796,7 @@ const mapDispatchToProps = (dispatch) => {
 		loadSellerInsights: (userId) => dispatch(loadSellerInsightAction(userId)),
 		updateProduct: (product, product_picture) =>
 			dispatch(updateProductAction(product, product_picture)),
+		selectBidder: (bid_id) => dispatch(updateBidAction(bid_id)),
 		// deleteBid: (id) => dispatch(deleteBidAction(id)),
 	};
 };

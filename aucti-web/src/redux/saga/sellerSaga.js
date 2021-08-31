@@ -113,6 +113,30 @@ function* updateProduct({ product, picture }) {
 	}
 }
 
+function* updateBid({ bid_id }) {
+	try {
+		const bid = yield call(service.updateBid, bid_id);
+
+		yield put(actions.bidUpdatedAction(bid));
+		yield put(
+			alerts.setAlertAction({
+				text: "Highest Bidder selected Successfully!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (error) {
+		console.log(error);
+		yield put(
+			alerts.setAlertAction({
+				text: "Highest Bidder not selected!",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
 //Watcher Sagas
 function* watchLoadSellerProducts() {
 	yield takeEvery(SELLER.LOAD_SELLER_PRODUCTS, loadSellerProducts);
@@ -134,6 +158,10 @@ function* watchLoadBidsWithUser() {
 	yield takeEvery(SELLER.LOAD_BIDS_WITH_USERS, loadsBidsWithUsers);
 }
 
+function* watchUpdatebid() {
+	yield takeEvery(SELLER.UPDATE_BID, updateBid);
+}
+
 export function* sellerSaga() {
 	yield all([
 		watchLoadSellerProducts(),
@@ -141,5 +169,6 @@ export function* sellerSaga() {
 		watchAddProduct(),
 		watchUpdateProduct(),
 		watchLoadBidsWithUser(),
+		watchUpdatebid(),
 	]);
 }

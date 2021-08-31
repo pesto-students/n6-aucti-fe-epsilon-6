@@ -99,6 +99,10 @@ export const updateProduct = (product) => {
 	return axios.put(productURL, { product }).then((res) => res.data);
 };
 
+export const updateBid = (bid_id) => {
+	return axios.put(bidsURL + "/highestBid", { bid_id }).then((res) => res.data);
+};
+
 export const loadBidsWithUsers = (productId, firstPageIndex, lastPageIndex) => {
 	return axios
 		.get(

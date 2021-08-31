@@ -214,6 +214,29 @@ function* deleteBuyerAddress({ id }) {
 	}
 }
 
+function* makePayment({ token, bid_id }) {
+	try {
+		const message = yield call(service.makePayments, token, bid_id);
+		yield put(actions.payemntAddedAction(message));
+		yield put(
+			alerts.setAlertAction({
+				text: message,
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (e) {
+		console.log(e);
+		yield put(
+			alerts.setAlertAction({
+				text: "Payment Failed",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
 //Watcher Sagas
 function* watchLoadBids() {
 	yield takeEvery(BUYER.LOAD_BIDS, loadBids);
@@ -267,6 +290,10 @@ function* watchDeleteBuyerAddress() {
 	yield takeEvery(BUYER.DELETE_BUYER_ADDRESS, deleteBuyerAddress);
 }
 
+function* watchMakePayment() {
+	yield takeEvery(BUYER.ADD_PAYMENT, makePayment);
+}
+
 export function* buyerSaga() {
 	yield all([
 		watchLoadBids(),
@@ -282,5 +309,6 @@ export function* buyerSaga() {
 		watchLoadBuyerAddress(),
 		watchSaveBuyerAddress(),
 		watchDeleteBuyerAddress(),
+		watchMakePayment(),
 	]);
 }

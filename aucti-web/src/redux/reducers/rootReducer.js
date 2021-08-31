@@ -13,6 +13,7 @@ import { sellerProductReducer } from "./sellerProductReducer";
 import { sellerInsightsReducer } from "./sellerInsightsReducer";
 import { sellerAddProductReducer } from "./sellerAddProductReducer";
 import { sellerBidsUserReducer } from "./sellerBidsUserReducer";
+import { paymentReducer } from "./paymentReducer";
 
 const rootReducer = combineReducers({
 	products: productReducer,
@@ -29,5 +30,6 @@ const rootReducer = combineReducers({
 	sellerInsights: sellerInsightsReducer,
 	addProductUpdate: sellerAddProductReducer,
 	bidsWithUsers: sellerBidsUserReducer,
+	paymentMessage: paymentReducer,
 });
 export default rootReducer;

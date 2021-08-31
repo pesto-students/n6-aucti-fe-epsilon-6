@@ -25,6 +25,10 @@ const SellerHistory = (props) => {
 
 	const [currentPage, setCurrentPage] = useState(1);
 
+	const handlePageSelect = (page) => {
+		setCurrentPage(page);
+	};
+
 	const currentTableData = () => {
 		const firstPageIndex = (currentPage - 1) * PageSize;
 		const lastPageIndex = firstPageIndex + PageSize;
@@ -147,6 +151,7 @@ const SellerHistory = (props) => {
 						totalCount={buyerHistory.length}
 						pageSize={PageSize}
 						onPageChange={(page) => setCurrentPage(page)}
+						handlePageSelect={handlePageSelect}
 					/>
 				</div>
 			</div>

@@ -54,3 +54,9 @@ export const addBuyerAddress = (address) => {
 export const deleteBuyerAddress = (id) => {
 	return axios.delete(addressesURL + "/" + id).then((res) => res.data);
 };
+
+export const makePayments = (token, bid_id) => {
+	return axios
+		.post(bidsURL + "/payment", { token, bid_id })
+		.then((res) => res.data);
+};

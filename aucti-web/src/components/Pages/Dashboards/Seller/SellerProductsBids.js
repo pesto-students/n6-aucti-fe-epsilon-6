@@ -25,7 +25,6 @@ const SellerProductsBids = (props) => {
 	const { productId, bidsWithUsers } = props;
 	const bids = bidsWithUsers?.data;
 	const [showModal, setShowModal] = useState(false);
-	const [checked, setChecked] = useState(false);
 
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedBidForOverride, setSelectedBidForOverride] = useState("");
@@ -148,8 +147,12 @@ const SellerProductsBids = (props) => {
 																		type="checkbox"
 																		name="checked-demo"
 																		className="form-tick appearance-none bg-white bg-check h-6 w-6 border border-gray-300 rounded-md checked:bg-yellow-500 checked:border-transparent focus:outline-none"
-																		checked={n.bid_status === ""}
-																		onChange={() => setChecked(!checked)}
+																		checked={props.checked.includes(n.id)}
+																		disabled={
+																			!props.checked.includes(n.id) &&
+																			props.checked.length > 0
+																		}
+																		onChange={() => props.handleSelectBid(n.id)}
 																	/>
 																	<span className="text-gray-700 dark:text-white font-normal">
 																		Select Bid

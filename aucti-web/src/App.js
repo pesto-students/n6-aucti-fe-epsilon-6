@@ -17,6 +17,7 @@ import { logoutUserAction, userLoggedIn } from "./redux/actions/userActions";
 import Nav from "./components/Pages/LandingPage/Nav";
 import BuyerRoute from "./routes/BuyerRoute";
 import SellerRoute from "./routes/SellerRoute";
+import BuyerPayments from "./components/Pages/Dashboards/Buyer/BuyerPayments";
 
 function App() {
 	// useEffect(() => {
@@ -39,6 +40,7 @@ function App() {
 				{/* <UserRoute path="/register" component={RegisterForm} /> */}
 				<BuyerRoute path="/buyer" component={Dashboard} />
 				<SellerRoute path="/seller" component={Dashboard} />
+				<SellerRoute path="/payments/:bid_id" component={BuyerPayments} />
 				<Route path="/**" component={PageNotFound} />
 			</Switch>
 		</div>

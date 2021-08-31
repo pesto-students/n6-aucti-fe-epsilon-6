@@ -60,6 +60,20 @@ export const productUpdatedAction = (product) => {
 	};
 };
 
+export const updateBidAction = (bid_id) => {
+	return {
+		type: SELLER.UPDATE_BID,
+		bid_id,
+	};
+};
+
+export const bidUpdatedAction = (bid) => {
+	return {
+		type: SELLER.BID_UPDATED,
+		bid,
+	};
+};
+
 export const loadBidsWithUsersAction = (
 	productId,
 	firstPageIndex,

@@ -182,3 +182,18 @@ export const userAddressDeletedAction = (id) => {
 		id,
 	};
 };
+
+export const makePaymentAction = (token, bid_id) => {
+	return {
+		type: BUYER.ADD_PAYMENT,
+		token,
+		bid_id,
+	};
+};
+
+export const payemntAddedAction = (message) => {
+	return {
+		type: BUYER.PAYMENT_ADDED,
+		message,
+	};
+};
