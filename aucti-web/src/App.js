@@ -37,7 +37,7 @@ function App() {
 				<Route path="/login" component={Login} />
 				{/* <Route path="/signup" component={Signup} /> */}
 				<Route path="/home" component={Nav} />
-				{/* <UserRoute path="/register" component={RegisterForm} /> */}
+
 				<BuyerRoute path="/buyer" component={Dashboard} />
 				<SellerRoute path="/seller" component={Dashboard} />
 				<SellerRoute path="/payments/:bid_id" component={BuyerPayments} />
