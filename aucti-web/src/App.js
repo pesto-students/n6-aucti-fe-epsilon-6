@@ -16,7 +16,7 @@ function App() {
   function onChange(e) {
     console.log(e.target.name, e.target.value);
   }
-  localStorage.setItem('user_id', 'iU1sjygBcXkVaIpaVYSC');
+  // localStorage.setItem('user_id', 'iU1sjygBcXkVaIpaVYSC');
 
   return (
     <div>
