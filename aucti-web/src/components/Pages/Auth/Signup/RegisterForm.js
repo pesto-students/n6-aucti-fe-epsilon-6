@@ -2,7 +2,7 @@ import React from "react";
 
 const RegisterForm = () => {
 	return (
-		<>
+		<div>
 			<form className="space-y-4 text-gray-700">
 				<div className="flex flex-wrap">
 					<div className="w-full">
@@ -71,7 +71,7 @@ const RegisterForm = () => {
 					</div>
 				</div>
 			</form>
-		</>
+		</div>
 	);
 };
 
