@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/Pages/Dashboards/Buyer/BuyerWishlist.js"],"names":["BuyerWishlist"],"mappings":"iGAAA,uBAMeA,UAJO,WACrB,OAAO","file":"static/js/8.2074781d.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nconst BuyerWishlist = () => {\r\n\treturn <div>BuyerWishlist works!</div>;\r\n};\r\n\r\nexport default BuyerWishlist;\r\n"],"sourceRoot":""}
