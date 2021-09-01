@@ -1,13 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Multer = require('multer');
+const Multer = require("multer");
 const {
 	fetchAllProducts,
 	fetchSellerProducts,
 	addProduct,
 	deleteProduct,
 	updateProduct,
-} = require('../services/products.service.js');
+	fetchProduct,
+} = require("../services/products.service.js");
 
 const multer = Multer({
 	storage: Multer.memoryStorage(),
@@ -16,41 +17,71 @@ const multer = Multer({
 	},
 });
 
-router.get('/', (req, res) => {
+// const isAuthenticated = require('../middlewares');
+// router.use(isAuthenticated);
+
+router.get("/", (req, res) => {
 	fetchAllProducts()
 		.then((data) => res.json(data))
-		.catch((err) => res.status(500).send(err));
-});
-
-router.get('/seller', (req, res) => {
-	const { seller_id } = req.query;
-	fetchSellerProducts(seller_id)
-		.then((data) => res.json(data))
-		.catch((err) => res.status(500).send(err));
-});
-
-router.post('/', multer.single('product_picture'), (req, res) => {
-	addProduct(req)
-		.then((id) => res.status(201).send(id))
-		.catch((err) => {
+		.catch((err) =>
 			res.status(500).send({
-				message: err.message || 'Some error occurred while adding product.',
+				message: err,
+			})
+		);
+});
+
+router.get("/:productId", (req, res) => {
+	const { productId } = req.params;
+	fetchProduct(productId)
+		.then((data) => res.json(data))
+		.catch((err) =>
+			res.status(500).send({
+				message: err,
+			})
+		);
+});
+
+router.get("/seller/:seller", (req, res) => {
+	const { seller } = req.params;
+	fetchSellerProducts(seller)
+		.then((data) => res.json(data))
+		.catch((err) =>
+			res.status(500).send({
+				message: err,
+			})
+		);
+});
+
+router.post("/", multer.single("product_picture"), (req, res) => {
+	addProduct(req)
+		.then((data) => res.status(201).send(data))
+		.catch((err) => {
+			res.status(500).json({
+				message: err,
 			});
 		});
 });
 
-router.delete('/:productId', (req, res) => {
+router.delete("/:productId", (req, res) => {
 	const { productId } = req.params;
 	deleteProduct(productId)
-		.then(() => res.status(200).send('Deleted successfully'))
-		.catch((err) => res.status(500).send(err));
+		.then(() => res.status(204).send("Deleted successfully"))
+		.catch((err) =>
+			res.status(500).send({
+				message: err,
+			})
+		);
 });
 
-router.put('/', (req, res) => {
+router.put("/", (req, res) => {
 	const { product } = req.body;
 	updateProduct(product)
-		.then(() => res.status(200).send('Product updated'))
-		.catch((err) => res.status(500).send(err));
+		.then((data) => res.status(200).send(data))
+		.catch((err) =>
+			res.status(500).json({
+				message: err,
+			})
+		);
 });
 
 module.exports = router;

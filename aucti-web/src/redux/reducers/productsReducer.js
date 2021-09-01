@@ -3,10 +3,11 @@ import * as types from "../types";
 const initialState = [];
 
 export const productReducer = (state = initialState, action) => {
-	switch (action.type) {
-		case types.PRODUCTS_LOADED:
-			return [...state, action.products];
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case types.PRODUCTS_LOADED:
+      return [...state,action.products];
+
+    default:
+      return state;
+  }
 };
