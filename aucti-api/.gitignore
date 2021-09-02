@@ -1,6 +1,5 @@
 node_modules/
 functions
-auctiweb-firebase-adminsdk-wrekm-0b997bc13d.json
 serviceAccountKey.json
 package-lock.json
 .env

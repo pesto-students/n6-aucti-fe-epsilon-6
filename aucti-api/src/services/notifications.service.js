@@ -34,7 +34,7 @@ exports.fetchUserNotification = (user_id) =>
 		notifications
 			.where("user_id", "==", user_id)
 			.where("status", "==", notification_status.UNREAD)
-			.orderBy("createdAt", "desc")
+			// .orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
@@ -83,7 +83,7 @@ exports.updateNotification = (notification) =>
 		notifications
 			.doc(notification.id)
 			.set({ ...notification }, { merge: true })
-			.then((notification) => resolve(notification))
+			.then(() => resolve(notification))
 			.catch(() => {
 				let msg = "Unable to update the notification status";
 				reject(msg);

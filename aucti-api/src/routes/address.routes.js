@@ -2,34 +2,35 @@ const express = require("express");
 const router = express.Router();
 
 const {
-	addWishlist,
-	deleteWishlist,
-	fetchAllWishlist,
-	fetchUserWishlist,
-} = require("../services/wishlist.service");
+	addAddress,
+	deleteAddress,
+	fetchUserAddress,
+	fetchAllAddress,
+} = require("../services/address.service");
 
 router.get("/", (req, res) => {
-	fetchAllWishlist()
+	fetchAllAddress()
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
 
 router.get("/:user", (req, res) => {
 	const { user } = req.params;
-	fetchUserWishlist(user)
+	fetchUserAddress(user)
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
 
 router.post("/", (req, res) => {
-	addWishlist(req)
-		.then((id) => res.status(201).send(id))
+	const { address } = req.body;
+	addAddress(address)
+		.then((data) => res.status(201).send(data))
 		.catch((err) => res.status(500).json(err));
 });
 
-router.delete("/:wishlistId", (req, res) => {
-	const { wishlistId } = req.params;
-	deleteWishlist(wishlistId)
+router.delete("/:id", (req, res) => {
+	const { id } = req.params;
+	deleteAddress(id)
 		.then(() => res.status(200).send("Deleted successfully"))
 		.catch((err) => res.status(500).send(err));
 });

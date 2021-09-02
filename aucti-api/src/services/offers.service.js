@@ -104,7 +104,7 @@ exports.updateOffer = (offer) =>
 		offers
 			.doc(offer.id)
 			.set({ ...offer }, { merge: true })
-			.then((offer) => resolve(offer))
+			.then(() => resolve())
 			.catch(() => {
 				let msg = "Unable to update the offer status";
 				reject(msg);
