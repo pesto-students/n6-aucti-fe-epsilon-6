@@ -33,16 +33,20 @@ exports.fetchUser = (userId) =>
 			let msg = "userId is empty";
 			reject(msg);
 		}
-		users
-			.where("id", "==", userId)
-			.orderBy("createdAt", "desc")
+
+		db.doc(`/users/${userId}`)
+			// .orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshotData(querySnapshot);
-				resolve(data);
+				let user = querySnapshot.data();
+				user.id = querySnapshot.id;
+				console.log(user);
+				resolve(user);
 			})
 			.catch((err) => {
+				console.log(err);
 				let msg = "Unable to retrieve user";
+				console.log(msg);
 				reject(msg);
 			});
 	});
@@ -135,7 +139,7 @@ exports.updateUser = (user) =>
 		users
 			.doc(user.id)
 			.set({ ...user }, { merge: true })
-			.then((user) => resolve(user))
+			.then(() => resolve())
 			.catch(() => {
 				let msg = "Unable to update the User";
 				reject(msg);

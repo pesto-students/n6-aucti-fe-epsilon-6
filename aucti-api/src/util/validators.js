@@ -18,8 +18,8 @@ exports.validateAddProductData = (data) => {
 		errors.base_price = "Base price must not be empty";
 	if (isNull(data.product_picture))
 		errors.product_picture = "Product image is not present";
-	if (isNull(data.product_document))
-		errors.product_document = "Product document is not present";
+	// if (isNull(data.product_document))
+	// 	errors.product_document = "Product document is not present";
 
 	return {
 		errors,
@@ -31,8 +31,8 @@ exports.validateUpdateProductData = (data) => {
 	let errors = {};
 
 	if (isEmpty(data.title)) errors.title = "Title must not be empty";
-	if (isEmpty(data.description))
-		errors.description = "Description must not be empty";
+	// if (isEmpty(data.description))
+	// 	errors.description = "Description must not be empty";
 	if (isEmpty(data.base_price))
 		errors.base_price = "Base price must not be empty";
 	return {

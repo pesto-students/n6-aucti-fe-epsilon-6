@@ -1,5 +1,7 @@
 const { admin, db } = require("../util/admin");
+const { fetchProduct } = require("./products.service");
 const wishlist = db.collection("wishlist");
+const bids = db.collection("bids");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -31,14 +33,84 @@ exports.fetchUserWishlist = (user_id) =>
 		}
 		wishlist
 			.where("user_id", "==", user_id)
-			.orderBy("createdAt", "desc")
+			// .orderBy("createdAt", "desc")
+			// .startAt(startAt)
+			// .limit(10)
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
-				resolve(data);
+				Promise.all(
+					data.map((bid) =>
+						fetchProduct(bid.product_id)
+							.then((product) => {
+								return {
+									...bid,
+									product: {
+										title: product.title,
+										base_price: product.base_price,
+										auction_status: product.auction_status,
+									},
+								};
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							})
+					)
+				)
+					.then((list) => {
+						Promise.all(
+							list.map((bid) =>
+								bids
+									.where("product_id", "==", bid.product_id)
+									.get()
+									.then((querySnapshot) => {
+										const data = querySnapshotData(querySnapshot);
+										console.log(data);
+										let maxValue = 0;
+										if (data.length > 0) {
+											maxValue = Math.max.apply(
+												Math,
+												data.map(function (o) {
+													return parseInt(o.bid_price);
+												})
+											);
+										}
+
+										return {
+											...bid,
+											product: {
+												...bid.product,
+												highest_bid: maxValue,
+											},
+										};
+									})
+									.catch((err) => {
+										let msg = "Unable to retrieve User bids";
+										console.log(err);
+										reject(msg);
+									})
+							)
+						)
+							.then((finalList) => {
+								resolve(finalList);
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							});
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve User bids";
+						console.log(err);
+						reject(msg);
+					});
 			})
 			.catch((err) => {
-				let msg = "Unable to retrieve User wishlist";
+				let msg = "Unable to retrieve User bids";
+				console.log(err);
 				reject(msg);
 			});
 	});

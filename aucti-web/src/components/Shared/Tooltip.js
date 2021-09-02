@@ -42,10 +42,12 @@ const Tooltip = (props) => {
 					>
 						<div className="flex flex-col justify-center items-center p-3">
 							<p className="text-gray-900">
-								Please click the button to confirm
+								{/* Please click the button to confirm */}
+								{props.msg1}
 							</p>
 							<p className="text-gray-900">
-								after shipping the product to user
+								{/* after shipping the product to user */}
+								{props.msg2}
 							</p>
 						</div>
 					</div>

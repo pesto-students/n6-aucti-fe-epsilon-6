@@ -11,8 +11,32 @@ export const getBuyerBids = (userId, firstPageIndex, lastPageIndex) => {
 		.then((res) => res.data);
 };
 
-export const getBuyerHistory = (userId) => {
-	return axios.get(bidsURL + "/history/" + userId).then((res) => res.data);
+export const getBuyerHistory = (userId, firstPageIndex, lastPageIndex) => {
+	return axios
+		.get(
+			bidsURL +
+				"/history/" +
+				userId +
+				"," +
+				firstPageIndex +
+				"," +
+				lastPageIndex
+		)
+		.then((res) => res.data);
+};
+
+export const getBuyerCompleted = (userId, firstPageIndex, lastPageIndex) => {
+	return axios
+		.get(
+			bidsURL +
+				"/completed/" +
+				userId +
+				"," +
+				firstPageIndex +
+				"," +
+				lastPageIndex
+		)
+		.then((res) => res.data);
 };
 
 export const getBuyerWishlist = (userId) => {
