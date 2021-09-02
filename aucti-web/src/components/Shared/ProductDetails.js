@@ -34,7 +34,7 @@ function ProductDetails(props) {
             bid_price :bidprice
         }
 
-         axios.post('/bids',obj);
+         axios.post('/bids',obj)
          .then(()=>{console.log('bid Submitted')})
          .catch(()=>{console.log('bid not submitted')})
     }
@@ -77,7 +77,7 @@ function ProductDetails(props) {
             Highest Bid
           </div>
 
-          <div className="ml-1 py-2">
+          {/* <div className="ml-1 py-2">
             <span className=" text-2xl font-semibold text-seller_light">
               Start Time:{" "}
             </span>
@@ -91,7 +91,7 @@ function ProductDetails(props) {
               End Time:{" "}
             </span>
             <span className=" text-2xl font-semibold ">{timestampconvert(props.end_time)} </span>
-          </div>
+          </div> */}
 
           <div className="ml-1 py-2">
             <span className=" text-2xl font-semibold text-seller_light">

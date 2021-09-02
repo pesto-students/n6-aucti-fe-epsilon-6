@@ -36,7 +36,7 @@ function LandingPage(props) {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.productReducer,
+    products: state.productsReducer,
   };
 };
 

@@ -7,7 +7,6 @@ import Rating from './rating'
 function Card(props) {
     const cardClick = () =>{
         let url = '/product/'+props.id;
-        console.log(typeof(url));
        return <Redirect to={url}/>
         // <Link to={url}/>
     }
