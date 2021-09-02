@@ -2,13 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import Card from "./card";
 const Cardlist = () => {
-  const state = useSelector((state) => state.productReducer);
-  //  const state1 =state.map(item => { if(item !=null) return item})
-  const state1 = state[1];
+	// const state = useSelector((state) => state.productReducer);
+	//  const state1 =state.map(item => { if(item !=null) return item})
+	// const state1 = state[1];
 
-  return (
-    <>
-      {/* {state1.map((item, index) => {
+	return (
+		<>
+			{/* {state1.map((item, index) => {
         return (  
           <Card
             key={index}
@@ -22,8 +22,8 @@ const Cardlist = () => {
       })}
   
       {JSON.stringify(state1)} */}
-    </>
-  );
+		</>
+	);
 };
 
 export default Cardlist;

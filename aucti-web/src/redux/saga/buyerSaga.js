@@ -28,10 +28,29 @@ function* loadBuyerBids({ id, firstPageIndex, lastPageIndex }) {
 	}
 }
 
-function* loadBuyerHistory({ id }) {
+function* loadBuyerHistory({ id, firstPageIndex, lastPageIndex }) {
 	try {
-		const history = yield call(service.getBuyerHistory, id);
+		const history = yield call(
+			service.getBuyerHistory,
+			id,
+			firstPageIndex,
+			lastPageIndex
+		);
 		yield put(actions.buyerHistoryLoadedAction(history));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+function* loadBuyerCompleted({ id, firstPageIndex, lastPageIndex }) {
+	try {
+		const completed = yield call(
+			service.getBuyerCompleted,
+			id,
+			firstPageIndex,
+			lastPageIndex
+		);
+		yield put(actions.buyerCompletedLoadedAction(completed));
 	} catch (e) {
 		console.log(e);
 	}
@@ -270,6 +289,10 @@ function* watchLoadBuyerHistory() {
 	yield takeEvery(BUYER.LOAD_BUYER_HISTORY, loadBuyerHistory);
 }
 
+function* watchLoadBuyerCompleted() {
+	yield takeEvery(BUYER.LOAD_BUYER_COMPLETED, loadBuyerCompleted);
+}
+
 function* watchLoadBuyerNotifications() {
 	yield takeEvery(BUYER.LOAD_BUYER_NOTIFICATIONS, loadBuyerNotifications);
 }
@@ -310,5 +333,6 @@ export function* buyerSaga() {
 		watchSaveBuyerAddress(),
 		watchDeleteBuyerAddress(),
 		watchMakePayment(),
+		watchLoadBuyerCompleted(),
 	]);
 }

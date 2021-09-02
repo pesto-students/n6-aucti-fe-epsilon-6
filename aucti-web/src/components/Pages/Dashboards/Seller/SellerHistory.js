@@ -150,8 +150,22 @@ const SellerHistory = (props) => {
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 														<div className="flex items-center space-x-4">
-															{n?.product_transaction_status !== "sent" && (
-																<Tooltip color="amber">
+															{n?.product_transaction_status === "paid" && (
+																<Tooltip
+																	color="amber"
+																	msg1="Please
+																	click
+																	the
+																	button"
+																	msg2="to
+																	confirm
+																	after
+																	shipping
+																	the
+																	product
+																	to
+																	user"
+																>
 																	<button
 																		layout="link"
 																		size="icon"

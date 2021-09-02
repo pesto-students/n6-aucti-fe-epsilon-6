@@ -30,7 +30,7 @@ const BuyerRoutes = [
 		component: Wishlist,
 	},
 	{
-		path: "/history",
+		path: "/auctions",
 		component: History,
 	},
 	// {

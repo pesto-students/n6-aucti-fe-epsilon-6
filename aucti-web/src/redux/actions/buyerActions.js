@@ -99,10 +99,12 @@ export const wishlistDeletedAction = (id) => {
 	};
 };
 
-export const loadBuyerHistoryAction = (id) => {
+export const loadBuyerHistoryAction = (id, firstPageIndex, lastPageIndex) => {
 	return {
 		type: BUYER.LOAD_BUYER_HISTORY,
 		id,
+		firstPageIndex,
+		lastPageIndex,
 	};
 };
 
@@ -110,6 +112,22 @@ export const buyerHistoryLoadedAction = (history) => {
 	return {
 		type: BUYER.BUYER_HISTORY_LOADED,
 		history,
+	};
+};
+
+export const loadBuyerCompletedAction = (id, firstPageIndex, lastPageIndex) => {
+	return {
+		type: BUYER.LOAD_BUYER_COMPLETED,
+		id,
+		firstPageIndex,
+		lastPageIndex,
+	};
+};
+
+export const buyerCompletedLoadedAction = (completed) => {
+	return {
+		type: BUYER.BUYER_COMPLETED_LOADED,
+		completed,
 	};
 };
 

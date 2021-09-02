@@ -16,6 +16,7 @@ import { sellerBidsUserReducer } from "./sellerBidsUserReducer";
 import { paymentReducer } from "./paymentReducer";
 import { sellerHistoryReducer } from "./sellerHistoryReducer";
 import { sellerCompletedReducer } from "./sellerCompletedReducer";
+import { buyerCompletedReducer } from "./buyerCompletedReducer";
 
 const rootReducer = combineReducers({
 	products: productReducer,
@@ -35,5 +36,6 @@ const rootReducer = combineReducers({
 	paymentMessage: paymentReducer,
 	sellerHistory: sellerHistoryReducer,
 	sellerCompleted: sellerCompletedReducer,
+	buyerCompleted: buyerCompletedReducer,
 });
 export default rootReducer;

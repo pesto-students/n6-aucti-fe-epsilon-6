@@ -40,7 +40,7 @@ function App() {
 
 				<BuyerRoute path="/buyer" component={Dashboard} />
 				<SellerRoute path="/seller" component={Dashboard} />
-				<SellerRoute path="/payments/:bid_id" component={BuyerPayments} />
+				<BuyerRoute path="/payments/:bid_id" component={BuyerPayments} />
 				<Route path="/**" component={PageNotFound} />
 			</Switch>
 		</div>

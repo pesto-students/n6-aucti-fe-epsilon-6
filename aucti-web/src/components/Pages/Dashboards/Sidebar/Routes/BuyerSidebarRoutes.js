@@ -10,9 +10,9 @@ const routes = [
 		name: "Wishlist",
 	},
 	{
-		path: "/buyer/history",
+		path: "/buyer/auctions",
 		icon: "HistoryIcon",
-		name: "History",
+		name: "Auctions",
 	},
 	// {
 	// 	path: "/buyer/ratings",
