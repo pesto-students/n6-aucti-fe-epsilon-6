@@ -1,12 +1,19 @@
-import { createStore,applyMiddleware } from "redux";
-import rootReducer from './reducers/rootReducer.js'
+import { createStore, applyMiddleware } from "redux";
+import rootReducer from "./reducers/rootReducer.js";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./saga/rootSaga.js";
+import { checkUser } from "./services/userService.js";
+import { userLoggedIn } from "./actions/userActions.js";
 
-const saga = createSagaMiddleware()
+const saga = createSagaMiddleware();
 
-const store = createStore(rootReducer,applyMiddleware(saga))
+const store = createStore(rootReducer, applyMiddleware(saga));
 
-saga.run(rootSaga)
+const user = checkUser();
+if (user) {
+	store.dispatch(userLoggedIn(user));
+}
 
-export default store
+saga.run(rootSaga);
+
+export default store;

@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/Pages/Dashboards/Buyer/BuyerHome.js"],"names":["BuyerHome"],"mappings":"iGAAA,uBAMeA,UAJG,WACjB,OAAO","file":"static/js/4.cecfbf2a.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nconst BuyerHome = () => {\r\n\treturn <div>Buyer works!</div>;\r\n};\r\n\r\nexport default BuyerHome;\r\n"],"sourceRoot":""}
