@@ -112,6 +112,7 @@ exports.fetchUserBids = (req) =>
 							)
 						)
 							.then((finalList) => {
+								console.log(finalList);
 								const length = finalList.length;
 
 								const filteredlist = finalList.slice(
