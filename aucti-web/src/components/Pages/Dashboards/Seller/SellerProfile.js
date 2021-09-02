@@ -78,8 +78,8 @@ const SellerProfile = (props) => {
 						<form>
 							<div className="overflow-hidden sm:rounded-md border-gray-400 border rounded">
 								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-1 gap-6">
-										<div className="col-span-6 sm:col-span-3">
+									<div className="w-96">
+										<div>
 											<label
 												htmlFor="email-address"
 												className="block text-sm font-medium text-gray-700"
@@ -97,7 +97,7 @@ const SellerProfile = (props) => {
 											/>
 										</div>
 
-										<div className="flex flex-wrap col-span-3">
+										{/* <div className="flex flex-wrap col-span-3">
 											<div className="w-full">
 												<label
 													className="block mb-1"
@@ -111,8 +111,8 @@ const SellerProfile = (props) => {
 													id="formGridCode_card"
 												/>
 											</div>
-										</div>
-										<div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0 col-span-3">
+										</div> */}
+										{/* <div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0 col-span-3">
 											<div className="w-full px-2 md:w-1/2">
 												<label
 													className="block mb-1"
@@ -139,8 +139,8 @@ const SellerProfile = (props) => {
 													id="formGridCode_last"
 												/>
 											</div>
-										</div>
-										<div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0 col-span-2">
+										</div> */}
+										{/* <div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0 col-span-2">
 											<div className="w-full px-2 md:w-1/3">
 												<label
 													className="block mb-1"
@@ -180,10 +180,10 @@ const SellerProfile = (props) => {
 													id="formGridCode_cvc"
 												/>
 											</div>
-										</div>
+										</div> */}
 									</div>
 								</div>
-								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+								{/* <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
 									<button
 										type="submit"
 										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-900 bg-aucti hover:bg-auctiHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -191,59 +191,9 @@ const SellerProfile = (props) => {
 									>
 										Save
 									</button>
-								</div>
+								</div> */}
 							</div>
 						</form>
-						<div className="mx-10 xl:my-0 md:my-10 xs:my-10 overflow-auto xl:h-96 xs:h-32">
-							<div className="container flex flex-col mx-auto    items-center justify-center">
-								<ul className="flex flex-col">
-									{addresses !== null &&
-										addresses.map((n) => {
-											return (
-												<li
-													key={n.id}
-													className="border-gray-400 flex flex-row mb-2"
-												>
-													<div className="border-gray-400 border rounded select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 justify-between items-center p-4 ">
-														<div className="flex flex-col text-xs">
-															<p className="break-words">{n.address}</p>
-															<p>{n.city}</p>
-															<p>{n.state}</p>
-															<p>{n.country}</p>
-															<p>{n.zip}</p>
-														</div>
-
-														<div className="w-12 text-right flex justify-end hover:text-aucti">
-															{/* <div className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-													<div className="flex items-center space-x-4"> */}
-
-															<button
-																layout="link"
-																size="icon"
-																aria-label="Delete"
-																onClick={() => handleDelete(n.id)}
-															>
-																<TrashIcon
-																	className="w-5 h-5"
-																	aria-hidden="true"
-																	// onClick={() => handleDelete(n)}
-																/>
-															</button>
-															{/* </div>
-												</div> */}
-														</div>
-													</div>
-												</li>
-											);
-										})}
-								</ul>
-								{addresses !== null && addresses.length === 0 && (
-									<div className="w=full flex justify-center items-center p-8">
-										No address available!
-									</div>
-								)}
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

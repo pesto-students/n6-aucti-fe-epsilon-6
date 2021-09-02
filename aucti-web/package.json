@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@firebase/storage": "^0.8.0",
+    "@popperjs/core": "2.9.1",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.17.1",
     "@tailwindui/react": "^0.1.1",

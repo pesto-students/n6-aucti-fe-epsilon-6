@@ -281,12 +281,7 @@ const SellerHome = (props) => {
 											>
 												Highest Bid
 											</th>
-											<th
-												scope="col"
-												className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
-											>
-												Approval Status
-											</th>
+
 											<th
 												scope="col"
 												className="px-6 py-3 text-left text-xs font-medium text-gray-50 uppercase tracking-wider"
@@ -318,13 +313,6 @@ const SellerHome = (props) => {
 														</td>
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
 															{n.product?.highest_bid}
-														</td>
-														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-															<div className="flex justify-center items-center space-x-4">
-																<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-																	{n.product?.product_approval_status}
-																</span>
-															</div>
 														</td>
 
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

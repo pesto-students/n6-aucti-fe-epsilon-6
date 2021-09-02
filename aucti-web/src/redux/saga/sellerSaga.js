@@ -137,6 +137,58 @@ function* updateBid({ bid_id }) {
 	}
 }
 
+function* loadSellerHistory({ id, firstPageIndex, lastPageIndex }) {
+	try {
+		const history = yield call(
+			service.getSellerHistory,
+			id,
+			firstPageIndex,
+			lastPageIndex
+		);
+		yield put(actions.sellerHistoryLoadedAction(history));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+function* loadSellerCompleted({ id, firstPageIndex, lastPageIndex }) {
+	try {
+		const completed = yield call(
+			service.getSellerCompleted,
+			id,
+			firstPageIndex,
+			lastPageIndex
+		);
+		yield put(actions.sellerCompletedLoadedAction(completed));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
+function* confirmShipment({ product_id }) {
+	try {
+		const product = yield call(service.confirmShipment, product_id);
+		console.log(product);
+		yield put(actions.shipmentConfirmedAction(product));
+		yield put(
+			alerts.setAlertAction({
+				text: "Product shipment confirmed to the buyer!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (error) {
+		console.log(error);
+		yield put(
+			alerts.setAlertAction({
+				text: "Product shipment not confirmed to the buyer!",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
 //Watcher Sagas
 function* watchLoadSellerProducts() {
 	yield takeEvery(SELLER.LOAD_SELLER_PRODUCTS, loadSellerProducts);
@@ -162,6 +214,18 @@ function* watchUpdatebid() {
 	yield takeEvery(SELLER.UPDATE_BID, updateBid);
 }
 
+function* watchLoadSellerHistory() {
+	yield takeEvery(SELLER.LOAD_SELLER_HISTORY, loadSellerHistory);
+}
+
+function* watchLoadSellerCompleted() {
+	yield takeEvery(SELLER.LOAD_SELLER_COMPLETED, loadSellerCompleted);
+}
+
+function* watchConFirmShipmemnt() {
+	yield takeEvery(SELLER.CONFIRM_SHIPMENT, confirmShipment);
+}
+
 export function* sellerSaga() {
 	yield all([
 		watchLoadSellerProducts(),
@@ -170,5 +234,8 @@ export function* sellerSaga() {
 		watchUpdateProduct(),
 		watchLoadBidsWithUser(),
 		watchUpdatebid(),
+		watchLoadSellerHistory(),
+		watchConFirmShipmemnt(),
+		watchLoadSellerCompleted(),
 	]);
 }

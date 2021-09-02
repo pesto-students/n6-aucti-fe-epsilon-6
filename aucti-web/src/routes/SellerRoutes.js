@@ -29,7 +29,7 @@ const SellerRoutes = [
 		component: AddProducts,
 	},
 	{
-		path: "/history",
+		path: "/auctions",
 		component: History,
 	},
 	{

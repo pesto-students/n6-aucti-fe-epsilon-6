@@ -93,3 +93,53 @@ export const bidsWithUsersLoadedAction = (bids) => {
 		bids,
 	};
 };
+
+export const loadSellerHistoryAction = (id, firstPageIndex, lastPageIndex) => {
+	return {
+		type: SELLER.LOAD_SELLER_HISTORY,
+		id,
+		firstPageIndex,
+		lastPageIndex,
+	};
+};
+
+export const sellerHistoryLoadedAction = (history) => {
+	return {
+		type: SELLER.SELLER_HISTORY_LOADED,
+		history,
+	};
+};
+
+export const loadSellerCompletedAction = (
+	id,
+	firstPageIndex,
+	lastPageIndex
+) => {
+	return {
+		type: SELLER.LOAD_SELLER_COMPLETED,
+		id,
+		firstPageIndex,
+		lastPageIndex,
+	};
+};
+
+export const sellerCompletedLoadedAction = (completed) => {
+	return {
+		type: SELLER.SELLER_COMPLETED_LOADED,
+		completed,
+	};
+};
+
+export const confirmShipmentAction = (product_id) => {
+	return {
+		type: SELLER.CONFIRM_SHIPMENT,
+		product_id,
+	};
+};
+
+export const shipmentConfirmedAction = (product) => {
+	return {
+		type: SELLER.SHIPMENT_CONFIRMED,
+		product,
+	};
+};

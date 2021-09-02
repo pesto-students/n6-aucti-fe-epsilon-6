@@ -103,12 +103,46 @@ export const updateBid = (bid_id) => {
 	return axios.put(bidsURL + "/highestBid", { bid_id }).then((res) => res.data);
 };
 
+export const confirmShipment = (product_id) => {
+	return axios
+		.put(productURL + "/shipment", { product_id })
+		.then((res) => res.data);
+};
+
 export const loadBidsWithUsers = (productId, firstPageIndex, lastPageIndex) => {
 	return axios
 		.get(
 			bidsURL +
 				"/products/" +
 				productId +
+				"," +
+				firstPageIndex +
+				"," +
+				lastPageIndex
+		)
+		.then((res) => res.data);
+};
+
+export const getSellerHistory = (userId, firstPageIndex, lastPageIndex) => {
+	return axios
+		.get(
+			productURL +
+				"/history/" +
+				userId +
+				"," +
+				firstPageIndex +
+				"," +
+				lastPageIndex
+		)
+		.then((res) => res.data);
+};
+
+export const getSellerCompleted = (userId, firstPageIndex, lastPageIndex) => {
+	return axios
+		.get(
+			productURL +
+				"/completed/" +
+				userId +
 				"," +
 				firstPageIndex +
 				"," +

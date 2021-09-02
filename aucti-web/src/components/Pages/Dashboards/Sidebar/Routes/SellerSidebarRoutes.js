@@ -10,14 +10,14 @@ const routes = [
 		name: "Add Product",
 	},
 	{
-		path: "/seller/history",
+		path: "/seller/auctions",
 		icon: "HistoryIcon",
-		name: "History",
+		name: "Auctions",
 	},
 	{
 		path: "/seller/reports",
 		icon: "FormsIcon",
-		name: "Reports",
+		name: "Notifications",
 	},
 	{
 		path: "/seller/profile",
