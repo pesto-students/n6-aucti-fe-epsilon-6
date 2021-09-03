@@ -5,7 +5,6 @@ import FilterCheckBox from '../../Shared/filterCheckbox'
 import FilterList from '../../Shared/filterList'
 import FilterRadio from '../../Shared/filterRadio'
 import Tag from '../../Shared/tag'
-import App from '../../Algolia/app'
 
 import { InstantSearch, SearchBox,RangeInput,  ClearRefinements,RefinementList, Hits, Highlight, Stats, SortBy, Pagination } from 'react-instantsearch-dom';
 

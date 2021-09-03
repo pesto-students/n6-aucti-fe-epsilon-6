@@ -1,31 +1,29 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import axios from "axios";
+import {connect} from 'react-redux'
 import Button from "./button";
 import Rating from "./rating";
 import { Facebook, Instagram, Twitter, Whatsapp } from "./socialmedia";
-import { Star, Halfstar } from "./star";
-import { timestampconvert } from "./timestampconvert";
-import Bidform from './bidform'
 import Modal from "./Modal";
 
+import {addWishlistAction} from '../../redux/actions/wishlistActions'
+
 function ProductDetails(props) {
+
   var initialState = false
   const [showModal, setShowModal] = useState(initialState)
-  const  addbid =()=>{setShowModal(true)}
 
+  const userid = localStorage.getItem("user_id")
+  const  addbid =()=>{setShowModal(true)}
+  
   const addwishlist = (id) =>{
-    let user_id=localStorage.getItem('user_id')
-    const obj = { user_id:user_id, product_id:id }
-    axios.post('http://localhost:9000/.netlify/functions/api/wishlists' ,obj)
-    .then(()=>{alert('added to wishlist')})
-    .catch(()=>{console.log('not added to wishlist')})
-      
+    props.addToWishlist(localStorage.getItem('user_id'),props.id)
+    console.log( 'wishlist added',props.wishlistadded)
   }
 
   //-----bids
 
    const [bidprice, setbidprice] = useState(0)
-    const userid = localStorage.getItem("user_id")
     const handleSubmit = (e) =>{
 
         const obj = {
@@ -37,11 +35,14 @@ function ProductDetails(props) {
          axios.post('/bids',obj)
          .then(()=>{console.log('bid Submitted')})
          .catch(()=>{console.log('bid not submitted')})
+
     }
 
     const handlebid=(e)=>{
          setbidprice(e.target.value)
     }
+
+    console.log(props.wishlistadded)
 
   return (<>
     <div className="m-5 p-4 w-4/5 h-7/10   border  font-sofia">
@@ -62,7 +63,7 @@ function ProductDetails(props) {
 
         <div className="m-2 flex flex-col w-4/6  font-sofia">
           <div className="ml-1 mr-2 py-3 text-3xl font-bold">{props.title}</div>
-
+           <h1>{props.wishlistadded}</h1>
           <div className="ml-1 py-1 text-5xl font-bold">
             ₹{props.base_price}
           </div>
@@ -76,22 +77,6 @@ function ProductDetails(props) {
           <div className="ml-1  text-2xl font-semibold text-seller_light">
             Highest Bid
           </div>
-
-          {/* <div className="ml-1 py-2">
-            <span className=" text-2xl font-semibold text-seller_light">
-              Start Time:{" "}
-            </span>
-            <span className=" text-2xl font-semibold ">
-               { timestampconvert(props.start_time)}{" "}
-            </span>
-          </div>
-
-          <div className="ml-1 py-2">
-            <span className=" text-2xl font-semibold text-seller_light">
-              End Time:{" "}
-            </span>
-            <span className=" text-2xl font-semibold ">{timestampconvert(props.end_time)} </span>
-          </div> */}
 
           <div className="ml-1 py-2">
             <span className=" text-2xl font-semibold text-seller_light">
@@ -119,23 +104,24 @@ function ProductDetails(props) {
         </div>
       </div>
     </div>
+   
     <Modal showModal={showModal} setShowModal={setShowModal} >
       {/* <Bidform product_id={props.id} base_price={props.base_price} highest_bid={props.highest_bid}/> */}
       <div className="w-full h-auto ">
-            <form className="w-full justify-center" onSubmit={handleSubmit}>
-            <div className="p-3">
-              <label className="text-2xl mr-6" htmlFor="base_price">Base Price  </label>
-              <input className="text-2xl px-4 bg-gray-200" disabled id="base_price"  type="text" value={props.base_price}/>
+            <form className="w-full flex flex-col justify-center" onSubmit={handleSubmit}>
+            <div className="p-1 flex flex-cols justify-center border-b-2">
+              <span className="text-2xl p-1" >Base Price:</span>
+              <span className="text-2xl p-1">{props.base_price}</span>
             </div>
-            <div className="p-3">
-              <label className="text-2xl mr-6" htmlFor="highest_bid">Highest Bid  </label>
-              <input className="text-2xl px-4 bg-gray-200" disabled id="highest_bid" type="text" value={props.highest_bid}/>
+            <div className="p-1 flex flex-cols justify-center border-b-2">
+              <span className="text-2xl p-1">Highest Bid:</span>  
+              <span className="text-2xl p-1">{props.highest_bid}</span>
             </div>
-            <div className="p-3">
-              <label className="text-2xl mr-6" htmlFor="bid">Place Bid  </label>
-              <input className="text-2xl px-4 bg-gray-100"  id="bid" type="text" name="bid_price" value={bidprice} onChange={handlebid}/>
+            <div className="p-1 flex flex-cols justify-center">
+              <span className="text-2xl p-1">Place Bid:</span>
+              <input className="text-xl w-24 px-1 border"  id="bid" type="text" name="bid_price" value={bidprice} onChange={handlebid}/>
             </div>
-            <div className="p-3 flex flex-cols justify-center">
+            <div className="p-1 flex flex-cols justify-center">
                <input className="font-semibold border rounded-l p-2" type="submit"/>  
             </div>
             </form>            
@@ -145,4 +131,17 @@ function ProductDetails(props) {
   );
 }
 
-export default ProductDetails;
+const mapStateToProps = (state) =>{
+  return {
+    wishlistadded : state.wishlistReducer,
+    // bidplaced : state.bidReducer,
+  }
+}
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    addToWishlist :(user_id,product_id)=> dispatch(addWishlistAction(user_id,product_id)),
+    // placeBid : (user_id,product_id,bid_price)=>dispatch(placeBidAction(user_id,product_id,bid_price)),
+  }
+}
+
+export default connect(mapStateToProps ,mapDispatchToProps ) (ProductDetails);
