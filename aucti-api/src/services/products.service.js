@@ -348,6 +348,7 @@ exports.addProduct = (req) =>
 			description,
 			product_picture,
 			picture,
+			product_category,
 		} = req;
 		const data = {
 			title,
@@ -357,6 +358,7 @@ exports.addProduct = (req) =>
 			// product_document,
 			description,
 			picture,
+			product_category,
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 			auction_status: auction_status.DRAFT,
 			product_transaction_status: product_transaction_status.PENDING,
@@ -435,13 +437,6 @@ exports.updateProduct = (product) =>
 										})
 									);
 								}
-								console.log({
-									product: {
-										...product,
-										highest_bid: maxValue,
-									},
-									bids: data,
-								});
 
 								resolve({
 									product: {

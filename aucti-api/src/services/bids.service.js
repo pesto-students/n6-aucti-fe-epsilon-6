@@ -10,12 +10,16 @@ const {
 	bid_status,
 	auction_status,
 	product_transaction_status,
+	payment_status,
 } = require("../util/constants");
 const { fetchUser } = require("./users.service");
 const { index } = require("../util/algolia");
 const { stripe } = require("../util/stripe");
 const { mailTransporter } = require("../util/nodeMailer");
 const { email } = require("../util/email");
+const {
+	paymentConfirmationEmail,
+} = require("../util/paymentConfirmationEmail");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -533,13 +537,13 @@ exports.selectHighestBid = (bid_id) =>
 			});
 	});
 
-const sendPayementConfirmMail = (bi_id) =>
+const sendPayementConfirmMail = (props) =>
 	new Promise((resolve, reject) => {
 		let mailDetails = {
 			from: "auctiapp@gmail.com",
-			to: "kirushanbalakrishnan@gmail.com,anuragkumarjsk13@gmail.com,rahul.rahulgags@gmail.com",
-			subject: "Node.js testing",
-			html: email(bi_id),
+			to: props.seller,
+			subject: `Payement Confirmed to your product ${props.title}`,
+			html: paymentConfirmationEmail(props),
 		};
 		mailTransporter.sendMail(mailDetails, function (err, data) {
 			if (err) {
@@ -553,12 +557,13 @@ const sendPayementConfirmMail = (bi_id) =>
 
 exports.makePayment = async (req) =>
 	new Promise((resolve, reject) => {
-		const { token, bid_id } = req.body;
-
+		const { token, bid_id, address_id } = req.body;
+		console.log(bid_id);
 		db.doc(`/bids/${bid_id}`)
 			.get()
 			.then((querySnapshot) => {
 				let bid = querySnapshot.data();
+				console.log(bid);
 				stripe.paymentIntents
 					.create({
 						amount: parseInt(bid.bid_price) * 100,
@@ -578,9 +583,53 @@ exports.makePayment = async (req) =>
 									.doc(product.id)
 									.set({ ...product }, { merge: true })
 									.then(() => {
-										console.log(data);
-										let msg = "Payment Successful";
-										resolve(msg);
+										const upDatedBid = bid;
+										upDatedBid.payment_status = payment_status.PAID;
+										bids
+											.doc(bid.id)
+											.set({ ...bid }, { merge: true })
+											.then(() => {
+												db.doc(`/addresses/${address_id}`)
+													.get()
+													.then((querySnapshotAddress) => {
+														let address = querySnapshotAddress.data();
+														db.doc(`/users/${address.user_id}`)
+															.get()
+															.then((querySnapshotUser) => {
+																let user = querySnapshotUser.data();
+																db.doc(`/users/${product.seller_id}`)
+																	.get()
+																	.then((querySnapshotSeller) => {
+																		let seller = querySnapshotSeller.data();
+																		const props = {
+																			...user,
+																			...address,
+																			...product,
+																			seller: seller.email,
+																		};
+																		sendPayementConfirmMail(props);
+																		console.log(data);
+																		let msg = "Payment Successful";
+																		resolve(msg);
+																	});
+															})
+															.catch((err) => {
+																let msg = "Payment Failed";
+																console.log(err);
+																reject(msg);
+															});
+													})
+													.catch((err) => {
+														let msg = "Payment Failed";
+														console.log(err);
+														reject(msg);
+													});
+											})
+											.catch((err) => {
+												let msg = "Payment Failed";
+												console.log(err);
+												reject(msg);
+											});
 									})
 									.catch((err) => {
 										let msg = "Payment Failed";

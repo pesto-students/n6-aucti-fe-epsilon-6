@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
 	CardElement,
@@ -7,8 +7,12 @@ import {
 	useStripe,
 } from "@stripe/react-stripe-js";
 import "./styles.css";
-import { makePaymentAction } from "../../../../redux/actions/buyerActions";
+import {
+	loadUserAddressAction,
+	makePaymentAction,
+} from "../../../../redux/actions/buyerActions";
 import { connect } from "react-redux";
+import { TrashIcon } from "../../../../assets/icons";
 
 const CARD_OPTIONS = {
 	iconStyle: "solid",
@@ -105,6 +109,7 @@ const ResetButton = ({ onClick }) => (
 );
 
 const CheckoutForm = (props) => {
+	const { user, addresses } = props;
 	const stripe = useStripe();
 	const elements = useElements();
 	const [error, setError] = useState(null);
@@ -116,9 +121,25 @@ const CheckoutForm = (props) => {
 		phone: "",
 		name: "",
 	});
+	const [checked, setChecked] = useState([]);
+
+	useEffect(() => {
+		props.loadUserAddress(user.uid);
+	}, []);
+
+	const handleSelectBid = (id) => {
+		console.log(id);
+		if (checked.indexOf(id) !== -1) {
+			setChecked(checked.filter((checkBox) => checkBox !== id));
+		} else {
+			setChecked([...checked, id]);
+		}
+	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		const found = checked.find((n) => n);
+		console.log(found);
 
 		if (!stripe || !elements) {
 			// Stripe.js has not loaded yet. Make sure to disable
@@ -131,8 +152,11 @@ const CheckoutForm = (props) => {
 			return;
 		}
 
-		if (cardComplete) {
+		if (cardComplete && found) {
 			setProcessing(true);
+		} else {
+			alert("Please select a address");
+			return;
 		}
 
 		const payload = await stripe.createPaymentMethod({
@@ -146,10 +170,10 @@ const CheckoutForm = (props) => {
 		if (payload.error) {
 			setError(payload.error);
 		} else {
-			console.log(payload.paymentMethod);
 			setPaymentMethod(payload.paymentMethod);
+			const found = checked.find((n) => n);
 			const { id } = payload.paymentMethod;
-			props.makePayemnt(id, props.bid_id);
+			props.makePayemnt(id, props.bid_id, found);
 		}
 	};
 
@@ -179,63 +203,124 @@ const CheckoutForm = (props) => {
 		<div
 			style={{
 				display: "flex",
+				flexDirection: "row",
 				justifyContent: "center",
 				justifyItems: "center",
-				padding: 200,
 			}}
 		>
-			<form className="Form" onSubmit={handleSubmit}>
-				<fieldset className="FormGroup">
-					<Field
-						label="Name"
-						id="name"
-						type="text"
-						placeholder="Jane Doe"
-						required
-						autoComplete="name"
-						value={billingDetails.name}
-						onChange={(e) => {
-							setBillingDetails({ ...billingDetails, name: e.target.value });
-						}}
-					/>
-					<Field
-						label="Email"
-						id="email"
-						type="email"
-						placeholder="janedoe@gmail.com"
-						required
-						autoComplete="email"
-						value={billingDetails.email}
-						onChange={(e) => {
-							setBillingDetails({ ...billingDetails, email: e.target.value });
-						}}
-					/>
-					<Field
-						label="Phone"
-						id="phone"
-						type="tel"
-						placeholder="(941) 555-0123"
-						required
-						autoComplete="tel"
-						value={billingDetails.phone}
-						onChange={(e) => {
-							setBillingDetails({ ...billingDetails, phone: e.target.value });
-						}}
-					/>
-				</fieldset>
-				<fieldset className="FormGroup">
-					<CardField
-						onChange={(e) => {
-							setError(e.error);
-							setCardComplete(e.complete);
-						}}
-					/>
-				</fieldset>
-				{error && <ErrorMessage>{error.message}</ErrorMessage>}
-				<SubmitButton processing={processing} error={error} disabled={!stripe}>
-					Pay
-				</SubmitButton>
-			</form>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "center",
+					justifyItems: "center",
+					padding: 200,
+				}}
+			>
+				<form className="Form" onSubmit={handleSubmit}>
+					<fieldset className="FormGroup">
+						<Field
+							label="Name"
+							id="name"
+							type="text"
+							placeholder="Jane Doe"
+							required
+							autoComplete="name"
+							value={billingDetails.name}
+							onChange={(e) => {
+								setBillingDetails({ ...billingDetails, name: e.target.value });
+							}}
+						/>
+						<Field
+							label="Email"
+							id="email"
+							type="email"
+							placeholder="janedoe@gmail.com"
+							required
+							autoComplete="email"
+							value={billingDetails.email}
+							onChange={(e) => {
+								setBillingDetails({ ...billingDetails, email: e.target.value });
+							}}
+						/>
+						<Field
+							label="Phone"
+							id="phone"
+							type="tel"
+							placeholder="(941) 555-0123"
+							required
+							autoComplete="tel"
+							value={billingDetails.phone}
+							onChange={(e) => {
+								setBillingDetails({ ...billingDetails, phone: e.target.value });
+							}}
+						/>
+					</fieldset>
+					<fieldset className="FormGroup">
+						<CardField
+							onChange={(e) => {
+								setError(e.error);
+								setCardComplete(e.complete);
+							}}
+						/>
+					</fieldset>
+					{error && <ErrorMessage>{error.message}</ErrorMessage>}
+					<SubmitButton
+						processing={processing}
+						error={error}
+						disabled={!stripe}
+					>
+						Pay
+					</SubmitButton>
+				</form>
+			</div>
+			<div className="mx-10 xl:my-0 md:my-10 xs:my-10 xl:h-96 xs:h-32 pt-48 pl-10">
+				<div className="container flex flex-col mx-auto items-center justify-center">
+					<p className="p-3 text-md font-semibold text-gray-700 dark:text-gray-200 bg-gray-200">
+						Please select a address to ship
+					</p>
+
+					<ul className="flex flex-col pt-5">
+						{addresses !== null &&
+							addresses.map((n) => {
+								return (
+									<li key={n.id} className="border-gray-400 flex flex-row mb-2">
+										<div className="border-gray-400 border rounded select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 justify-between items-center p-4 ">
+											<div className="flex flex-col text-xs">
+												<p className="break-words">{n.address}</p>
+												<p>{n.city}</p>
+												<p>{n.state}</p>
+												<p>{n.country}</p>
+												<p>{n.zip}</p>
+											</div>
+
+											<div className="w-12 text-right flex justify-end hover:text-aucti">
+												<div className="flex items-center space-x-4">
+													<label className="flex items-center space-x-3 mb-3">
+														<input
+															type="checkbox"
+															name="checked-demo"
+															className="form-tick appearance-none bg-white bg-check h-6 w-6 border border-gray-300 rounded-md checked:bg-yellow-500 checked:border-transparent focus:outline-none"
+															checked={checked.includes(n.id)}
+															disabled={
+																!checked.includes(n.id) && checked.length > 0
+															}
+															onChange={() => handleSelectBid(n.id)}
+														/>
+													</label>
+												</div>
+											</div>
+										</div>
+									</li>
+								);
+							})}
+					</ul>
+					{addresses !== null && addresses.length === 0 && (
+						<div className="w=full flex justify-center items-center p-8">
+							No address available!
+						</div>
+					)}
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -244,13 +329,15 @@ const mapStateToProps = (state) => {
 	return {
 		user: state.user,
 		paymentMessage: state.paymentMessage,
+		addresses: state.addresses,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		// loadUserAddress: (id) => dispatch(loadUserAddressAction(id)),
-		makePayemnt: (token, bid_id) => dispatch(makePaymentAction(token, bid_id)),
+		loadUserAddress: (id) => dispatch(loadUserAddressAction(id)),
+		makePayemnt: (token, bid_id, address_id) =>
+			dispatch(makePaymentAction(token, bid_id, address_id)),
 	};
 };
 
