@@ -3,18 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@firebase/storage": "^0.8.0",
+    "@popperjs/core": "2.9.1",
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.17.1",
+    "@tailwindui/react": "^0.1.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "algoliasearch": "^4.10.5",
+    "@windmill/react-ui": "^0.6.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
-    "http-proxy-middleware": "^2.0.1",
+    "firebase": "^8.10.0",
     "postcss": "^8.3.1",
     "postcss-cli": "^8.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-instantsearch-dom": "^6.12.1",
+    "react-firebase-hooks": "^3.0.4",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -49,5 +54,11 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:9000/.netlify/functions/api/"
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "prettier": "^2.3.2"
+  }
 }

@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/Pages/Dashboards/Buyer/BuyerProfile.js"],"names":["BuyerProfile"],"mappings":"iGAAA,uBAMeA,UAJM,WACpB,OAAO","file":"static/js/6.21529f45.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nconst BuyerProfile = () => {\r\n\treturn <div>Profile works!</div>;\r\n};\r\n\r\nexport default BuyerProfile;\r\n"],"sourceRoot":""}

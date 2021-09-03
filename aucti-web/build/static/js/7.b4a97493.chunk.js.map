@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/Pages/Dashboards/Buyer/BuyerRating.js"],"names":["BuyerRating"],"mappings":"iGAAA,uBAMeA,UAJK,WACnB,OAAO","file":"static/js/7.b4a97493.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nconst BuyerRating = () => {\r\n\treturn <div>BuyerRating works!</div>;\r\n};\r\n\r\nexport default BuyerRating;\r\n"],"sourceRoot":""}

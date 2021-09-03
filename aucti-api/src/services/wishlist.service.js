@@ -1,5 +1,7 @@
 const { admin, db } = require("../util/admin");
+const { fetchProduct } = require("./products.service");
 const wishlist = db.collection("wishlist");
+const bids = db.collection("bids");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -31,22 +33,91 @@ exports.fetchUserWishlist = (user_id) =>
 		}
 		wishlist
 			.where("user_id", "==", user_id)
+			// .orderBy("createdAt", "desc")
+			// .startAt(startAt)
+			// .limit(10)
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
-				resolve(data);
+				Promise.all(
+					data.map((bid) =>
+						fetchProduct(bid.product_id)
+							.then((product) => {
+								return {
+									...bid,
+									product: {
+										title: product.title,
+										base_price: product.base_price,
+										auction_status: product.auction_status,
+									},
+								};
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							})
+					)
+				)
+					.then((list) => {
+						Promise.all(
+							list.map((bid) =>
+								bids
+									.where("product_id", "==", bid.product_id)
+									.get()
+									.then((querySnapshot) => {
+										const data = querySnapshotData(querySnapshot);
+										console.log(data);
+										let maxValue = 0;
+										if (data.length > 0) {
+											maxValue = Math.max.apply(
+												Math,
+												data.map(function (o) {
+													return parseInt(o.bid_price);
+												})
+											);
+										}
+
+										return {
+											...bid,
+											product: {
+												...bid.product,
+												highest_bid: maxValue,
+											},
+										};
+									})
+									.catch((err) => {
+										let msg = "Unable to retrieve User bids";
+										console.log(err);
+										reject(msg);
+									})
+							)
+						)
+							.then((finalList) => {
+								resolve(finalList);
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							});
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve User bids";
+						console.log(err);
+						reject(msg);
+					});
 			})
 			.catch((err) => {
-				let msg = "Unable to retrieve User wishlist";
+				let msg = "Unable to retrieve User bids";
+				console.log(err);
 				reject(msg);
 			});
 	});
 
 exports.addWishlist = async (req) =>
 	await new Promise((resolve, reject) => {
-		try{
 		const { user_id, product_id } = req.body;
-		console.log(user_id, product_id)
 		const data = {
 			user_id,
 			product_id,
@@ -56,17 +127,11 @@ exports.addWishlist = async (req) =>
 		wishlist
 			.add(data)
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
-			.catch((e) => {
+			.catch(() => {
 				let msg = "Unable to add the product to wishlist";
-				console.log(e)
 				reject(msg);
 			});
-		}
-		catch(e){
-			console.log(e)
-		}
 	});
-
 
 exports.deleteWishlist = (wishlistID) =>
 	new Promise((resolve, reject) => {

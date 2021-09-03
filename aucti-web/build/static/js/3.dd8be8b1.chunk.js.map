@@ -1,1 +1,0 @@
-{"version":3,"sources":["components/Pages/Dashboards/Buyer/BuyerHistory.js"],"names":["BuyerHistory"],"mappings":"iGAAA,uBAMeA,UAJM,WACpB,OAAO","file":"static/js/3.dd8be8b1.chunk.js","sourcesContent":["import React from \"react\";\r\n\r\nconst BuyerHistory = () => {\r\n\treturn <div>BuyerHistory works!</div>;\r\n};\r\n\r\nexport default BuyerHistory;\r\n"],"sourceRoot":""}
