@@ -233,9 +233,9 @@ function* deleteBuyerAddress({ id }) {
 	}
 }
 
-function* makePayment({ token, bid_id }) {
+function* makePayment({ token, bid_id, address_id }) {
 	try {
-		const message = yield call(service.makePayments, token, bid_id);
+		const message = yield call(service.makePayments, token, bid_id, address_id);
 		yield put(actions.payemntAddedAction(message));
 		yield put(
 			alerts.setAlertAction({
