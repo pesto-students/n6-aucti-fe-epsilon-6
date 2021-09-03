@@ -10,6 +10,7 @@ const {
 	bid_status,
 	auction_status,
 	product_transaction_status,
+	payment_status,
 } = require("../util/constants");
 const { fetchUser } = require("./users.service");
 const { index } = require("../util/algolia");
@@ -578,9 +579,21 @@ exports.makePayment = async (req) =>
 									.doc(product.id)
 									.set({ ...product }, { merge: true })
 									.then(() => {
-										console.log(data);
-										let msg = "Payment Successful";
-										resolve(msg);
+										const upDatedBid = bid;
+										upDatedBid.payment_status = payment_status.PAID;
+										bids
+											.doc(bid.id)
+											.set({ ...bid }, { merge: true })
+											.then(() => {
+												console.log(data);
+												let msg = "Payment Successful";
+												resolve(msg);
+											})
+											.catch((err) => {
+												let msg = "Payment Failed";
+												console.log(err);
+												reject(msg);
+											});
 									})
 									.catch((err) => {
 										let msg = "Payment Failed";

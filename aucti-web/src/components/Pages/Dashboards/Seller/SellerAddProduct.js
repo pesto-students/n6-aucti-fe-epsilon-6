@@ -9,22 +9,41 @@ const SellerAddProduct = (props) => {
 	const [loading, setLoading] = useState(false);
 	const [title, setTitle] = useState("");
 	const [product_picture, setProduct_picture] = useState("");
-	// const [product_document , setState] = useState("");
+	const [product_category, setProduct_category] = useState("");
 	const [description, setDescription] = useState("");
 	const [base_price, setBase_price] = useState("");
+	const [error, setError] = useState("");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		props.uploadProduct(
-			{ user_id: user.uid, title, description, base_price },
-			product_picture
-		);
-		setTitle("");
-		setProduct_picture("");
-		setDescription("");
-		setBase_price("");
-		setLoading(true);
+		let valid = true;
+		if (!title) {
+			setError("Title cannot be blank");
+			valid = false;
+		} else if (!description) {
+			setError("Description cannot be blank");
+			valid = false;
+		} else if (!base_price) {
+			setError("Base Price cannot be blank");
+			valid = false;
+		} else if (!product_category) {
+			setError("Product category cannot be blank");
+			valid = false;
+		} else if (!product_picture) {
+			setError("Product picture cannot be blank");
+			valid = false;
+		} else if (valid) {
+			props.uploadProduct(
+				{ user_id: user.uid, title, description, base_price, product_category },
+				product_picture
+			);
+			setTitle("");
+			setProduct_picture("");
+			setDescription("");
+			setBase_price("");
+			setError("");
+			setLoading(true);
+		}
 	};
 
 	useEffect(() => {
@@ -91,6 +110,26 @@ const SellerAddProduct = (props) => {
 												value={title}
 												onChange={(e) => setTitle(e.target.value)}
 											/>
+										</div>
+										<div className="col-span-10">
+											<label
+												htmlFor="email-address"
+												className="block text-sm font-medium text-gray-700"
+											>
+												Product Category
+											</label>
+											<select
+												className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+												onChange={(e) => setProduct_category(e.target.value)}
+											>
+												<option value={""}>-----Select-----</option>
+												<option value={"antiques_vintages"}>
+													Antiques and Vintage
+												</option>
+												<option value={"digital_art"}>Digital Art</option>
+												<option value={"autographed"}>Autographed</option>
+												<option value={"Other"}>Other</option>
+											</select>
 										</div>
 
 										<div className="col-span-12">
@@ -211,6 +250,14 @@ const SellerAddProduct = (props) => {
 									>
 										Add Product
 									</button>
+								</div>
+								<div className="text-right sm:px-6">
+									<span
+										id="titleErr"
+										style={{ color: "red", fontSize: "12px" }}
+									>
+										{error}
+									</span>
 								</div>
 							</div>
 						</form>

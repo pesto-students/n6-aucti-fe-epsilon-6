@@ -79,8 +79,8 @@ export const deleteBuyerAddress = (id) => {
 	return axios.delete(addressesURL + "/" + id).then((res) => res.data);
 };
 
-export const makePayments = (token, bid_id) => {
+export const makePayments = (token, bid_id, address_id) => {
 	return axios
-		.post(bidsURL + "/payment", { token, bid_id })
+		.post(bidsURL + "/payment", { token, bid_id, address_id })
 		.then((res) => res.data);
 };

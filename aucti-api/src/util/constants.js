@@ -46,3 +46,8 @@ module.exports.bid_status = {
 	PENDING: "pending",
 	SUCCESS: "success",
 };
+
+module.exports.payment_status = {
+	PENDING: "pending",
+	PAID: "PAID",
+};

@@ -201,11 +201,12 @@ export const userAddressDeletedAction = (id) => {
 	};
 };
 
-export const makePaymentAction = (token, bid_id) => {
+export const makePaymentAction = (token, bid_id, address_id) => {
 	return {
 		type: BUYER.ADD_PAYMENT,
 		token,
 		bid_id,
+		address_id,
 	};
 };
 

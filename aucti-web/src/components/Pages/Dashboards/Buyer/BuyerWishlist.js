@@ -92,7 +92,7 @@ const BuyerWishlist = (props) => {
 													<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
 														{(currentPage - 1) * PageSize + index + 1}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td className="px-6 py-4 text-sm text-gray-500 ">
 														{n.product?.title}
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">

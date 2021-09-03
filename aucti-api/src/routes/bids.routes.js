@@ -62,7 +62,6 @@ router.post("/", (req, res) => {
 });
 
 router.post("/payment", (req, res) => {
-	console.log(req);
 	makePayment(req)
 		.then((msg) => res.status(201).send(msg))
 		.catch((err) => res.status(500).json(err));
