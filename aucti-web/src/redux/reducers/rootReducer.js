@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
-import { productReducer } from "./productsReducer";
+import { productsReducer } from "./productsReducer";
+import { wishlistReducer } from "./wishlistReducer"
 import { userReducer } from "./userReducer";
 import { alertReducer } from "./alertReducer";
 import { bidReducer } from "./bidReducer";
@@ -19,23 +20,25 @@ import { sellerCompletedReducer } from "./sellerCompletedReducer";
 import { buyerCompletedReducer } from "./buyerCompletedReducer";
 
 const rootReducer = combineReducers({
-	products: productReducer,
-	user: userReducer,
-	alert: alertReducer,
-	bids: bidReducer,
-	buyerBids: buyerBidReducer,
-	insights: buyerInsightsReducer,
-	wishlist: buyerWishlistReducer,
-	buyerHistory: buyerHistoryReducer,
-	notifications: buyerNotificationReducer,
-	addresses: addressReducer,
-	sellerProducts: sellerProductReducer,
-	sellerInsights: sellerInsightsReducer,
-	addProductUpdate: sellerAddProductReducer,
-	bidsWithUsers: sellerBidsUserReducer,
-	paymentMessage: paymentReducer,
-	sellerHistory: sellerHistoryReducer,
-	sellerCompleted: sellerCompletedReducer,
-	buyerCompleted: buyerCompletedReducer,
+  products: productReducer,
+  user: userReducer,
+  alert: alertReducer,
+  bids: bidReducer,
+  buyerBids: buyerBidReducer,
+  insights: buyerInsightsReducer,
+  wishlist: buyerWishlistReducer,
+  buyerHistory: buyerHistoryReducer,
+  notifications: buyerNotificationReducer,
+  addresses: addressReducer,
+  sellerProducts: sellerProductReducer,
+  sellerInsights: sellerInsightsReducer,
+  addProductUpdate: sellerAddProductReducer,
+  bidsWithUsers: sellerBidsUserReducer,
+  paymentMessage: paymentReducer,
+  sellerHistory: sellerHistoryReducer,
+  sellerCompleted: sellerCompletedReducer,
+  buyerCompleted: buyerCompletedReducer,
+  productsReducer,
+  wishlistReducer,
 });
 export default rootReducer;

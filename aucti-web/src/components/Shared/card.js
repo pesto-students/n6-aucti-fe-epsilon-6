@@ -1,12 +1,17 @@
 import React from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import Button from './button'
 import Favourite from './favourite'
 import Rating from './rating'
 
 function Card(props) {
-    // "https://source.unsplash.com/random"
+    const cardClick = () =>{
+        let url = '/product/'+props.id;
+       return <Redirect to={url}/>
+        // <Link to={url}/>
+    }
     return (
-        <div className="font-sofia max-w-sm max-h-sm rounded-md border overflow-hidden hover:shadow-lg pd-2 pt-2 mx-2 mb-2">
+        <div className="font-sofia max-w-sm max-h-sm rounded-md border overflow-hidden hover:shadow-lg pd-2 pt-2 mx-2 mb-2" onClick={cardClick}>
             <img src={props.img_url} 
             alt="img"
             className="object-scale-down px-2 h-60 w-full"

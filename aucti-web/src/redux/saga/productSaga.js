@@ -2,19 +2,19 @@ import { all, call, put, takeEvery } from "redux-saga/effects";
 import * as types from "../types";
 import * as service from "../services/productService";
 import * as actions from "../actions/productActions";
-function* loadProducts() {
+function* loadProduct({product_id}) {
   try {
-    const products = yield call(service.getProducts);
-    yield put(actions.productsLoaded(products));
+    const product = yield call(service.getProduct,product_id);
+    yield put(actions.productLoadedAction(product));
   } catch (e) {
     console.log(e);
   }
 }
 
-function* watchGetProducts() {
-  yield takeEvery(types.PRODUCTS_LOADED, loadProducts);
+function* watchGetProduct() {
+  yield takeEvery(types.GET_PRODUCT,loadProduct);
 }
 
 export function* productSaga() {
-  yield all([watchGetProducts()]);
+  yield all([watchGetProduct()]);
 }

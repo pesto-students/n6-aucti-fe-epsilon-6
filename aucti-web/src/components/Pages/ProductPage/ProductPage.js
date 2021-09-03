@@ -1,26 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import FilterCheckBox from "../../Shared/filterCheckbox";
 import ProductDetail from "../../Shared/ProductDetails";
+import { getProductAction } from "../../../redux/actions/productActions";
+import Loader from "../../Shared/Loader";
 
-const ProductPage = () => {
-	return (
-		<>
-			<div className="col-start-1 row-start-2 col-span-1 row-span-4 ">
-				<h1></h1>
-			</div>
-			<div className="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
-				<ProductDetail
-					title="ParagonRomario's Flamengo Worn and Signed Shirt, 1995"
-					base_price={15750}
-					highest_bid={27000}
-					start_time={"19/08/2021 07:00 pm"}
-					end_time={"29/08/2021 10:15 am"}
-					bids_registered={7}
-					product_description="The shorts are such a great color and in really good condition. They were stiff upon arrival but softened up after the initial wash. Wish I had taken better measurements as they are much bigger in all areas except for the waist :( but that's on me. Shipping was speedy and item was packaged well."
-				/>
-			</div>
-		</>
-	);
+const ProductPage = (props) => {
+  let id = props.match.params.id;
+
+  const productdata = props.product;
+
+  useEffect(() => {
+    props.getProduct(id);
+  }, []);
+
+  if (productdata !== undefined) {
+    return (
+      <>
+        <div class="col-start-1 row-start-2 col-span-1 row-span-4 ">
+          <h1></h1>
+        </div>
+        <div class="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
+          <ProductDetail
+            title={productdata.title}
+            base_price={productdata.base_price}
+            highest_bid={27000}
+            // start_time={productdata.start_time._seconds}
+            // end_time={productdata.end_time._seconds}
+            bids_registered={7}
+            product_description={productdata.description}
+            product_picture={productdata.product_picture}
+            id={props.match.params.id}
+          />
+        </div>
+      </>
+    );
+  } //end of if
+  else return <Loader />;
 };
 
-export default ProductPage;
+const mapStateToProps = (state) => {
+  return {
+    product: state.productReducer,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProduct: (id) => dispatch(getProductAction(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
