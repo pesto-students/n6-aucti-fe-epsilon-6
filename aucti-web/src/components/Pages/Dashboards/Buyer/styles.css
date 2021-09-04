@@ -2,14 +2,14 @@
 	box-sizing: border-box;
 } */
 
-/* input,
-button {
+.payment {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	outline: none;
 	border-style: none;
-} */
+	background-color: #6772e5;
+}
 /* 
 html {
 	background-color: #6772e5;

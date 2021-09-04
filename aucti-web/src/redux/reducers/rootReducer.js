@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { productsReducer } from "./productsReducer";
+import { productReducer } from "./productReducer";
 import { wishlistReducer } from "./wishlistReducer";
 import { userReducer } from "./userReducer";
 import { alertReducer } from "./alertReducer";
@@ -18,9 +19,10 @@ import { paymentReducer } from "./paymentReducer";
 import { sellerHistoryReducer } from "./sellerHistoryReducer";
 import { sellerCompletedReducer } from "./sellerCompletedReducer";
 import { buyerCompletedReducer } from "./buyerCompletedReducer";
+import { bidProductReducer } from "./bidProductReducer";
 
 const rootReducer = combineReducers({
-	products: productsReducer,
+	// product: productReducer,
 	user: userReducer,
 	alert: alertReducer,
 	bids: bidReducer,
@@ -38,7 +40,9 @@ const rootReducer = combineReducers({
 	sellerHistory: sellerHistoryReducer,
 	sellerCompleted: sellerCompletedReducer,
 	buyerCompleted: buyerCompletedReducer,
+	productReducer,
 	productsReducer,
 	wishlistReducer,
+	bidproduct: bidProductReducer,
 });
 export default rootReducer;

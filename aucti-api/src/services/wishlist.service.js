@@ -33,9 +33,7 @@ exports.fetchUserWishlist = (user_id) =>
 		}
 		wishlist
 			.where("user_id", "==", user_id)
-			// .orderBy("createdAt", "desc")
-			// .startAt(startAt)
-			// .limit(10)
+			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);

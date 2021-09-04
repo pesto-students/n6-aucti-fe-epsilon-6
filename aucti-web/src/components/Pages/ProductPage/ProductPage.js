@@ -6,11 +6,10 @@ import { getProductAction } from "../../../redux/actions/productActions";
 import Loader from "../../Shared/Loader";
 
 const ProductPage = (props) => {
-	let id = props.match.params.id;
-
 	const productdata = props.product;
 
 	useEffect(() => {
+		let id = props.match.params.id;
 		props.getProduct(id);
 	}, []);
 

@@ -219,8 +219,6 @@ exports.fetchUserInsights = (user_id) =>
 					.get()
 					.then((querySnapshot) => {
 						const list = querySnapshotData(querySnapshot);
-
-						console.log(list);
 						let total = 0;
 						if (list.length > 0) {
 							list.forEach((n) => {
@@ -442,6 +440,13 @@ exports.updateBid = (bid) =>
 								return parseInt(o.bid_price);
 							})
 						);
+						console.log({
+							...bid,
+							product: {
+								...bid.product,
+								highest_bid: maxValue,
+							},
+						});
 						resolve({
 							...bid,
 							product: {
@@ -651,6 +656,34 @@ exports.makePayment = async (req) =>
 			})
 			.catch((err) => {
 				let msg = "Payment Failed";
+				console.log(err);
+				reject(msg);
+			});
+	});
+
+exports.getBidPaymentProduct = (bid_id) =>
+	new Promise((resolve, reject) => {
+		db.doc(`/bids/${bid_id}`)
+			.get()
+			.then((querySnapshot) => {
+				let bid = querySnapshot.data();
+				fetchProduct(bid.product_id)
+					.then((data) => {
+						const product = data;
+						const props = {
+							...bid,
+							...product,
+						};
+						resolve(props);
+					})
+					.catch((err) => {
+						let msg = "Bid payemnt product could't retirve";
+						console.log(err);
+						reject(msg);
+					});
+			})
+			.catch((err) => {
+				let msg = "Bid payemnt product could't retirve";
 				console.log(err);
 				reject(msg);
 			});

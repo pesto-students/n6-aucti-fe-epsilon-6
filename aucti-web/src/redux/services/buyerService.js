@@ -84,3 +84,7 @@ export const makePayments = (token, bid_id, address_id) => {
 		.post(bidsURL + "/payment", { token, bid_id, address_id })
 		.then((res) => res.data);
 };
+
+export const getBidProduct = (id) => {
+	return axios.get(bidsURL + "/bidPayemnt/" + id).then((res) => res.data);
+};

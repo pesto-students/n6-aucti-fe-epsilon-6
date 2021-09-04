@@ -13,6 +13,7 @@ const {
 	selectHighestBid,
 	makePayment,
 	fetchBuyerBidCompleted,
+	getBidPaymentProduct,
 } = require("../services/bids.service");
 
 router.get("/", (req, res) => {
@@ -64,6 +65,14 @@ router.post("/", (req, res) => {
 router.post("/payment", (req, res) => {
 	makePayment(req)
 		.then((msg) => res.status(201).send(msg))
+		.catch((err) => res.status(500).json(err));
+});
+
+router.get("/bidPayemnt/:bidId", (req, res) => {
+	const { bidId } = req.params;
+	console.log(bidId);
+	getBidPaymentProduct(bidId)
+		.then((data) => res.json(data))
 		.catch((err) => res.status(500).json(err));
 });
 

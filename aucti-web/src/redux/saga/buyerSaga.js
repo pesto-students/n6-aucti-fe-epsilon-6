@@ -187,6 +187,15 @@ function* loadBuyerAddress({ id }) {
 	}
 }
 
+function* loadBidProduct({ id }) {
+	try {
+		const product = yield call(service.getBidProduct, id);
+		yield put(actions.bidProductDetailsLoadedAction(product));
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* saveBuyerAddress({ address }) {
 	try {
 		const addressData = yield call(service.addBuyerAddress, address);
@@ -317,6 +326,10 @@ function* watchMakePayment() {
 	yield takeEvery(BUYER.ADD_PAYMENT, makePayment);
 }
 
+function* loadBidProductDetailsAction() {
+	yield takeEvery(BUYER.LOAD_BID_PRODUCT, loadBidProduct);
+}
+
 export function* buyerSaga() {
 	yield all([
 		watchLoadBids(),
@@ -334,5 +347,6 @@ export function* buyerSaga() {
 		watchDeleteBuyerAddress(),
 		watchMakePayment(),
 		watchLoadBuyerCompleted(),
+		loadBidProductDetailsAction(),
 	]);
 }

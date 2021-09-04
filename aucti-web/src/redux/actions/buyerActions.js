@@ -173,6 +173,20 @@ export const userAddressLoadedAction = (addresses) => {
 	};
 };
 
+export const loadBidProductDetailsAction = (id) => {
+	return {
+		type: BUYER.LOAD_BID_PRODUCT,
+		id,
+	};
+};
+
+export const bidProductDetailsLoadedAction = (product) => {
+	return {
+		type: BUYER.BID_PRODUCT_LOADED,
+		product,
+	};
+};
+
 export const saveUserAddressAction = (address) => {
 	return {
 		type: BUYER.SAVE_BUYER_ADDRESS,
