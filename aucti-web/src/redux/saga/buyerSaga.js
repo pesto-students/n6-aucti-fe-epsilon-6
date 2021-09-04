@@ -265,6 +265,55 @@ function* makePayment({ token, bid_id, address_id }) {
 	}
 }
 
+function* confirmReceive({ product_id }) {
+	try {
+		const product = yield call(service.confirmReceived, product_id);
+		yield put(actions.reciveConfirmedAction(product));
+		yield put(actions.reciveConfirmedActionCompleted(product));
+		yield put(
+			alerts.setAlertAction({
+				text: "Product received confirmed to the seller!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (error) {
+		console.log(error);
+		yield put(
+			alerts.setAlertAction({
+				text: "Product received not confirmed to the seller!",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
+function* confirmDispute({ product_id }) {
+	try {
+		const product = yield call(service.confirmDispute, product_id);
+		console.log(product);
+		yield put(actions.disputeConfirmedAction(product));
+		yield put(actions.disputeConfirmedActionCompleted(product));
+		yield put(
+			alerts.setAlertAction({
+				text: "Successfully raised a dispute!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (error) {
+		console.log(error);
+		yield put(
+			alerts.setAlertAction({
+				text: "Dispute not raised!",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
 //Watcher Sagas
 function* watchLoadBids() {
 	yield takeEvery(BUYER.LOAD_BIDS, loadBids);
@@ -330,6 +379,14 @@ function* loadBidProductDetailsAction() {
 	yield takeEvery(BUYER.LOAD_BID_PRODUCT, loadBidProduct);
 }
 
+function* watchConFirmReceived() {
+	yield takeEvery(BUYER.CONFIRM_RECEIVED, confirmReceive);
+}
+
+function* watchConFirmDispute() {
+	yield takeEvery(BUYER.CONFIRM_DISPUTE, confirmDispute);
+}
+
 export function* buyerSaga() {
 	yield all([
 		watchLoadBids(),
@@ -348,5 +405,7 @@ export function* buyerSaga() {
 		watchMakePayment(),
 		watchLoadBuyerCompleted(),
 		loadBidProductDetailsAction(),
+		watchConFirmReceived(),
+		watchConFirmDispute(),
 	]);
 }

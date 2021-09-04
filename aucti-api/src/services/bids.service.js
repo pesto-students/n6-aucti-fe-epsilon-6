@@ -55,8 +55,6 @@ exports.fetchUserBids = (req) =>
 		bids
 			.where("user_id", "==", user_id)
 			.orderBy("createdAt", "desc")
-			// .startAt(startAt)
-			// .limit(10)
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
@@ -90,7 +88,6 @@ exports.fetchUserBids = (req) =>
 							filter.map((bid) =>
 								bids
 									.where("product_id", "==", bid.product_id)
-									// .orderBy("createdAt", "desc")
 									.get()
 									.then((querySnapshot) => {
 										const data = querySnapshotData(querySnapshot);
@@ -116,7 +113,6 @@ exports.fetchUserBids = (req) =>
 							)
 						)
 							.then((finalList) => {
-								console.log(finalList);
 								const length = finalList.length;
 
 								const filteredlist = finalList.slice(
@@ -440,13 +436,7 @@ exports.updateBid = (bid) =>
 								return parseInt(o.bid_price);
 							})
 						);
-						console.log({
-							...bid,
-							product: {
-								...bid.product,
-								highest_bid: maxValue,
-							},
-						});
+
 						resolve({
 							...bid,
 							product: {

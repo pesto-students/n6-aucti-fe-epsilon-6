@@ -70,7 +70,7 @@ router.post("/payment", (req, res) => {
 
 router.get("/bidPayemnt/:bidId", (req, res) => {
 	const { bidId } = req.params;
-	console.log(bidId);
+
 	getBidPaymentProduct(bidId)
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).json(err));

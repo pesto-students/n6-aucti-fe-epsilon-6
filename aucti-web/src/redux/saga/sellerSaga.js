@@ -189,6 +189,29 @@ function* confirmShipment({ product_id }) {
 	}
 }
 
+function* cancelAuction({ product_id }) {
+	try {
+		const product = yield call(service.cancelAuction, product_id);
+		yield put(actions.auctionCancelledAction(product));
+		yield put(
+			alerts.setAlertAction({
+				text: "Product successfully cancelled!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (error) {
+		console.log(error);
+		yield put(
+			alerts.setAlertAction({
+				text: "Product not cancelled!",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
 //Watcher Sagas
 function* watchLoadSellerProducts() {
 	yield takeEvery(SELLER.LOAD_SELLER_PRODUCTS, loadSellerProducts);
@@ -226,6 +249,10 @@ function* watchConFirmShipmemnt() {
 	yield takeEvery(SELLER.CONFIRM_SHIPMENT, confirmShipment);
 }
 
+function* watchCancelAcution() {
+	yield takeEvery(SELLER.CANCEL_AUCTION, cancelAuction);
+}
+
 export function* sellerSaga() {
 	yield all([
 		watchLoadSellerProducts(),
@@ -237,5 +264,6 @@ export function* sellerSaga() {
 		watchLoadSellerHistory(),
 		watchConFirmShipmemnt(),
 		watchLoadSellerCompleted(),
+		watchCancelAcution(),
 	]);
 }

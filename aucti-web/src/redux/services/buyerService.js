@@ -1,5 +1,11 @@
 import axios from "axios";
-import { addressesURL, bidsURL, notificationURL, wishlistURL } from "../api";
+import {
+	addressesURL,
+	bidsURL,
+	notificationURL,
+	productURL,
+	wishlistURL,
+} from "../api";
 
 export const getBids = () => {
 	return axios.get(bidsURL).then((res) => res.data);
@@ -87,4 +93,16 @@ export const makePayments = (token, bid_id, address_id) => {
 
 export const getBidProduct = (id) => {
 	return axios.get(bidsURL + "/bidPayemnt/" + id).then((res) => res.data);
+};
+
+export const confirmReceived = (product_id) => {
+	return axios
+		.put(productURL + "/receieved", { product_id })
+		.then((res) => res.data);
+};
+
+export const confirmDispute = (product_id) => {
+	return axios
+		.put(productURL + "/dispute", { product_id })
+		.then((res) => res.data);
 };

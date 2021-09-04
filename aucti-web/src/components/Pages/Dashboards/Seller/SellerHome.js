@@ -8,6 +8,7 @@ import {
 	TrashIcon,
 } from "../../../../assets/icons";
 import {
+	cancelAuctionAction,
 	loadSellerAction,
 	loadSellerInsightAction,
 	updateBidAction,
@@ -32,11 +33,13 @@ const SellerHome = (props) => {
 	// 	useState(sellerProducts);
 
 	const [showModal, setShowModal] = useState(false);
+	const [showModalCancel, setShowModalCancel] = useState(false);
 	const [showModalBids, setShowModalBids] = useState(false);
 	const [showModalStatus, setShowModalStatus] = useState(false);
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedProductForOverride, setSelectedProductForOverride] =
 		useState("");
+	const [selectedProductForCancel, setSelectedProductForCancel] = useState("");
 	const [productForBids, setProductForBids] = useState("");
 	const [selectedProductForStatus, setSelectedProductForStatus] = useState("");
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
@@ -78,9 +81,19 @@ const SellerHome = (props) => {
 	}, [currentPage]);
 
 	const handleEdit = (product) => {
-		console.log(product);
 		setSelectedProductForOverride(product);
 		setShowModal(true);
+	};
+
+	const handleCancel = (product) => {
+		setSelectedProductForCancel(product);
+		setShowModalCancel(true);
+	};
+
+	const handleCancelConfirm = () => {
+		props.cancelAuction(selectedProductForCancel.id);
+		setSelectedProductForCancel("");
+		setShowModalCancel(false);
 	};
 
 	const handleChange = (e) => {
@@ -101,7 +114,6 @@ const SellerHome = (props) => {
 	};
 
 	const handleSelectBid = (id) => {
-		console.log(id);
 		if (checked.indexOf(id) !== -1) {
 			setChecked(checked.filter((checkBox) => checkBox !== id));
 		} else {
@@ -392,6 +404,7 @@ const SellerHome = (props) => {
 																			size="icon"
 																			aria-label="stop auction"
 																			className="hover:text-aucti"
+																			onClick={() => handleCancel(n.product)}
 																		>
 																			<svg
 																				xmlns="http://www.w3.org/2000/svg"
@@ -764,6 +777,56 @@ const SellerHome = (props) => {
 						</div>
 					</div>
 				</ConfirmModal>
+				<ConfirmModal
+					showModal={showModalCancel}
+					setShowModal={setShowModalCancel}
+				>
+					<div className="">
+						<div className="w-full h-full text-center">
+							<div className="flex h-full flex-col justify-between">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="h-6 w-6"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+									/>
+								</svg>
+								{/* <p className="text-gray-800 dark:text-gray-200 text-xl font-bold mt-4">
+									Remove Bid
+								</p> */}
+								<p className="text-gray-600 dark:text-gray-400 text-xs py-2 px-6">
+									Please confirm to cancel the auction?
+								</p>
+								<div className="flex items-center justify-between gap-4 w-full mt-8">
+									<button
+										type="button"
+										className="py-2 px-2  bg-white hover:bg-gray-100 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded"
+										onClick={() => {
+											setSelectedProductForCancel("");
+											setShowModalCancel(false);
+										}}
+									>
+										back
+									</button>
+									<button
+										type="button"
+										className="py-2 px-2  bg-red-500 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
+										onClick={handleCancelConfirm}
+									>
+										Confirm cancellation
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ConfirmModal>
 			</div>
 		</>
 	);
@@ -785,7 +848,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateProduct: (product, product_picture) =>
 			dispatch(updateProductAction(product, product_picture)),
 		selectBidder: (bid_id) => dispatch(updateBidAction(bid_id)),
-		// deleteBid: (id) => dispatch(deleteBidAction(id)),
+		cancelAuction: (id) => dispatch(cancelAuctionAction(id)),
 	};
 };
 
