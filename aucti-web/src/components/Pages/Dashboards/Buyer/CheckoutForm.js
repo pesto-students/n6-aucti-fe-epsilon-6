@@ -8,11 +8,16 @@ import {
 } from "@stripe/react-stripe-js";
 import "./styles.css";
 import {
+	loadBidProductDetailsAction,
 	loadUserAddressAction,
 	makePaymentAction,
 } from "../../../../redux/actions/buyerActions";
 import { connect } from "react-redux";
 import { TrashIcon } from "../../../../assets/icons";
+import Card from "../../../Shared/card";
+import CustomCard from "../../../Shared/CustomCard";
+import Loader from "../../../Shared/Loader";
+import history from "../../../../routes/history";
 
 const CARD_OPTIONS = {
 	iconStyle: "solid",
@@ -59,7 +64,7 @@ const Field = ({
 			{label}
 		</label>
 		<input
-			className="FormRowInput"
+			className="FormRowInput payment"
 			id={id}
 			type={type}
 			placeholder={placeholder}
@@ -73,7 +78,7 @@ const Field = ({
 
 const SubmitButton = ({ processing, error, children, disabled }) => (
 	<button
-		className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
+		className={`payment SubmitButton ${error ? "SubmitButton--error" : ""}`}
 		type="submit"
 		disabled={processing || disabled}
 	>
@@ -98,7 +103,7 @@ const ErrorMessage = ({ children }) => (
 );
 
 const ResetButton = ({ onClick }) => (
-	<button type="button" className="ResetButton" onClick={onClick}>
+	<button type="button" className="ResetButton payment" onClick={onClick}>
 		<svg width="32px" height="32px" viewBox="0 0 32 32">
 			<path
 				fill="#FFF"
@@ -109,7 +114,7 @@ const ResetButton = ({ onClick }) => (
 );
 
 const CheckoutForm = (props) => {
-	const { user, addresses } = props;
+	const { user, bidproduct, addresses } = props;
 	const stripe = useStripe();
 	const elements = useElements();
 	const [error, setError] = useState(null);
@@ -124,6 +129,7 @@ const CheckoutForm = (props) => {
 	const [checked, setChecked] = useState([]);
 
 	useEffect(() => {
+		// props.loadBidproductDetails(props.bid_id);
 		props.loadUserAddress(user.uid);
 	}, []);
 
@@ -200,86 +206,17 @@ const CheckoutForm = (props) => {
 			<ResetButton onClick={reset} />
 		</div>
 	) : (
-		<div
-			style={{
-				display: "flex",
-				flexDirection: "row",
-				justifyContent: "center",
-				justifyItems: "center",
-			}}
-		>
-			<div
-				style={{
-					display: "flex",
-					justifyContent: "center",
-					justifyItems: "center",
-					padding: 200,
-				}}
-			>
-				<form className="Form" onSubmit={handleSubmit}>
-					<fieldset className="FormGroup">
-						<Field
-							label="Name"
-							id="name"
-							type="text"
-							placeholder="Jane Doe"
-							required
-							autoComplete="name"
-							value={billingDetails.name}
-							onChange={(e) => {
-								setBillingDetails({ ...billingDetails, name: e.target.value });
-							}}
-						/>
-						<Field
-							label="Email"
-							id="email"
-							type="email"
-							placeholder="janedoe@gmail.com"
-							required
-							autoComplete="email"
-							value={billingDetails.email}
-							onChange={(e) => {
-								setBillingDetails({ ...billingDetails, email: e.target.value });
-							}}
-						/>
-						<Field
-							label="Phone"
-							id="phone"
-							type="tel"
-							placeholder="(941) 555-0123"
-							required
-							autoComplete="tel"
-							value={billingDetails.phone}
-							onChange={(e) => {
-								setBillingDetails({ ...billingDetails, phone: e.target.value });
-							}}
-						/>
-					</fieldset>
-					<fieldset className="FormGroup">
-						<CardField
-							onChange={(e) => {
-								setError(e.error);
-								setCardComplete(e.complete);
-							}}
-						/>
-					</fieldset>
-					{error && <ErrorMessage>{error.message}</ErrorMessage>}
-					<SubmitButton
-						processing={processing}
-						error={error}
-						disabled={!stripe}
-					>
-						Pay
-					</SubmitButton>
-				</form>
+		<div className="flex xl:flex-row md:flex-col xs:flex-col p-8">
+			<div className="xl:h-32 xs:h-32 pr-40 pb-16 pl-16 pt-8">
+				<CustomCard bidproduct={bidproduct}></CustomCard>
 			</div>
-			<div className="mx-10 xl:my-0 md:my-10 xs:my-10 xl:h-96 xs:h-32 pt-48 pl-10">
+			<div className="xl:h-96 xs:h-32  xl:pr-32 xl:pt-32 md:pt-96 xs:pt-96">
 				<div className="container flex flex-col mx-auto items-center justify-center">
-					<p className="p-3 text-md font-semibold text-gray-700 dark:text-gray-200 bg-gray-200">
+					<p className="p-3 text-md font-semibold text-gray-700 dark:text-gray-200 bg-gray-200 rounded-lg">
 						Please select a address to ship
 					</p>
 
-					<ul className="flex flex-col pt-5">
+					<ul className="flex flex-col pt-5 ">
 						{addresses !== null &&
 							addresses.map((n) => {
 								return (
@@ -321,6 +258,73 @@ const CheckoutForm = (props) => {
 					)}
 				</div>
 			</div>
+			<div className="xl:h-96 xs:h-32 pt-32 pr-32 xl:pt-32 md:pt-96 xs:pt-96">
+				<form className="Form" onSubmit={handleSubmit}>
+					<fieldset className="FormGroup">
+						<Field
+							label="Name"
+							id="name"
+							type="text"
+							placeholder="Jane Doe"
+							required
+							autoComplete="name"
+							value={billingDetails.name}
+							onChange={(e) => {
+								setBillingDetails({
+									...billingDetails,
+									name: e.target.value,
+								});
+							}}
+						/>
+						<Field
+							label="Email"
+							id="email"
+							type="email"
+							placeholder="janedoe@gmail.com"
+							required
+							autoComplete="email"
+							value={billingDetails.email}
+							onChange={(e) => {
+								setBillingDetails({
+									...billingDetails,
+									email: e.target.value,
+								});
+							}}
+						/>
+						<Field
+							label="Phone"
+							id="phone"
+							type="tel"
+							placeholder="(941) 555-0123"
+							required
+							autoComplete="tel"
+							value={billingDetails.phone}
+							onChange={(e) => {
+								setBillingDetails({
+									...billingDetails,
+									phone: e.target.value,
+								});
+							}}
+						/>
+					</fieldset>
+					<fieldset className="FormGroup">
+						<CardField
+							onChange={(e) => {
+								setError(e.error);
+								setCardComplete(e.complete);
+							}}
+						/>
+					</fieldset>
+					{error && <ErrorMessage>{error.message}</ErrorMessage>}
+					<SubmitButton
+						processing={processing}
+						error={error}
+						disabled={!stripe}
+					>
+						Pay
+					</SubmitButton>
+				</form>
+			</div>
 		</div>
 	);
 };
@@ -329,6 +333,7 @@ const mapStateToProps = (state) => {
 	return {
 		user: state.user,
 		paymentMessage: state.paymentMessage,
+
 		addresses: state.addresses,
 	};
 };
@@ -336,6 +341,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		loadUserAddress: (id) => dispatch(loadUserAddressAction(id)),
+
 		makePayemnt: (token, bid_id, address_id) =>
 			dispatch(makePaymentAction(token, bid_id, address_id)),
 	};
