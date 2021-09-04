@@ -1,2 +1,0 @@
-(this.webpackJsonpclient=this.webpackJsonpclient||[]).push([[8],{91:function(t,i,s){"use strict";s.r(i);s(0);var e=s(1);i.default=function(){return Object(e.jsx)("div",{children:"BuyerWishlist works!"})}}}]);
-//# sourceMappingURL=8.2074781d.chunk.js.map

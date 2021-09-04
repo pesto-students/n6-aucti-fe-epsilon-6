@@ -3,6 +3,7 @@ module.exports.product_transaction_status = {
 	PAID: "paid",
 	SENT: "sent",
 	SETTLED: "settled",
+	DISPUTE: "dispute",
 };
 
 module.exports.auction_status = {
@@ -39,4 +40,14 @@ module.exports.notification_status = {
 module.exports.offer_status = {
 	LIVE: "live",
 	STOP: "stop",
+};
+
+module.exports.bid_status = {
+	PENDING: "pending",
+	SUCCESS: "success",
+};
+
+module.exports.payment_status = {
+	PENDING: "pending",
+	PAID: "PAID",
 };

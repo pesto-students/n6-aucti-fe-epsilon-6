@@ -1,2 +1,0 @@
-(this.webpackJsonpclient=this.webpackJsonpclient||[]).push([[3],{88:function(t,e,i){"use strict";i.r(e);i(0);var n=i(1);e.default=function(){return Object(n.jsx)("div",{children:"BuyerHistory works!"})}}}]);
-//# sourceMappingURL=3.dd8be8b1.chunk.js.map
