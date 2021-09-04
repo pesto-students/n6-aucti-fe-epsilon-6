@@ -17,10 +17,10 @@ const ProductPage = (props) => {
   if (productdata !== undefined) {
     return (
       <>
-        <div class="col-start-1 row-start-2 col-span-1 row-span-4 ">
+        <div className="col-start-1 row-start-2 col-span-1 row-span-4 ">
           <h1></h1>
         </div>
-        <div class="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
+        <div className="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
           <ProductDetail
             title={productdata.title}
             base_price={productdata.base_price}

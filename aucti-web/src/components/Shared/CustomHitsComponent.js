@@ -11,9 +11,9 @@ const CustomHitsComponent = ({ searchState, searchResults }) => {
         )}
          {searchResults?.hits.length > 0 && validQuery && (
         <ol className="absolute w-1/2 top-20 border m-l-2 p-2 bg-white shadow">
-          {searchResults.hits.map((hit) => (
-                   <Link to={`/product/${hit.objectID}`}>
-                   <li className="font-sofia font-semibold p-1 border-b overflow-ellipsis" key={hit.objectID}>
+          {searchResults.hits.map((hit,index) => (
+                   <Link key={index} to={`/product/${hit.objectID}`}>
+                   <li  className="font-sofia font-semibold p-1 border-b overflow-ellipsis" key={hit.objectID}>
                        {hit.title}
                     </li>
                    </Link>

@@ -11,7 +11,7 @@ const Cardlist = (props) => {
         {state.map((item, index) => {
           let url = "/product/" + item.id;
           return (
-            <Link to={url}>
+            <Link key={item.id} to={url}>
               <Card
                 key={index}
                 product_title={item.title}

@@ -14,11 +14,11 @@ function LandingPage(props) {
 
   return (
     <>
-      <div class="col-start-1 row-start-1 col-span-1 row-span-1 ">
+      <div className="col-start-1 row-start-1 col-span-1 row-span-1 ">
         <FilterList />
       </div>
-      <div class="col-start-2 row-start-1 col-span-4 row-span-1 ">
-        <div id="main" class="grid grid-cols-3 gap-1 justify-evenly">
+      <div className="col-start-2 row-start-1 col-span-4 row-span-1 ">
+        <div id="main" className="grid grid-cols-3 gap-1 justify-evenly">
           <div className="flex flex-col  justify-start">
             <Quicklink image_url="https://images.pexels.com/photos/1302883/pexels-photo-1302883.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" />
             <Quicklink image_url="https://images.unsplash.com/photo-1616144848810-11eec385ddbd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" />

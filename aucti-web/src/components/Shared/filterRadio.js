@@ -10,19 +10,19 @@ const FilterRadio = () => {
             <ul className="font-sofia">
             <li> 
             <input type="radio" id="age1" name="age" value="30"/>
-            <label for="age1"> more than 50,000</label>
+            <label htmlFor="age1"> more than 50,000</label>
             </li>
             <li> 
             <input type="radio" id="age1" name="age" value="30"/>
-            <label for="age1"> 50k to 30K</label>
+            <label htmlFor="age1"> 50k to 30K</label>
             </li>
             <li> 
             <input type="radio" id="age1" name="age" value="30"/>
-            <label for="age1"> 30k to 10K </label>
+            <label htmlFor="age1"> 30k to 10K </label>
             </li>
             <li> 
             <input type="radio" id="age1" name="age" value="30"/>
-            <label for="age1"> below 10K</label>
+            <label htmlFor="age1"> below 10K</label>
             </li>
             </ul> 
             </div>

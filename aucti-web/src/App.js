@@ -10,10 +10,10 @@ import Layout from "./components/Layouts/layout";
 import ProductPage from "./components/Pages/ProductPage/ProductPage";
 import SearchPage from "./components/Pages/SearchPage/SearchPage";
 
-import algoliasearch from 'algoliasearch'
+import algoliasearch from 'algoliasearch';
 import {InstantSearch} from 'react-instantsearch-dom';
 const searchClient = algoliasearch("DZTA0M5OD8", "bfcc29ed9a87db03544730c93ed22ac2")
-import PageNotFound from "./components/Pages/PageNotFound";
+// import PageNotFound from "./components/Pages/PageNotFound";
 
 import Dashboard from "./components/Pages/Dashboards/Dashboard";
 import Login from "./components/Pages/Auth/Login/Login";
