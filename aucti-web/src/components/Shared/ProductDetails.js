@@ -1,5 +1,4 @@
-import React,{useState,useEffect} from "react";
-import axios from "axios";
+import React,{useState} from "react";
 import {connect} from 'react-redux'
 import Button from "./button";
 import Rating from "./rating";
@@ -7,39 +6,28 @@ import { Facebook, Instagram, Twitter, Whatsapp } from "./socialmedia";
 import Modal from "./Modal";
 
 import {addWishlistAction} from '../../redux/actions/wishlistActions'
+import {placeBidAction} from '../../redux/actions/bidAction'
 
 function ProductDetails(props) {
-
+  //modal
   var initialState = false
   const [showModal, setShowModal] = useState(initialState)
-
-  const userid = localStorage.getItem("user_id")
   const  addbid =()=>{setShowModal(true)}
-  
+  //constants and user input
+  const user_id = localStorage.getItem("user_id");
+  const product_id = props.id;
+  const [bid_price, setbidprice] = useState(0)
+  const handlebid=(e)=>{setbidprice(e.target.value)}
+  //dispatch add wishlist action
   const addwishlist = (id) =>{
     props.addToWishlist(localStorage.getItem('user_id'),props.id)
     console.log( 'wishlist added',props.wishlistadded)
   }
-
-  //-----bids
-
-   const [bidprice, setbidprice] = useState(0)
+  //dispatch add-bids functionality
     const handleSubmit = (e) =>{
-
-        const obj = {
-            user_id : userid,
-            product_id :props.product_id,
-            bid_price :bidprice
-        }
-
-         axios.post('/bids',obj)
-         .then(()=>{console.log('bid Submitted')})
-         .catch(()=>{console.log('bid not submitted')})
-
-    }
-
-    const handlebid=(e)=>{
-         setbidprice(e.target.value)
+        //e.preventDefault();
+        props.placeBid(user_id,product_id,bid_price)
+        console.log(props.bidplaced)
     }
 
     console.log(props.wishlistadded)
@@ -104,9 +92,8 @@ function ProductDetails(props) {
         </div>
       </div>
     </div>
-   
+
     <Modal showModal={showModal} setShowModal={setShowModal} >
-      {/* <Bidform product_id={props.id} base_price={props.base_price} highest_bid={props.highest_bid}/> */}
       <div className="w-full h-auto ">
             <form className="w-full flex flex-col justify-center" onSubmit={handleSubmit}>
             <div className="p-1 flex flex-cols justify-center border-b-2">
@@ -119,7 +106,7 @@ function ProductDetails(props) {
             </div>
             <div className="p-1 flex flex-cols justify-center">
               <span className="text-2xl p-1">Place Bid:</span>
-              <input className="text-xl w-24 px-1 border"  id="bid" type="text" name="bid_price" value={bidprice} onChange={handlebid}/>
+              <input className="text-xl w-24 px-1 border"  id="bid" type="text" name="bid_price" value={bid_price} onChange={handlebid}/>
             </div>
             <div className="p-1 flex flex-cols justify-center">
                <input className="font-semibold border rounded-l p-2" type="submit"/>  
@@ -134,13 +121,13 @@ function ProductDetails(props) {
 const mapStateToProps = (state) =>{
   return {
     wishlistadded : state.wishlistReducer,
-    // bidplaced : state.bidReducer,
+    bidplaced : state.bidReducer,
   }
 }
 const mapDispatchToProps = (dispatch) =>{
   return {
     addToWishlist :(user_id,product_id)=> dispatch(addWishlistAction(user_id,product_id)),
-    // placeBid : (user_id,product_id,bid_price)=>dispatch(placeBidAction(user_id,product_id,bid_price)),
+    placeBid : (user_id,product_id,bid_price)=>dispatch(placeBidAction(user_id,product_id,bid_price)),
   }
 }
 

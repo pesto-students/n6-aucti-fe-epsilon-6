@@ -3,6 +3,7 @@ const router = express.Router();
 const Multer = require("multer");
 const {
 	fetchAllProducts,
+	fetchProductPerUser,
 	fetchSellerProducts,
 	addProduct,
 	deleteProduct,
@@ -40,6 +41,13 @@ router.get("/:productId", (req, res) => {
 			})
 		);
 });
+
+router.get("/product/:productId,:userId", (req, res) => {
+    fetchProductPerUser(req.params)
+        .then((data) => res.json(data))
+        .catch((err) => res.status(500).send(err));
+});
+
 
 router.get("/seller/:seller", (req, res) => {
 	const { seller } = req.params;

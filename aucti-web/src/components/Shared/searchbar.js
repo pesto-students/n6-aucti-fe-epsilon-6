@@ -1,14 +1,16 @@
 import React from "react";
-import { SearchBox } from "react-instantsearch-dom";
+import {Link} from 'react-router-dom'
+import CustomSearchBox from "./CustomSearchBox";
+import CustomHitsComponent from "./CustomHitsComponent";
 function Searchbar(props) {
   return (
     <div className="flex-col justify-center pt-3">
-      <div className="flex font-sofia text-xlm-2 mx-2   inline-block ">
-        <SearchBox  />
-      </div>
+     <CustomSearchBox/>
+      {window.location.pathname === '/search'? <></> :<CustomHitsComponent/>}
     </div>
   );
 }
+
 
 export default Searchbar;
 

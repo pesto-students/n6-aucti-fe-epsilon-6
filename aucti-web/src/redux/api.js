@@ -4,4 +4,4 @@ export const productsURL = 'http://localhost:9000/.netlify/functions/api/product
 export const getUserWishlistURL = 'http://localhost:9000/.netlify/functions/api/wishlists/'
 export const addUserWishlistURL = 'http://localhost:9000/.netlify/functions/api/wishlists/'
 
-export const placeBidURL = "http://localhost:9000/.netlify/functions/api/bids"
+export const placeBidURL = "http://localhost:9000/.netlify/functions/api/bids/"

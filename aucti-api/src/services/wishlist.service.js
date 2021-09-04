@@ -44,9 +44,8 @@ exports.fetchUserWishlist = (user_id) =>
 
 exports.addWishlist = async (req) =>
 	await new Promise((resolve, reject) => {
-		try{
+
 		const { user_id, product_id } = req.body;
-		console.log(user_id, product_id)
 		const data = {
 			user_id,
 			product_id,
@@ -58,13 +57,9 @@ exports.addWishlist = async (req) =>
 			.then((docRef) => resolve({ ...data, id: docRef.id }))
 			.catch((e) => {
 				let msg = "Unable to add the product to wishlist";
-				console.log(e)
 				reject(msg);
 			});
-		}
-		catch(e){
-			console.log(e)
-		}
+		
 	});
 
 
