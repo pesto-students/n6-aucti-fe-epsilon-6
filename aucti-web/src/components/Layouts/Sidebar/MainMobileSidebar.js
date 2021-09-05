@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { Transition, Backdrop } from "@windmill/react-ui";
 import SidebarContent from "./MainSidebarContent";
+import { connect } from "react-redux";
+import { toggleSidebarAction } from "../../../redux/actions/userActions";
 
-function MainMobileSidebar() {
-	const [isSidebarOpen, closeSidebar] = useState(false);
+function MainMobileSidebar(props) {
+	const { user, sideBar } = props;
+	const closeSidebar = () => {
+		props.dispatch(toggleSidebarAction());
+	};
 
 	return (
 		<>
-			<Transition show={isSidebarOpen}>
+			<Transition show={sideBar}>
 				<>
 					<Transition
 						enter="transition ease-in-out duration-150"
@@ -17,7 +22,7 @@ function MainMobileSidebar() {
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<Backdrop onClick={() => closeSidebar(false)} />
+						<Backdrop onClick={closeSidebar} />
 					</Transition>
 
 					<Transition
@@ -37,5 +42,11 @@ function MainMobileSidebar() {
 		</>
 	);
 }
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+		sideBar: state.sideBar,
+	};
+};
 
-export default MainMobileSidebar;
+export default connect(mapStateToProps)(MainMobileSidebar);

@@ -1,8 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 
-const Footer = () => {
+const Footer = (props) => {
+	const { user } = props;
 	return (
-		<footer className="bg-gray-900 dark:bg-gray-800 w-full py-8  bottom-0">
+		<footer className={`bg-gray-900 dark:bg-gray-800 w-full py-8 bottom-0`}>
 			<div className="max-w-screen-xl mx-auto px-4">
 				<ul className="max-w-screen-md mx-auto text-lg font-light flex flex-wrap justify-between">
 					<li className="my-2">
@@ -123,4 +125,6 @@ const Footer = () => {
 	);
 };
 
-export default Footer;
+const mapStateToProps = ({ user }) => ({ user });
+
+export default connect(mapStateToProps)(Footer);

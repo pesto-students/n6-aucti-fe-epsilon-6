@@ -6,7 +6,9 @@ function Main({ children }) {
 	return (
 		<main className="h-screen w-full overflow-y-auto">
 			<Alert />
-			<div className="container grid px-6 mx-auto">{children}</div>
+			<div className="flex-grow container grid xl:px-6 lg:px-6 md:px-6 sm:px-6 mx-auto xs:px-0">
+				{children}
+			</div>
 			<Footer></Footer>
 		</main>
 	);
