@@ -1,55 +1,46 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import FilterCheckBox from '../../Shared/filterCheckbox'
-import FilterList from '../../Shared/filterList'
-import FilterRadio from '../../Shared/filterRadio'
-import Tag from '../../Shared/tag'
+import React from "react";
 
-import { Hits, Pagination} from 'react-instantsearch-dom';
+import "./Search.css";
+import {
+	Configure,
+	connectHits,
+	Hits,
+	Pagination,
+} from "react-instantsearch-dom";
+import ProductCard from "../../Shared/ProductCard";
+import AlgoliaSearch from "./AlgoliaSearch";
+import { connect } from "react-redux";
 
+const SearchPage = (props) => {
+	const { searchFilter } = props;
+	return (
+		<>
+			{searchFilter !== null && (
+				<Configure
+					filters={`product_category:${searchFilter}`}
+					// hitsPerPage={4}
+					analytics={false}
+					// enablePersonalization={true}
+					distinct
+				/>
+			)}
 
-const Hit = ({ hit }) => (
-     <Link to={`/product/${hit.objectID}`}>
-         <div className="w-full h-auto m-2 p-1 flex flex-start">
-             <div className=" border rounded-xl p-5 font-sofia ">
-                 <div className="flex flex-cols justify-around border-b-2">
-                        <div className="text-2xl p-1">
-                                <h2>{hit.title}</h2>
-                        </div>
-                        <div className="text-xl p-1">
-                                <h3>{hit.base_price}</h3>
-                        </div>
-                </div>
-                <div className="font-semibold p-1">
-                        <h3>{hit.description}</h3>
-                </div>
-    
-             </div>
-         </div>
-     </Link> 
-       
-);
-const SearchPage = () => {
-    return (<>
-           <div className=" col-start-1 row-start-1 col-span-1 row-span-4 " id="filtercontainer">                 
-                <FilterList/>
-                <FilterRadio/>
-            </div>  
-            <div className="col-start-2 row-start-1 col-span-4 row-span-1">
-             <div className="flex justify-start">
-             <Tag name={"trending"}/><Tag name={"fresh arrival"}/><Tag name={"old"}/><Tag name={"popular"}/><Tag name={"new"}/>
-             </div>
-             </div>
-             <div className="col-start-2 row-start-2 col-span-4 row-span-4">
-                 < div className="">
-                  <Hits hitComponent={Hit} />
-                  </div>
-                  <span className="flex justify-center"><Pagination showLast/></span>
-            </div>
-            
-        </>
-    )
-}
+			<div className="grid xl:px-6 xs:px-0  items-start xl:grid-cols-3 md:grid-cols-2 gap-1  xs:grid-cols-1">
+				<AlgoliaSearch />
+			</div>
+			<div className="flex justify-end p-4">
+				{" "}
+				<Pagination />
+			</div>
+		</>
+	);
+};
 
+const mapStateToProps = (state) => {
+	return {
+		product: state.productReducer,
+		searchFilter: state.searchFilter,
+	};
+};
 
-export default SearchPage
+export default connect(mapStateToProps)(SearchPage);

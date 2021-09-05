@@ -21,6 +21,7 @@ import { sellerCompletedReducer } from "./sellerCompletedReducer";
 import { buyerCompletedReducer } from "./buyerCompletedReducer";
 import { bidProductReducer } from "./bidProductReducer";
 import { sideBarReducer } from "./sideBarReducer";
+import { filterReducer } from "./filterReducer";
 
 const rootReducer = combineReducers({
 	// product: productReducer,
@@ -46,5 +47,6 @@ const rootReducer = combineReducers({
 	wishlistReducer,
 	bidproduct: bidProductReducer,
 	sideBar: sideBarReducer,
+	searchFilter: filterReducer,
 });
 export default rootReducer;

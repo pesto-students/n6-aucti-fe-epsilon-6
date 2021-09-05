@@ -39,7 +39,6 @@ function App() {
 					<Route exact path="/" render={() => <Redirect to="/home" />} />
 					<Route path="/login" component={Login} />
 					<Route path="/home" component={Home} />
-					<Route path="/nav" component={Nav} />
 					<BuyerRoute path="/buyer" component={Dashboard} />
 					<SellerRoute path="/seller" component={Dashboard} />
 					<BuyerRoute path="/payments/:bid_id" component={BuyerPayments} />

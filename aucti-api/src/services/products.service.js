@@ -442,17 +442,19 @@ exports.addProduct = (req) =>
 		products
 			.add(data)
 			.then((docRef) => {
-				index
-					.saveObject({
-						title,
-						base_price,
-						description,
-						product_picture,
-						objectID: docRef.id,
-					})
-					.then(({ objectID }) => {
-						resolve({ ...data, id: objectID });
-					});
+				resolve({ ...data, id: docRef.id });
+				// index
+				// .saveObject({
+				// 	title,
+				// 	base_price,
+				// 	description,
+				// 	product_category,
+				// 	product_picture,
+				// 	objectID: docRef.id,
+				// })
+				// .then(({ objectID }) => {
+
+				// });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -490,13 +492,13 @@ exports.updateProduct = (product) =>
 						title: product.title,
 						base_price: product.base_price,
 						description: product.description,
+						product_category: product.product_category,
 						product_picture: product.product_picture,
 						objectID: product.id,
 					})
 					.then(() => {
 						bids
 							.where("product_id", "==", product.id)
-							// .orderBy("createdAt", "desc")
 							.get()
 							.then((querySnapshot) => {
 								const data = querySnapshotData(querySnapshot);

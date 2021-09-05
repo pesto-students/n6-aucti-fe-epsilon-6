@@ -1,18 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import history from "../../routes/history";
-import LazyLoad from "react-lazyload";
-const ProductCard = (props) => {
+
+const ProductCardAlgolia = (props) => {
 	const { bidproduct } = props;
-	let url = "/home/product/" + bidproduct.id;
+	let url = "/home/product/" + bidproduct.objectID;
 
 	const handleProduct = () => {
 		history.push(url);
-	};
-	const refPlaceholder = React.useRef();
-
-	const removePlaceholder = () => {
-		refPlaceholder.current.remove();
 	};
 
 	return (
@@ -21,21 +16,19 @@ const ProductCard = (props) => {
 				<div className="card flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl">
 					<Link to={url}>
 						<div className="prod-img flex justify-center">
-							<LazyLoad>
-								<img
-									src={bidproduct?.product_picture}
-									className="object-cover object-center h-40 pb-4"
-									// onClick={handleProduct}
-								/>
-							</LazyLoad>
+							<img
+								src={bidproduct?.product_picture}
+								className="object-cover object-center h-40 pb-4"
+								// onClick={handleProduct}
+							/>
 						</div>
 						<div className="prod-title p-1">
 							<p className="text-sm uppercase text-gray-900 font-bold">
 								{bidproduct?.title}
 							</p>
 							{/* <p className="uppercase text-sm text-gray-400  p-1">
-							The best shoes in the marketplace
-						</p> */}
+								{bidproduct?.description}
+							</p> */}
 						</div>
 						<div className="prod-info grid gap-10 p-1">
 							<div className="flex flex-col md:flex-row justify-between items-center text-gray-900">
@@ -57,4 +50,4 @@ const ProductCard = (props) => {
 	);
 };
 
-export default ProductCard;
+export default ProductCardAlgolia;
