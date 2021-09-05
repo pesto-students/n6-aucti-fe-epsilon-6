@@ -18,6 +18,8 @@ const {
 	validateUpdateProductData,
 } = require("../util/validators");
 const { fetchUser } = require("./users.service");
+const { mailTransporter } = require("../util/nodeMailer");
+const { buyerReceivedEmail } = require("../util/buyerReceivedEmail");
 
 const querySnapshotData = (querySnapshot) => {
 	return querySnapshot?.docs?.map((doc) => ({
@@ -550,7 +552,6 @@ exports.updateProductShipment = (product_id) =>
 					.doc(product.id)
 					.set({ ...product }, { merge: true })
 					.then(() => {
-						console.log(product);
 						resolve(product);
 					});
 			})
@@ -588,6 +589,24 @@ exports.cancelAuction = (product_id) =>
 			});
 	});
 
+const sendMail = (user, product, bid) =>
+	new Promise((resolve, reject) => {
+		let mailDetails = {
+			from: "auctiapp@gmail.com",
+			to: user.email,
+			subject: "Aucti - Payment Transffered",
+			html: buyerReceivedEmail(product, bid),
+		};
+		mailTransporter.sendMail(mailDetails, function (err, data) {
+			if (err) {
+				console.log("Error Occurs");
+				reject(err);
+			} else {
+				resolve();
+			}
+		});
+	});
+
 exports.updateProductRecieved = (product_id) =>
 	new Promise((resolve, reject) => {
 		if (!product_id) {
@@ -604,8 +623,33 @@ exports.updateProductRecieved = (product_id) =>
 					.doc(product.id)
 					.set({ ...product }, { merge: true })
 					.then(() => {
-						console.log(product);
-						resolve(product);
+						db.doc(`/bids/${product.selected_bid}`)
+							.get()
+							.then((querySnapshot) => {
+								let bid = querySnapshot.data();
+								db.doc(`/users/${product.seller_id}`)
+									.get()
+									.then((querySnapshot) => {
+										let user = querySnapshot.data();
+										sendMail(user, product, bid);
+										resolve(product);
+									})
+									.catch((err) => {
+										console.log(err);
+										let msg = "Unable to retrieve  product";
+										reject(msg);
+									});
+							})
+							.catch((err) => {
+								console.log(err);
+								let msg = "Unable to retrieve  product";
+								reject(msg);
+							});
+					})
+					.catch((err) => {
+						console.log(err);
+						let msg = "Unable to retrieve  product";
+						reject(msg);
 					});
 			})
 			.catch((err) => {
