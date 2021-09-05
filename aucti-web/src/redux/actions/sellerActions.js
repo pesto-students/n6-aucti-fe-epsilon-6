@@ -74,6 +74,20 @@ export const bidUpdatedAction = (bid) => {
 	};
 };
 
+export const cancelAuctionAction = (product_id) => {
+	return {
+		type: SELLER.CANCEL_AUCTION,
+		product_id,
+	};
+};
+
+export const auctionCancelledAction = (product) => {
+	return {
+		type: SELLER.AUCTION_CANCELLED,
+		product,
+	};
+};
+
 export const loadBidsWithUsersAction = (
 	productId,
 	firstPageIndex,

@@ -25,3 +25,9 @@ export const userLoggedOutAction = () => {
 		type: AUTH.USER_LOGGEDOUT,
 	};
 };
+
+export const toggleSidebarAction = () => {
+	return {
+		type: AUTH.TOGGLE_SIDEBAR,
+	};
+};

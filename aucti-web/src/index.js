@@ -8,12 +8,10 @@ import store from "./redux/store";
 import history from "./routes/history";
 
 ReactDOM.render(
-	<React.StrictMode>
-		<Provider store={store}>
-			<Router history={history}>
-				<Route component={App} />
-			</Router>
-		</Provider>
-	</React.StrictMode>,
+	<Provider store={store}>
+		<Router history={history}>
+			<Route component={App} />
+		</Router>
+	</Provider>,
 	document.getElementById("root")
 );

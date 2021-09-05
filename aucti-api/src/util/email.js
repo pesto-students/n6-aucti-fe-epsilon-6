@@ -1,4 +1,4 @@
-const email = (bid_id) =>
+const email = (product, bid) =>
 	`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +76,7 @@ const email = (bid_id) =>
                                 <tr>
                                     <td align="left" bgcolor="#f0b90b"
                                         style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                                        <p style="margin: 0;">Please click the below button to complete the payment!</p>
+                                        <p style="margin: 0;">You have been selected as highest bidder for the product ${product.title}, Please pay the bidded amount ₹ ${bid.bid_price} by clicking the below button to complete the payment!</p>
                                     </td>
                                 </tr>
     
@@ -89,7 +89,7 @@ const email = (bid_id) =>
                                                         <tr>
                                                             <td align="center" bgcolor="#1a82e2"
                                                                 style="border-radius: 6px;">
-                                                                <a href="http://localhost:3000/payments/${bid_id}"
+                                                                <a href="http://localhost:3000/payments/${bid.id}"
                                                                     target="_blank"
                                                                     style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Pay
                                                                     Now</a>

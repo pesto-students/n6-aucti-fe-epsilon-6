@@ -55,8 +55,6 @@ exports.fetchUserBids = (req) =>
 		bids
 			.where("user_id", "==", user_id)
 			.orderBy("createdAt", "desc")
-			// .startAt(startAt)
-			// .limit(10)
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
@@ -90,7 +88,6 @@ exports.fetchUserBids = (req) =>
 							filter.map((bid) =>
 								bids
 									.where("product_id", "==", bid.product_id)
-									// .orderBy("createdAt", "desc")
 									.get()
 									.then((querySnapshot) => {
 										const data = querySnapshotData(querySnapshot);
@@ -116,7 +113,6 @@ exports.fetchUserBids = (req) =>
 							)
 						)
 							.then((finalList) => {
-								console.log(finalList);
 								const length = finalList.length;
 
 								const filteredlist = finalList.slice(
@@ -219,8 +215,6 @@ exports.fetchUserInsights = (user_id) =>
 					.get()
 					.then((querySnapshot) => {
 						const list = querySnapshotData(querySnapshot);
-
-						console.log(list);
 						let total = 0;
 						if (list.length > 0) {
 							list.forEach((n) => {
@@ -442,6 +436,7 @@ exports.updateBid = (bid) =>
 								return parseInt(o.bid_price);
 							})
 						);
+
 						resolve({
 							...bid,
 							product: {
@@ -462,13 +457,13 @@ exports.updateBid = (bid) =>
 			});
 	});
 
-const sendMail = (bi_id) =>
+const sendMail = (user, product, bid) =>
 	new Promise((resolve, reject) => {
 		let mailDetails = {
 			from: "auctiapp@gmail.com",
-			to: "kirushanbalakrishnan@gmail.com,anuragkumarjsk13@gmail.com,rahul.rahulgags@gmail.com",
-			subject: "Node.js testing",
-			html: email(bi_id),
+			to: user.email,
+			subject: "Aucti - Please make the payment",
+			html: email(product, bid),
 		};
 		mailTransporter.sendMail(mailDetails, function (err, data) {
 			if (err) {
@@ -510,13 +505,18 @@ exports.selectHighestBid = (bid_id) =>
 										index
 											.deleteObject(product.id)
 											.then(() => {
-												sendMail(bid.id)
-													.then(() => {
-														resolve(bid);
-													})
-													.catch(() => {
-														let msg = "Unable to update the bid";
-														reject(msg);
+												db.doc(`/users/${bid.user_id}`)
+													.get()
+													.then((querySnapshot) => {
+														let user = querySnapshot.data();
+														sendMail(user, product, bid)
+															.then(() => {
+																resolve(bid);
+															})
+															.catch(() => {
+																let msg = "Unable to update the bid";
+																reject(msg);
+															});
 													});
 											})
 											.catch(() => {
@@ -651,6 +651,34 @@ exports.makePayment = async (req) =>
 			})
 			.catch((err) => {
 				let msg = "Payment Failed";
+				console.log(err);
+				reject(msg);
+			});
+	});
+
+exports.getBidPaymentProduct = (bid_id) =>
+	new Promise((resolve, reject) => {
+		db.doc(`/bids/${bid_id}`)
+			.get()
+			.then((querySnapshot) => {
+				let bid = querySnapshot.data();
+				fetchProduct(bid.product_id)
+					.then((data) => {
+						const product = data;
+						const props = {
+							...bid,
+							...product,
+						};
+						resolve(props);
+					})
+					.catch((err) => {
+						let msg = "Bid payemnt product could't retirve";
+						console.log(err);
+						reject(msg);
+					});
+			})
+			.catch((err) => {
+				let msg = "Bid payemnt product could't retirve";
 				console.log(err);
 				reject(msg);
 			});

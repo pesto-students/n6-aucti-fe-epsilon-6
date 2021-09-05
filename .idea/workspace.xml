@@ -3,6 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="d42ce2a0-3c55-403b-a115-c58e5358bcd3" name="Default Changelist" comment="Alert message on one file and export to entire project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-api/src/routes/bids.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/routes/bids.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-api/src/routes/products.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/routes/products.routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-api/src/services/bids.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/services/bids.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-api/src/services/products.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/services/products.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/Dashboards/Buyer/BuyerHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/Dashboards/Buyer/BuyerHistory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/Dashboards/Buyer/BuyerHome.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/Dashboards/Buyer/BuyerHome.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/Dashboards/Seller/SellerHistory.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/Dashboards/Seller/SellerHistory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/actions/buyerActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/actions/buyerActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/reducers/buyerCompletedReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/reducers/buyerCompletedReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/reducers/buyerHistoryReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/reducers/buyerHistoryReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/saga/buyerSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/saga/buyerSaga.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/services/buyerService.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/services/buyerService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/types.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="kirushan_development_2" />
+        <entry key="$PROJECT_DIR$" value="kirushan_development" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -34,7 +47,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/Projects/planning-processor" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -70,6 +83,9 @@
       <workItem from="1630151027896" duration="507000" />
       <workItem from="1630505898073" duration="1414000" />
       <workItem from="1630552910711" duration="42000" />
+      <workItem from="1630693580993" duration="165000" />
+      <workItem from="1630737361795" duration="245000" />
+      <workItem from="1630746722633" duration="615000" />
     </task>
     <task id="LOCAL-00001" summary="Alert message on one file and export to entire project">
       <created>1629693819289</created>
@@ -101,10 +117,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="393" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630507032726" />
-    <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1630552923835">
+    <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1630746729301">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1630552923835" />
+    <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1630746729301" />
     <state x="349" y="148" key="IDE.errors.dialog" timestamp="1630507354261">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -113,17 +129,21 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="147" y="71" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1630506796943" />
-    <state x="474" y="129" width="857" height="565" key="MultipleFileMergeDialog" timestamp="1630506804015">
+    <state x="474" y="129" width="857" height="565" key="MultipleFileMergeDialog" timestamp="1630693720328">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="474" y="129" width="857" height="565" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1630506804015" />
+    <state x="474" y="129" width="857" height="565" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1630693720328" />
     <state x="361" y="135" key="Vcs.Push.Dialog.v2" timestamp="1630505956603">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="135" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1630505956603" />
-    <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630845613737">
+    <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1630693740103">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1630845613737" />
+    <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1630693740103" />
+    <state x="557" y="126" key="git4idea.branch.GitSmartOperationDialog" timestamp="1630693710943">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="557" y="126" key="git4idea.branch.GitSmartOperationDialog/0.0.1536.824@0.0.1536.824" timestamp="1630693710943" />
   </component>
 </project>
