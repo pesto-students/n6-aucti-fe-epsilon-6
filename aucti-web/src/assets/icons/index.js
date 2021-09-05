@@ -33,6 +33,9 @@ import { ReactComponent as HistoryIcon } from "./clock-history.svg";
 import { ReactComponent as StarIcon } from "./star.svg";
 import { ReactComponent as BellIconOutLined } from "./bell1.svg";
 import { ReactComponent as UserIcon } from "./user.svg";
+import { ReactComponent as VintageIcon } from "./vintagecamera.svg";
+import { ReactComponent as DigitalArtIcon } from "./digitalArt.svg";
+import { ReactComponent as AutographedIcon } from "./autographed.svg";
 
 export {
 	ButtonsIcon,
@@ -70,4 +73,7 @@ export {
 	StarIcon,
 	BellIconOutLined,
 	UserIcon,
+	VintageIcon,
+	DigitalArtIcon,
+	AutographedIcon,
 };

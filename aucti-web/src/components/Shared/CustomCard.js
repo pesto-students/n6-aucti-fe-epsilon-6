@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CustomCard = (props) => {
 	const { bidproduct } = props;
+
 	return (
 		<div className="w-80 flex justify-center items-center">
 			<div className="w-full p-4">
@@ -23,7 +25,7 @@ const CustomCard = (props) => {
 					<div className="prod-info grid gap-10 p-1">
 						<div className="flex flex-col md:flex-row justify-between items-center text-gray-900">
 							<p className="font-bold text-xl">
-								{"₹ " + bidproduct?.bid_price}
+								{"₹ " + bidproduct?.base_price}
 							</p>
 						</div>
 					</div>

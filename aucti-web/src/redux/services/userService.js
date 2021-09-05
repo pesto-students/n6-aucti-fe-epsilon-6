@@ -59,5 +59,8 @@ export const logout = () => {
 
 export const checkUser = () => {
 	const UserData = JSON.parse(localStorage.getItem("user"));
-	return { ...UserData?.user, role: UserData?.role };
+	if (UserData) {
+		return { ...UserData?.user, role: UserData?.role };
+	}
+	return null;
 };

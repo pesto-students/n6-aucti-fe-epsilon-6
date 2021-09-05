@@ -32,8 +32,11 @@ exports.fetchAllProducts = () =>
 			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshotData(querySnapshot);
-				resolve(data);
+				const dataRef = querySnapshotData(querySnapshot);
+				// const data = dataRef.filter(
+				// 	(n) => n.auction_status === auction_status.LIVE
+				// );
+				resolve(dataRef);
 			})
 			.catch((err) => {
 				let msg = "Unable to retrieve Products!";

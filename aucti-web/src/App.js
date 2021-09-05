@@ -29,34 +29,26 @@ import Nav from "./components/Pages/LandingPage/Nav";
 import BuyerRoute from "./routes/BuyerRoute";
 import SellerRoute from "./routes/SellerRoute";
 import BuyerPayments from "./components/Pages/Dashboards/Buyer/BuyerPayments";
+import Home from "./routes/Home";
 
 function App() {
-	localStorage.setItem("user_id", "xzhZQNkWW8fGsj44xE4DpY47dOJ2");
-
 	return (
-		<div>
+		<>
 			<InstantSearch searchClient={searchClient} indexName="aucti_products">
-				{/* <Layout> */}
 				<Switch>
 					<Route exact path="/" render={() => <Redirect to="/home" />} />
-					<Route exact path="/landing" component={LandingPage} />
-					<Route exact path="/product/:id" component={ProductPage} />
-					<Route exact path="/search" component={SearchPage} />
-
 					<Route path="/login" component={Login} />
-					{/* <Route path="/signup" component={Signup} /> */}
-					<Route path="/home" component={Nav} />
-
+					<Route path="/home" component={Home} />
+					<Route path="/nav" component={Nav} />
 					<BuyerRoute path="/buyer" component={Dashboard} />
 					<SellerRoute path="/seller" component={Dashboard} />
 					<BuyerRoute path="/payments/:bid_id" component={BuyerPayments} />
+
 					<Route path="/**" component={PageNotFound} />
 				</Switch>
-				{/* </Layout> */}
 			</InstantSearch>
-		</div>
+		</>
 	);
 }
-// const mapStateToProps = ({ user }) => ({ user });
 
 export default App;

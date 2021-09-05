@@ -1,43 +1,47 @@
-import React,{useRef,useState,useEffect} from 'react'
-import Person from './Person'
-import Notification from './Notification'
+import React, { useRef, useState, useEffect } from "react";
+import Person from "./Person";
+import Notification from "./Notification";
 const Usericon = () => {
-    const popupref = useRef()
-    const show_notification = false
-    const show_profile = false
-     
-    const [notification, setnotification] = useState(show_notification)
-    const [profile, setprofile] = useState(show_profile)
+	const popupref = useRef();
+	const show_notification = false;
+	const show_profile = false;
 
-    const handlenot=()=>{if(profile)
-                         setprofile(false)
-                         setnotification(!notification)}
-    const handlepro=()=>{if(notification)
-                         setnotification(false)
-                         setprofile(!profile)}
+	const [notification, setnotification] = useState(show_notification);
+	const [profile, setprofile] = useState(show_profile);
 
-                             
-    const handleClick = (event) => {
-        if (popupref && !popupref.current.contains(event.target)) {
-            setnotification(false)
-            setprofile(false)
-        }
-    }
+	const handlenot = () => {
+		if (profile) setprofile(false);
+		setnotification(!notification);
+	};
+	const handlepro = () => {
+		if (notification) setnotification(false);
+		setprofile(!profile);
+	};
 
-    useEffect(() => {
-        document.addEventListener("mousedown",handleClick)
-        return () => {
-            document.removeEventListener("mousedown",handleClick)
-        }
-    }, [])
+	const handleClick = (event) => {
+		if (popupref && !popupref.current.contains(event.target)) {
+			setnotification(false);
+			setprofile(false);
+		}
+	};
 
-    return (<>
-        <div className="flex justify-end p-4" ref={popupref}>
-            <div onClick={handlenot}><Notification show={notification}/></div>
-            <div onClick={handlepro}><Person show={profile}/></div>
-        </div>
-        </>
-    )
-}
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClick);
+		return () => {
+			document.removeEventListener("mousedown", handleClick);
+		};
+	}, []);
 
-export default Usericon
+	return (
+		<>
+			<div className="flex justify-end p-4" ref={popupref}>
+				{/* <div onClick={handlenot}><Notification show={notification}/></div> */}
+				<div onClick={handlepro}>
+					<Person show={profile} />
+				</div>
+			</div>
+		</>
+	);
+};
+
+export default Usericon;
