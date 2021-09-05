@@ -12,6 +12,10 @@ const {
 	fetchSellerHistory,
 	updateProductShipment,
 	fetchSellerCompleted,
+	updateProductRecieved,
+	updateProductDispute,
+	cancelAuction,
+	fetchProductPerUser,
 } = require("../services/products.service.js");
 
 // const multer = Multer({
@@ -33,6 +37,12 @@ router.get("/", (req, res) => {
 router.get("/:productId", (req, res) => {
 	const { productId } = req.params;
 	fetchProduct(productId)
+		.then((data) => res.json(data))
+		.catch((err) => res.status(500).send(err));
+});
+
+router.get("/product/:productId,:userId", (req, res) => {
+	fetchProductPerUser(req.params)
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
@@ -91,6 +101,27 @@ router.put("/", (req, res) => {
 router.put("/shipment", (req, res) => {
 	const { product_id } = req.body;
 	updateProductShipment(product_id)
+		.then((data) => res.status(200).json(data))
+		.catch((err) => res.status(500).json(err));
+});
+
+router.put("/cancellation", (req, res) => {
+	const { product_id } = req.body;
+	cancelAuction(product_id)
+		.then((data) => res.status(200).json(data))
+		.catch((err) => res.status(500).json(err));
+});
+
+router.put("/receieved", (req, res) => {
+	const { product_id } = req.body;
+	updateProductRecieved(product_id)
+		.then((data) => res.status(200).json(data))
+		.catch((err) => res.status(500).json(err));
+});
+
+router.put("/dispute", (req, res) => {
+	const { product_id } = req.body;
+	updateProductDispute(product_id)
 		.then((data) => res.status(200).json(data))
 		.catch((err) => res.status(500).json(err));
 });

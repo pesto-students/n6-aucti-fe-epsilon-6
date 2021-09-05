@@ -49,7 +49,7 @@ const SellerProfile = (props) => {
 	}, []);
 
 	return (
-		<div className="flex flex-col justify-center">
+		<div className="flex flex-col justify-center pb-44">
 			<header className="w-full shadow-lg bg-white dark:bg-gray-700 items-center h-16 my-4 border-gray-400 border rounded">
 				<div className="relative z-20 flex flex-col justify-center h-full px-3 mx-auto flex-center">
 					<div className="relative items-center pl-1 flex w-full lg:max-w-68 sm:pr-2 sm:ml-0">

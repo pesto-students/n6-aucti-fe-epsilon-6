@@ -2,6 +2,7 @@ const { admin, db } = require("../util/admin");
 const { index } = require("../util/algolia");
 const products = db.collection("products");
 const bids = db.collection("bids");
+const wishlist = db.collection("wishlist");
 
 const bucket = admin.storage().bucket("gs://aucti-web.appspot.com/");
 const uuid = require("uuid-v4");
@@ -31,8 +32,11 @@ exports.fetchAllProducts = () =>
 			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshotData(querySnapshot);
-				resolve(data);
+				const dataRef = querySnapshotData(querySnapshot);
+				// const data = dataRef.filter(
+				// 	(n) => n.auction_status === auction_status.LIVE
+				// );
+				resolve(dataRef);
 			})
 			.catch((err) => {
 				let msg = "Unable to retrieve Products!";
@@ -51,7 +55,6 @@ exports.fetchProduct = (productId) =>
 			.then((querySnapshot) => {
 				let product = querySnapshot.data();
 				product.id = querySnapshot.id;
-				// const data = querySnapshotData(querySnapshot);
 
 				resolve(product);
 			})
@@ -61,6 +64,71 @@ exports.fetchProduct = (productId) =>
 			});
 	});
 
+exports.fetchProductPerUser = (req) =>
+	new Promise((resolve, reject) => {
+		const { productId, userId } = req;
+		if (!productId) {
+			let msg = "productId is empty";
+			reject(msg);
+		} else if (!userId) {
+			let msg = "productId is empty";
+			reject(msg);
+		}
+		db.doc(`/products/${productId}`)
+			.get()
+			.then((querySnapshotProduct) => {
+				let product = querySnapshotProduct.data();
+				product.id = querySnapshotProduct.id;
+
+				bids
+					.where("product_id", "==", productId)
+					.get()
+					.then((querySnapshotBid) => {
+						const data = querySnapshotData(querySnapshotBid);
+						const filteredBid = data.filter((n) => n.user_id === userId);
+						let maxValue = Math.max.apply(
+							Math,
+							data.map(function (o) {
+								return parseInt(o.bid_price);
+							})
+						);
+						wishlist
+							.where("user_id", "==", userId)
+							.get()
+							.then((querySnapshotWish) => {
+								const data = querySnapshotData(querySnapshotWish);
+								const filteredWishList = data.filter(
+									(n) => n.product_id === productId
+								);
+								let bid = {};
+								if (filteredBid.length > 0) {
+									bid = filteredBid[0];
+								}
+
+								resolve({
+									bid: bid,
+									propduct: product,
+									highest_bid: maxValue,
+									wishlist: filteredWishList.length > 0 ? true : false,
+								});
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							});
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve User bids";
+						console.log(err);
+						reject(msg);
+					});
+			})
+			.catch((err) => {
+				let msg = "Unable to retrieve  product";
+				reject(msg);
+			});
+	});
 exports.fetchSellerProducts = (req) =>
 	new Promise((resolve, reject) => {
 		const { seller_id, firstPageIndex, lastPageIndex } = req;
@@ -75,7 +143,10 @@ exports.fetchSellerProducts = (req) =>
 			.then((querySnapshot) => {
 				const dataRef = querySnapshotData(querySnapshot);
 				const data = dataRef.filter(
-					(n) => n.auction_status !== auction_status.COMPLETED
+					(n) =>
+						n.auction_status === auction_status.DRAFT ||
+						n.auction_status === auction_status.LIVE ||
+						n.auction_status === auction_status.HOLD
 				);
 				Promise.all(
 					data.map((product) =>
@@ -475,6 +546,87 @@ exports.updateProductShipment = (product_id) =>
 				let product = querySnapshot.data();
 				product.id = querySnapshot.id;
 				product.product_transaction_status = product_transaction_status.SENT;
+				products
+					.doc(product.id)
+					.set({ ...product }, { merge: true })
+					.then(() => {
+						console.log(product);
+						resolve(product);
+					});
+			})
+			.catch((err) => {
+				console.log(err);
+				let msg = "Unable to retrieve  product";
+				reject(msg);
+			});
+	});
+
+exports.cancelAuction = (product_id) =>
+	new Promise((resolve, reject) => {
+		if (!product_id) {
+			let msg = "productId is empty";
+			reject(msg);
+		}
+		db.doc(`/products/${product_id}`)
+			.get()
+			.then((querySnapshot) => {
+				let product = querySnapshot.data();
+				product.id = querySnapshot.id;
+				product.auction_status = auction_status.CENCELLED;
+				products
+					.doc(product.id)
+					.set({ ...product }, { merge: true })
+					.then(() => {
+						console.log(product);
+						resolve(product);
+					});
+			})
+			.catch((err) => {
+				console.log(err);
+				let msg = "Unable to retrieve  product";
+				reject(msg);
+			});
+	});
+
+exports.updateProductRecieved = (product_id) =>
+	new Promise((resolve, reject) => {
+		if (!product_id) {
+			let msg = "productId is empty";
+			reject(msg);
+		}
+		db.doc(`/products/${product_id}`)
+			.get()
+			.then((querySnapshot) => {
+				let product = querySnapshot.data();
+				product.id = querySnapshot.id;
+				product.product_transaction_status = product_transaction_status.SETTLED;
+				products
+					.doc(product.id)
+					.set({ ...product }, { merge: true })
+					.then(() => {
+						console.log(product);
+						resolve(product);
+					});
+			})
+			.catch((err) => {
+				console.log(err);
+				let msg = "Unable to retrieve  product";
+				reject(msg);
+			});
+	});
+
+exports.updateProductDispute = (product_id) =>
+	new Promise((resolve, reject) => {
+		if (!product_id) {
+			let msg = "productId is empty";
+			reject(msg);
+		}
+		db.doc(`/products/${product_id}`)
+			.get()
+			.then((querySnapshot) => {
+				let product = querySnapshot.data();
+				product.id = querySnapshot.id;
+				product.product_transaction_status = product_transaction_status.DISPUTE;
 				products
 					.doc(product.id)
 					.set({ ...product }, { merge: true })

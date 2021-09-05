@@ -8,8 +8,15 @@ export const buyerBidReducer = (state = initialState, action) => {
 		case BUYER.BUYER_BIDS_LOADED:
 			return action.buyerBids;
 		case BUYER.BID_OVERRIDED:
-			const filter = state.filter((bid) => bid.id !== action.buyerBid.id);
-			return [action.buyerBid, ...filter];
+			const filtered = state.data.filter(
+				(dataRef) => dataRef.id !== action.buyerBid.id
+			);
+
+			return {
+				data: [action.buyerBid, ...filtered],
+				length: state.length,
+			};
+
 		case BUYER.BID_DELETED:
 			const { id } = action;
 			return state.data.filter((bid) => bid.id !== id);
