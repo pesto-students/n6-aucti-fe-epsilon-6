@@ -457,13 +457,13 @@ exports.updateBid = (bid) =>
 			});
 	});
 
-const sendMail = (bi_id) =>
+const sendMail = (user, product, bid) =>
 	new Promise((resolve, reject) => {
 		let mailDetails = {
 			from: "auctiapp@gmail.com",
-			to: "kirushanbalakrishnan@gmail.com,anuragkumarjsk13@gmail.com,rahul.rahulgags@gmail.com",
-			subject: "Node.js testing",
-			html: email(bi_id),
+			to: user.email,
+			subject: "Aucti - Please make the payment",
+			html: email(product, bid),
 		};
 		mailTransporter.sendMail(mailDetails, function (err, data) {
 			if (err) {
@@ -505,13 +505,18 @@ exports.selectHighestBid = (bid_id) =>
 										index
 											.deleteObject(product.id)
 											.then(() => {
-												sendMail(bid.id)
-													.then(() => {
-														resolve(bid);
-													})
-													.catch(() => {
-														let msg = "Unable to update the bid";
-														reject(msg);
+												db.doc(`/users/${bid.user_id}`)
+													.get()
+													.then((querySnapshot) => {
+														let user = querySnapshot.data();
+														sendMail(user, product, bid)
+															.then(() => {
+																resolve(bid);
+															})
+															.catch(() => {
+																let msg = "Unable to update the bid";
+																reject(msg);
+															});
 													});
 											})
 											.catch(() => {

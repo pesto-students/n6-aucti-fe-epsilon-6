@@ -1,4 +1,4 @@
-const email = (product, bid) =>
+const buyerReceivedEmail = (product, bid) =>
 	`<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +49,7 @@ const email = (product, bid) =>
                                         style="padding: 36px 24px 0; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; border-top: 3px solid #d4dadf;">
                                         <h1
                                             style="margin: 0; font-size: 32px; font-weight: 700; letter-spacing: -1px; line-height: 48px;">
-                                            You have selected as Highest Bidder!</h1>
+                                            Payment Transffered!</h1>
                                     </td>
                                 </tr>
                             </table>
@@ -76,31 +76,11 @@ const email = (product, bid) =>
                                 <tr>
                                     <td align="left" bgcolor="#f0b90b"
                                         style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-                                        <p style="margin: 0;">You have been selected as highest bidder for the product ${product.title}, Please pay the bidded amount ₹ ${bid.bid_price} by clicking the below button to complete the payment!</p>
+                                        <p style="margin: 0;">Buyer has confirmed that your product ${product.title} has been delivered successfully and mets buyer's satisfaction, please find the amount ${bid.bid_price} transffered to your account</p>
                                     </td>
                                 </tr>
     
-                                <tr>
-                                    <td align="left" bgcolor="#f0b90b">
-                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                            <tr>
-                                                <td align="center" bgcolor="#f0b90b" style="padding: 12px;">
-                                                    <table border="0" cellpadding="0" cellspacing="0">
-                                                        <tr>
-                                                            <td align="center" bgcolor="#1a82e2"
-                                                                style="border-radius: 6px;">
-                                                                <a href="http://localhost:3000/payments/${bid.id}"
-                                                                    target="_blank"
-                                                                    style="display: inline-block; padding: 16px 36px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; color: #ffffff; text-decoration: none; border-radius: 6px;">Pay
-                                                                    Now</a>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
+                                
     
                                 <tr>
                                     <td align="left" bgcolor="#f0b90b"
@@ -152,4 +132,4 @@ const email = (product, bid) =>
 </body>
 </html>`;
 
-module.exports = { email };
+module.exports = { buyerReceivedEmail };
