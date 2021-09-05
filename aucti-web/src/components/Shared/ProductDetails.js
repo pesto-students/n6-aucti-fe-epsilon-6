@@ -78,7 +78,8 @@ function ProductDetails(props) {
           <div className="ml-1 py-2">
             <div className="flex">
               <Button onClick={addbid} text={"Place Bid Now"} />
-              <Button onClick={(e)=>{e.preventDefault();addwishlist(props.id)}} text={"Add to Wishlist"} />
+              { (!props.wishlistadded) ? <Button onClick={(e)=>{e.preventDefault();addwishlist(props.id)}} text={"Add to Wishlist"} />
+              :<span className="bg-gray-400 mx-2 rounded-lg  px-2 text-xl">already added to wishlist</span> }
             </div>
           </div>
           <div className=" py-2">
