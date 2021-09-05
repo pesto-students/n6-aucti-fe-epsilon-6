@@ -40,9 +40,27 @@ function* login({ role }) {
 }
 
 function* logout() {
-	yield call(service.logout);
-	yield put(actions.userLoggedOutAction());
-	history.push("/");
+	try {
+		yield call(service.logout);
+		yield put(actions.userLoggedOutAction());
+		yield put(
+			alert.setAlertAction({
+				text: "User Logged Out!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+		history.push("/");
+	} catch (e) {
+		console.log(e);
+		yield put(
+			alert.setAlertAction({
+				text: "Somethin went wrong",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
 }
 
 function* watchLoginUser() {

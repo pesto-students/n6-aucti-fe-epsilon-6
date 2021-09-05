@@ -8,6 +8,7 @@ import {
 	TrashIcon,
 } from "../../../../assets/icons";
 import {
+	cancelAuctionAction,
 	loadSellerAction,
 	loadSellerInsightAction,
 	updateBidAction,
@@ -32,11 +33,13 @@ const SellerHome = (props) => {
 	// 	useState(sellerProducts);
 
 	const [showModal, setShowModal] = useState(false);
+	const [showModalCancel, setShowModalCancel] = useState(false);
 	const [showModalBids, setShowModalBids] = useState(false);
 	const [showModalStatus, setShowModalStatus] = useState(false);
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedProductForOverride, setSelectedProductForOverride] =
 		useState("");
+	const [selectedProductForCancel, setSelectedProductForCancel] = useState("");
 	const [productForBids, setProductForBids] = useState("");
 	const [selectedProductForStatus, setSelectedProductForStatus] = useState("");
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
@@ -78,9 +81,19 @@ const SellerHome = (props) => {
 	}, [currentPage]);
 
 	const handleEdit = (product) => {
-		console.log(product);
 		setSelectedProductForOverride(product);
 		setShowModal(true);
+	};
+
+	const handleCancel = (product) => {
+		setSelectedProductForCancel(product);
+		setShowModalCancel(true);
+	};
+
+	const handleCancelConfirm = () => {
+		props.cancelAuction(selectedProductForCancel.id);
+		setSelectedProductForCancel("");
+		setShowModalCancel(false);
 	};
 
 	const handleChange = (e) => {
@@ -101,7 +114,6 @@ const SellerHome = (props) => {
 	};
 
 	const handleSelectBid = (id) => {
-		console.log(id);
 		if (checked.indexOf(id) !== -1) {
 			setChecked(checked.filter((checkBox) => checkBox !== id));
 		} else {
@@ -185,14 +197,14 @@ const SellerHome = (props) => {
 	return (
 		<>
 			<div className="pb-16">
-				<h1 className="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 px-5 pb-4">
+				<h1 className="my-6 xl:text-2xl xs:text-lg font-semibold text-gray-700 dark:text-gray-200 xl:px-5 xs:px-0 xl:pb-4">
 					{"Welcome, " + user?.displayName}
 				</h1>
 
-				<div className="md:px-4 mx-auto w-full pb-12">
+				<div className="xl:px-4 md:px-4 xs:p-0 xl:mx-auto xs:m-0 w-full xl:pb-12">
 					<div>
-						<div className="flex flex-wrap ">
-							<div className="w-full lg:w-6/12 xl:w-3/12 sm:w-6/12 xs:w-6/12 mr-8">
+						<div className="flex flex-wrap xl:flex-row xs:flex-col">
+							<div className="w-full xl:w-1/4  xs:w-5/12 mr-8">
 								<div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
 									<div className="flex-auto p-4">
 										<div className="flex flex-wrap">
@@ -219,7 +231,7 @@ const SellerHome = (props) => {
 									</div>
 								</div>
 							</div>
-							<div className="w-full lg:w-6/12 xl:w-3/12 sm:w-6/12 xs:w-6/12 mr-4">
+							<div className="w-full xl:w-1/4  xs:w-5/12 xl:mr-4">
 								<div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
 									<div className="flex-auto p-4">
 										<div className="flex flex-wrap">
@@ -249,8 +261,8 @@ const SellerHome = (props) => {
 					</div>
 				</div>
 
-				<div className="flex-1 flex-col px-4 pb-4">
-					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+				<div className="flex-1 flex-col xl:px-4 xl:w-full pb-4 xs:px-0 xs:w-5/12">
+					<div className="overflow-x-auto  sm:-mx-6 lg:-mx-8">
 						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg xs:rounded-lg">
 								<table className="min-w-full divide-y divide-gray-200">
@@ -392,6 +404,7 @@ const SellerHome = (props) => {
 																			size="icon"
 																			aria-label="stop auction"
 																			className="hover:text-aucti"
+																			onClick={() => handleCancel(n.product)}
 																		>
 																			<svg
 																				xmlns="http://www.w3.org/2000/svg"
@@ -764,6 +777,56 @@ const SellerHome = (props) => {
 						</div>
 					</div>
 				</ConfirmModal>
+				<ConfirmModal
+					showModal={showModalCancel}
+					setShowModal={setShowModalCancel}
+				>
+					<div className="">
+						<div className="w-full h-full text-center">
+							<div className="flex h-full flex-col justify-between">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									className="h-6 w-6"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke="currentColor"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										strokeWidth="2"
+										d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+									/>
+								</svg>
+								{/* <p className="text-gray-800 dark:text-gray-200 text-xl font-bold mt-4">
+									Remove Bid
+								</p> */}
+								<p className="text-gray-600 dark:text-gray-400 text-xs py-2 px-6">
+									Please confirm to cancel the auction?
+								</p>
+								<div className="flex items-center justify-between gap-4 w-full mt-8">
+									<button
+										type="button"
+										className="py-2 px-2  bg-white hover:bg-gray-100 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded"
+										onClick={() => {
+											setSelectedProductForCancel("");
+											setShowModalCancel(false);
+										}}
+									>
+										back
+									</button>
+									<button
+										type="button"
+										className="py-2 px-2  bg-red-500 hover:bg-red-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
+										onClick={handleCancelConfirm}
+									>
+										Confirm cancellation
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</ConfirmModal>
 			</div>
 		</>
 	);
@@ -785,7 +848,7 @@ const mapDispatchToProps = (dispatch) => {
 		updateProduct: (product, product_picture) =>
 			dispatch(updateProductAction(product, product_picture)),
 		selectBidder: (bid_id) => dispatch(updateBidAction(bid_id)),
-		// deleteBid: (id) => dispatch(deleteBidAction(id)),
+		cancelAuction: (id) => dispatch(cancelAuctionAction(id)),
 	};
 };
 

@@ -204,7 +204,7 @@ const BuyerHome = (props) => {
 										</tr>
 									</thead>
 									<tbody className="bg-white divide-y divide-gray-200">
-										{buyerBidsFiltered != null &&
+										{buyerBidsFiltered !== null &&
 											buyerBidsFiltered.map((n, index) => {
 												return (
 													<tr key={n.id}>

@@ -173,6 +173,20 @@ export const userAddressLoadedAction = (addresses) => {
 	};
 };
 
+export const loadBidProductDetailsAction = (id) => {
+	return {
+		type: BUYER.LOAD_BID_PRODUCT,
+		id,
+	};
+};
+
+export const bidProductDetailsLoadedAction = (product) => {
+	return {
+		type: BUYER.BID_PRODUCT_LOADED,
+		product,
+	};
+};
+
 export const saveUserAddressAction = (address) => {
 	return {
 		type: BUYER.SAVE_BUYER_ADDRESS,
@@ -214,5 +228,47 @@ export const payemntAddedAction = (message) => {
 	return {
 		type: BUYER.PAYMENT_ADDED,
 		message,
+	};
+};
+
+export const confirmRecievedAction = (product_id) => {
+	return {
+		type: BUYER.CONFIRM_RECEIVED,
+		product_id,
+	};
+};
+
+export const reciveConfirmedAction = (product) => {
+	return {
+		type: BUYER.RECIEVED_CONFIRMED,
+		product,
+	};
+};
+
+export const reciveConfirmedActionCompleted = (product) => {
+	return {
+		type: BUYER.RECIEVED_CONFIRMED_COMPLETED,
+		product,
+	};
+};
+
+export const confirmDisputeAction = (product_id) => {
+	return {
+		type: BUYER.CONFIRM_DISPUTE,
+		product_id,
+	};
+};
+
+export const disputeConfirmedAction = (product) => {
+	return {
+		type: BUYER.DISPUTE_CONFIRMED,
+		product,
+	};
+};
+
+export const disputeConfirmedActionCompleted = (product) => {
+	return {
+		type: BUYER.DISPUTE_CONFIRMED_COMPLETED,
+		product,
 	};
 };

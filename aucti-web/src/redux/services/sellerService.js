@@ -109,6 +109,12 @@ export const confirmShipment = (product_id) => {
 		.then((res) => res.data);
 };
 
+export const cancelAuction = (product_id) => {
+	return axios
+		.put(productURL + "/cancellation", { product_id })
+		.then((res) => res.data);
+};
+
 export const loadBidsWithUsers = (productId, firstPageIndex, lastPageIndex) => {
 	return axios
 		.get(
