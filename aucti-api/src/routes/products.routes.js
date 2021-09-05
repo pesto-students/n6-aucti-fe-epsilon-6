@@ -16,7 +16,6 @@ const {
 	updateProductRecieved,
 	updateProductDispute,
 	cancelAuction,
-	fetchProductPerUser,
 } = require("../services/products.service.js");
 
 // const multer = Multer({
@@ -55,19 +54,17 @@ router.get("/seller/:seller_id,:firstPageIndex,:lastPageIndex", (req, res) => {
 });
 
 router.get("/product/:productId,:userId", (req, res) => {
-    fetchProductPerUser(req.params)
-        .then((data) => res.json(data))
-        .catch((err) => res.status(500).send(err));
+	fetchProductPerUser(req.params)
+		.then((data) => res.json(data))
+		.catch((err) => res.status(500).send(err));
 });
-
 
 router.get("/seller/:seller", (req, res) => {
 	const { seller } = req.params;
 	fetchSellerProducts(seller)
-	.then((data) => res.json(data))
-	.catch((err) => res.status(500).send(err));
+		.then((data) => res.json(data))
+		.catch((err) => res.status(500).send(err));
 });
-
 
 router.get("/insights/:seller_id", (req, res) => {
 	const { seller_id } = req.params;
