@@ -3,6 +3,7 @@ const router = express.Router();
 // const Multer = require("multer");
 const {
 	fetchAllProducts,
+	fetchProductPerUser,
 	fetchSellerProducts,
 	addProduct,
 	deleteProduct,
@@ -52,6 +53,21 @@ router.get("/seller/:seller_id,:firstPageIndex,:lastPageIndex", (req, res) => {
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
+
+router.get("/product/:productId,:userId", (req, res) => {
+    fetchProductPerUser(req.params)
+        .then((data) => res.json(data))
+        .catch((err) => res.status(500).send(err));
+});
+
+
+router.get("/seller/:seller", (req, res) => {
+	const { seller } = req.params;
+	fetchSellerProducts(seller)
+	.then((data) => res.json(data))
+	.catch((err) => res.status(500).send(err));
+});
+
 
 router.get("/insights/:seller_id", (req, res) => {
 	const { seller_id } = req.params;

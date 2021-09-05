@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import Button from './button'
 import Favourite from './favourite'
 import Rating from './rating'
@@ -8,7 +8,6 @@ function Card(props) {
     const cardClick = () =>{
         let url = '/product/'+props.id;
        return <Redirect to={url}/>
-        // <Link to={url}/>
     }
     return (
         <div className="font-sofia max-w-sm max-h-sm rounded-md border overflow-hidden hover:shadow-lg pd-2 pt-2 mx-2 mb-2" onClick={cardClick}>
@@ -31,10 +30,11 @@ function Card(props) {
                 </li> 
             </ul>
 
-            <div className="px-4 py-2 grid grid-cols-2">
+            <div className = "flex flex-col justify-center"><Button text={"Show Details"}/></div>
+            {/* <div className="px-4 py-2 grid grid-cols-2">
                 <div onClick={props.fun} className="grid-col-start-1"><Button text={"Bid Now"}/> </div>
                 <div onClick={props.fun} className="grid-col-start-2 mb-1  flex justify-end"><Favourite/></div>
-            </div>
+            </div> */}
         </div>
     )
 }

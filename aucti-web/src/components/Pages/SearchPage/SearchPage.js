@@ -1,12 +1,11 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import Cardlist from '../../Shared/cardlist'
 import FilterCheckBox from '../../Shared/filterCheckbox'
 import FilterList from '../../Shared/filterList'
 import FilterRadio from '../../Shared/filterRadio'
 import Tag from '../../Shared/tag'
 
-import { InstantSearch, SearchBox,RangeInput,  ClearRefinements,RefinementList, Hits, Highlight, Stats, SortBy, Pagination } from 'react-instantsearch-dom';
+import { Hits, Pagination} from 'react-instantsearch-dom';
 
 
 const Hit = ({ hit }) => (
@@ -32,12 +31,7 @@ const Hit = ({ hit }) => (
 );
 const SearchPage = () => {
     return (<>
-           <div className=" col-start-1 row-start-1 col-span-1 row-span-4 " id="filtercontainer">
-               <ClearRefinements/>
-               <RefinementList attribute="base_price"/>
-               <RangeInput attribute="base_price" />
-                    
-                <FilterCheckBox />
+           <div className=" col-start-1 row-start-1 col-span-1 row-span-4 " id="filtercontainer">                 
                 <FilterList/>
                 <FilterRadio/>
             </div>  
@@ -45,15 +39,14 @@ const SearchPage = () => {
              <div className="flex justify-start">
              <Tag name={"trending"}/><Tag name={"fresh arrival"}/><Tag name={"old"}/><Tag name={"popular"}/><Tag name={"new"}/>
              </div>
-             <div className="flex justify-start p-2">
-                 {/* < div className="grid grid-cols-3 gap-2 justify evenly"> */}
-                  {/* <Cardlist/> */}
-
-                  {/* <App/> */}
-                  <Hits hitComponent={Hit} />
-                  {/* </div> */}
-            </div>
              </div>
+             <div className="col-start-2 row-start-2 col-span-4 row-span-4">
+                 < div className="">
+                  <Hits hitComponent={Hit} />
+                  </div>
+                  <span className="flex justify-center"><Pagination showLast/></span>
+            </div>
+            
         </>
     )
 }
