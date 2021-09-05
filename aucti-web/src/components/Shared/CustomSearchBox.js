@@ -1,19 +1,23 @@
-import React from 'react'
-import {connectSearchBox } from 'react-instantsearch-dom'
-import { useHistory,Link, Redirect } from 'react-router-dom'
-const CustomSearchBox = ({refine}) => {
-  const history =  useHistory()
-    return (
-        <>
-             <div className="flex font-sofia text-xlm-2 mx-2   inline-block ">
-      <input
+import React from "react";
+import { connectSearchBox } from "react-instantsearch-dom";
+import { useHistory, Link, Redirect } from "react-router-dom";
+const CustomSearchBox = ({ refine }) => {
+  const history = useHistory();
+  return (
+    <>
+      <div className="flex font-sofia text-xlm-2 mx-2   inline-block ">
+        <input
           className="font-sofia px-4 w-2/3"
           type="text"
           placeholder="enter seach value"
-          onKeyUp={(e)=>{ if(e.key === 'Enter'){history.push("/search")} }}
-          onChange={(e)=>refine(e.currentTarget.value)}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              history.push("/search");
+            }
+          }}
+          onChange={(e) => refine(e.currentTarget.value)}
         />
-        <div className="p-2" onClick={()=> history.push("/search")  }>
+        <div className="p-2" onClick={() => history.push("/search")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="26"
@@ -26,8 +30,8 @@ const CustomSearchBox = ({refine}) => {
           </svg>
         </div>
       </div>
-        </>
-    )
-}
+    </>
+  );
+};
 
-export default  connectSearchBox( CustomSearchBox)
+export default connectSearchBox(CustomSearchBox);
