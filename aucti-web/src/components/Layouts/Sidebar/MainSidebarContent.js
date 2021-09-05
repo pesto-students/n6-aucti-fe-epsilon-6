@@ -3,6 +3,8 @@ import MainSidebarRoutes from "./Routes/MainSidebarRoutes";
 import { Link, NavLink, Route } from "react-router-dom";
 import * as Icons from "../../../assets/icons";
 import { connect } from "react-redux";
+import { filterSearchResultAction } from "../../../redux/actions/userActions";
+import history from "../../../routes/history";
 
 function Icon({ icon, ...props }) {
 	const Icon = Icons[icon];
@@ -11,6 +13,11 @@ function Icon({ icon, ...props }) {
 
 function MainSidebarContent(props) {
 	const { user } = props;
+
+	const handleFilter = (filter, path) => {
+		props.dispatch(filterSearchResultAction(filter));
+		history.push(path);
+	};
 
 	return (
 		<div className="py-4  text-gray-900 dark:text-gray-400">
@@ -25,11 +32,12 @@ function MainSidebarContent(props) {
 						</div>
 					) : (
 						<li className="relative px-6 py-3" key={route.name}>
-							<Link
+							<button
 								key={route.path}
-								to={route.path}
+								// to={route.path}
 								className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
 								// activeClassName="text-gray-800 dark:text-gray-100"
+								onClick={() => handleFilter(route.tag, route.path)}
 							>
 								<Icon
 									className="w-5 h-5 z-10"
@@ -43,7 +51,7 @@ function MainSidebarContent(props) {
 										aria-hidden="true"
 									></span>
 								</Route> */}
-							</Link>
+							</button>
 						</li>
 					)
 				)}
@@ -58,8 +66,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainSidebarContent);
+export default connect(mapStateToProps)(MainSidebarContent);
