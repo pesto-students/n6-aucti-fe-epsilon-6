@@ -2,8 +2,8 @@ import React from "react";
 
 export const Banner = () => {
 	return (
-		<div className="flex flex-wrap items-center justify-center xl:py-0 xs:py-10">
-			<div className=" mx-2 mb-6 sm:mb-0 relative overflow-hidden bg-yellow-500 rounded-lg max-w-xs shadow-lg m-4 p-10">
+		<div className="flex flex-wrap items-center justify-center xl:p-0 xs:py-10">
+			<div className="mb-6 sm:mb-0 relative overflow-hidden bg-yellow-500 rounded-lg max-w-xs shadow-lg m-4 p-10">
 				<svg
 					className="absolute bottom-0 left-0 mb-8"
 					viewBox="0 0 375 283"
@@ -27,25 +27,11 @@ export const Banner = () => {
 						fill="#f3c06b"
 					></rect>
 				</svg>
-				{/* <div className="relative pt-10 px-10 flex items-center justify-center">
-					<div className="block absolute w-48 h-48 bottom-0 left-0 -mb-24 ml-3"></div>
-					<picture>
-						<source srcSet="/images/object/5.webp" type="image/webp" />
-						<source srcSet="/images/object/5.png" />
-						<img
-							className="relative w-40"
-							src="/images/object/5.png"
-							alt="shopping item"
-						/>
-					</picture>
-				</div> */}
-				<div className="relative text-white px-6 pb-6 mt-6">
+
+				<div className="relative text-white px-3 pb-3">
 					{/* <span className="block opacity-75 -mb-1">Indoor</span> */}
 					<div className="flex justify-between">
 						<span className="block font-semibold text-xl">Hot Auctions</span>
-						{/* <span className="bg-white rounded-full text-yellow-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
-							$36.00
-						</span> */}
 					</div>
 				</div>
 			</div>
@@ -81,7 +67,7 @@ export const Banner = () => {
 						alt="shopping"
 					/>
 				</div> */}
-				<div className="relative text-white px-6 pb-6 mt-6">
+				<div className="relative text-white px-3 pb-3">
 					<div className="flex justify-between">
 						<span className="block font-semibold text-xl">Trending</span>
 						{/* <span className="bg-white rounded-full text-blue-500 text-xs font-bold px-3 py-2 leading-none flex items-center">
@@ -125,7 +111,7 @@ export const Banner = () => {
 						alt="shopping"
 					/>
 				</div> */}
-				<div className="relative text-white px-6 pb-6 mt-6">
+				<div className="relative text-white px-3 pb-3">
 					<span className="block opacity-75 -mb-1">50% off</span>
 					<div className="flex justify-between">
 						<span className="block font-semibold text-xl">Summer sale</span>

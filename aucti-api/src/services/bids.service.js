@@ -377,7 +377,7 @@ exports.fetchBuyerBidCompleted = (req) =>
 exports.addBid = (req) =>
 	new Promise((resolve, reject) => {
 		const { user_id, product_id, bid_price } = req.body;
-		console.log("here");
+
 		const data = {
 			user_id,
 			product_id,
@@ -392,12 +392,134 @@ exports.addBid = (req) =>
 		}
 
 		bids
-			.add(data)
-			.then((docRef) => resolve({ ...data, id: docRef.id }))
-			.catch((err) => {
-				let msg = "Unable to add the bid";
-				console.log(err);
-				reject(msg);
+			.where("user_id", "==", user_id)
+			.get()
+			.then((querySnapshotBids) => {
+				const dataBid = querySnapshotData(querySnapshotBids);
+				const filter = dataBid.filter((n) => n.product_id === product_id);
+
+				if (filter.length > 0) {
+					console.log(
+						"here---------------------------------------------------------->"
+					);
+					console.log(filter);
+					const bid = filter[0];
+					console.log(bid);
+					bids
+						.doc(filter[0].id)
+						.set({ ...bid, bid_price }, { merge: true })
+						.then(() => {
+							bids
+								.where("product_id", "==", bid.product_id)
+								.get()
+								.then((querySnapshotBidProduct) => {
+									const dataProd = querySnapshotData(querySnapshotBidProduct);
+									let maxValue = Math.max.apply(
+										Math,
+										dataProd.map(function (o) {
+											return parseInt(o.bid_price);
+										})
+									);
+									db.doc(`/products/${product_id}`)
+										.get()
+										.then((querySnapshotProduct) => {
+											let product = querySnapshotProduct.data();
+											product.id = querySnapshotProduct.id;
+											db.doc(`/users/${product.seller_id}`)
+												.get()
+												.then((querySnapshotUser) => {
+													let user = querySnapshotUser.data();
+													console.log({
+														...product,
+														seller: user.name,
+														highest_bid: maxValue,
+														bids: dataProd.length,
+													});
+													resolve({
+														...product,
+														seller: user.name,
+														highest_bid: maxValue,
+														bids: dataProd.length,
+													});
+												})
+												.catch((err) => {
+													let msg = "Unable to add bid";
+													console.log(err);
+													reject(msg);
+												});
+										})
+										.catch((err) => {
+											let msg = "Unable to add bid";
+											console.log(err);
+											reject(msg);
+										});
+								})
+								.catch((err) => {
+									let msg = "Unable to add bid";
+									console.log(err);
+									reject(msg);
+								});
+						})
+						.catch(() => {
+							let msg = "Unable to update the bid";
+							reject(msg);
+						});
+				} else {
+					bids
+						.add(data)
+						.then((docRef) => {
+							bids
+								.where("product_id", "==", data.product_id)
+								.get()
+								.then((querySnapshot) => {
+									const dataProd = querySnapshotData(querySnapshot);
+									let maxValue = Math.max.apply(
+										Math,
+										dataProd.map(function (o) {
+											return parseInt(o.bid_price);
+										})
+									);
+									db.doc(`/products/${product_id}`)
+										.get()
+										.then((querySnapshot) => {
+											let product = querySnapshot.data();
+											product.id = querySnapshot.id;
+											db.doc(`/users/${product.seller_id}`)
+												.get()
+												.then((querySnapshot) => {
+													let user = querySnapshot.data();
+
+													resolve({
+														...product,
+														seller: user.name,
+														highest_bid: maxValue,
+														bids: dataProd.length,
+													});
+												})
+												.catch((err) => {
+													let msg = "Unable to add bid";
+													console.log(err);
+													reject(msg);
+												});
+										})
+										.catch((err) => {
+											let msg = "Unable to add bid";
+											console.log(err);
+											reject(msg);
+										});
+								})
+								.catch((err) => {
+									let msg = "Unable to add bid";
+									console.log(err);
+									reject(msg);
+								});
+						})
+						.catch((err) => {
+							let msg = "Unable to add the bid";
+							console.log(err);
+							reject(msg);
+						});
+				}
 			});
 	});
 
@@ -420,6 +542,10 @@ exports.updateBid = (bid) =>
 			let msg = "Bid price must not be empty";
 			reject(msg);
 		}
+		// else if (bid.bid_price.isNaN()) {
+		// 	let msg = "Bid price must be number";
+		// 	reject(msg);
+		// }
 		bids
 			.doc(bid.id)
 			.set({ ...bid }, { merge: true })

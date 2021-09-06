@@ -4,13 +4,13 @@ const MainSidebarRoutes = [
 		heading: true,
 	},
 	{
-		path: "/home/search/antiques_vintages",
+		path: "/home/search",
 		icon: "VintageIcon",
 		name: "Antiques and Vintage",
 		tag: "antiques_vintages",
 	},
 	{
-		path: "/home/search/digital_art",
+		path: "/home/search",
 		icon: "DigitalArtIcon",
 		name: "Digital Art",
 		tag: "digital_art",
@@ -21,10 +21,16 @@ const MainSidebarRoutes = [
 	// 	name: "Notifications",
 	// },
 	{
-		path: "/home/search/autographed",
+		path: "/home/search",
 		icon: "AutographedIcon",
 		name: "Autographed",
 		tag: "autographed",
+	},
+	{
+		path: "/home/search",
+		name: "Clear All",
+		heading: true,
+		subheading: true,
 	},
 ];
 

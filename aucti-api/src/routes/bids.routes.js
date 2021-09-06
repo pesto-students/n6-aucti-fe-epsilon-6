@@ -58,7 +58,7 @@ router.get(
 
 router.post("/", (req, res) => {
 	addBid(req)
-		.then((id) => res.status(201).send(id))
+		.then((data) => res.status(201).send(data))
 		.catch((err) => res.status(500).json(err));
 });
 

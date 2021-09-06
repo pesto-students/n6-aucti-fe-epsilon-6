@@ -314,6 +314,29 @@ function* confirmDispute({ product_id }) {
 	}
 }
 
+function* addBid({ product_id, bid_price, user_id }) {
+	try {
+		const product = yield call(service.addBid, product_id, bid_price, user_id);
+		yield put(actions.bidAddedAction(product));
+		yield put(
+			alerts.setAlertAction({
+				text: "Your Bid Successfully Added!",
+				text_color: "text-blue-700",
+				bg_color: "bg-blue-100",
+			})
+		);
+	} catch (error) {
+		console.log(error);
+		yield put(
+			alerts.setAlertAction({
+				text: "We couldn't add your bid at the moment!",
+				text_color: "text-red-700",
+				bg_color: "bg-red-100",
+			})
+		);
+	}
+}
+
 //Watcher Sagas
 function* watchLoadBids() {
 	yield takeEvery(BUYER.LOAD_BIDS, loadBids);
@@ -387,6 +410,10 @@ function* watchConFirmDispute() {
 	yield takeEvery(BUYER.CONFIRM_DISPUTE, confirmDispute);
 }
 
+function* watchAddBid() {
+	yield takeEvery(BUYER.ADD_BID, addBid);
+}
+
 export function* buyerSaga() {
 	yield all([
 		watchLoadBids(),
@@ -407,5 +434,6 @@ export function* buyerSaga() {
 		loadBidProductDetailsAction(),
 		watchConFirmReceived(),
 		watchConFirmDispute(),
+		watchAddBid(),
 	]);
 }

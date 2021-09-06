@@ -106,3 +106,9 @@ export const confirmDispute = (product_id) => {
 		.put(productURL + "/dispute", { product_id })
 		.then((res) => res.data);
 };
+
+export const addBid = (product_id, bid_price, user_id) => {
+	return axios
+		.post(bidsURL, { product_id, bid_price, user_id })
+		.then((res) => res.data);
+};

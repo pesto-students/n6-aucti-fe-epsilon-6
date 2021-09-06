@@ -24,7 +24,6 @@ import { sideBarReducer } from "./sideBarReducer";
 import { filterReducer } from "./filterReducer";
 
 const rootReducer = combineReducers({
-	// product: productReducer,
 	user: userReducer,
 	alert: alertReducer,
 	bids: bidReducer,

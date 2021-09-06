@@ -1,5 +1,5 @@
 import React from "react";
-import { connectHits } from "react-instantsearch-dom";
+import { connectHits, RefinementList } from "react-instantsearch-dom";
 import ProductCard from "../../Shared/ProductCard";
 import ProductCardAlgolia from "../../Shared/ProductCardAlgolia";
 
