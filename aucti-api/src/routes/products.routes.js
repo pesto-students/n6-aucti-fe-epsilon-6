@@ -3,7 +3,6 @@ const router = express.Router();
 // const Multer = require("multer");
 const {
 	fetchAllProducts,
-	fetchProductPerUser,
 	fetchSellerProducts,
 	addProduct,
 	deleteProduct,
