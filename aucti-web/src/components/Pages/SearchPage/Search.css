@@ -1,0 +1,13 @@
+.ais-Pagination-list {
+	display: flex;
+	justify-content: center;
+}
+.ais-Pagination-item {
+	margin: 10px;
+}
+
+.ais-Pagination-item:hover {
+	background-color: #f0b90b;
+
+	border-radius: 20px;
+}

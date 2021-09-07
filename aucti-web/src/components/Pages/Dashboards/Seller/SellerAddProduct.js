@@ -78,10 +78,11 @@ const SellerAddProduct = (props) => {
 			);
 		} else {
 			return (
-				<div>
-					<br />
-					<h4>Choose before Pressing the Upload button</h4>
-				</div>
+				<></>
+				// <div>
+				// 	<br />
+				// 	<h4>Choose before Pressing the Upload button</h4>
+				// </div>
 			);
 		}
 	};
