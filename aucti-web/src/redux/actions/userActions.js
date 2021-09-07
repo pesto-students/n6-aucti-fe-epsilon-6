@@ -32,6 +32,12 @@ export const toggleSidebarAction = () => {
 	};
 };
 
+export const showpriceRangeAction = () => {
+	return {
+		type: AUTH.SHOW_PRICE_RANGE,
+	};
+};
+
 export const filterSearchResultAction = (filter) => {
 	return {
 		type: AUTH.FILTER_SEARCH,

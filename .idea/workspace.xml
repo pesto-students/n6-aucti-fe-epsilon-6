@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d42ce2a0-3c55-403b-a115-c58e5358bcd3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-api/src/routes/bids.routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/routes/bids.routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-api/src/services/bids.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/services/bids.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-api/src/services/products.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-api/src/services/products.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Layouts/Sidebar/MainSidebarContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Layouts/Sidebar/MainSidebarContent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Layouts/Sidebar/Routes/MainSidebarRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Layouts/Sidebar/Routes/MainSidebarRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/LandingPage/LandingPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/LandingPage/LandingPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/ProductPage/ProductPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/ProductPage/ProductPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/SearchPage/AlgoliaSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/SearchPage/AlgoliaSearch.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Pages/SearchPage/SearchPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Pages/SearchPage/SearchPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Shared/Banner.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Shared/Banner.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Shared/ProductCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Shared/ProductCard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/components/Shared/cardlist.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/components/Shared/cardlist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/actions/buyerActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/actions/buyerActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/actions/productActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/actions/productActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/reducers/productReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/reducers/productReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/reducers/productsReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/reducers/productsReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/reducers/rootReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/reducers/rootReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/saga/buyerSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/saga/buyerSaga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/saga/productsSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/saga/productsSaga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/saga/userSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/saga/userSaga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/services/buyerService.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/services/buyerService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/services/productService.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/services/productService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aucti-web/src/redux/types.js" beforeDir="false" afterPath="$PROJECT_DIR$/aucti-web/src/redux/types.js" afterDir="false" />
-    </list>
+    <list default="true" id="d42ce2a0-3c55-403b-a115-c58e5358bcd3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -100,6 +73,7 @@
       <workItem from="1630746722633" duration="615000" />
       <workItem from="1630847300085" duration="158000" />
       <workItem from="1630896328195" duration="2611000" />
+      <workItem from="1630950285951" duration="212000" />
     </task>
     <task id="LOCAL-00001" summary="Alert message on one file and export to entire project">
       <created>1629693819289</created>
@@ -139,10 +113,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="393" y="8" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1630847427950" />
-    <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1630916773371">
+    <state x="549" y="168" key="FileChooserDialogImpl" timestamp="1630950484381">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1630916773371" />
+    <state x="549" y="168" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1630950484381" />
     <state x="349" y="148" key="IDE.errors.dialog" timestamp="1630507354261">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

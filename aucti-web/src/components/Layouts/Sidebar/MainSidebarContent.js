@@ -10,6 +10,7 @@ import {
 	NumericMenu,
 	RefinementList,
 } from "react-instantsearch-dom";
+import CustomNumericMenu from "../../Shared/CustomNumericMenu ";
 // import "./Sidebar.css";
 // import "instantsearch.css/themes/reset.css";
 
@@ -19,7 +20,7 @@ function Icon({ icon, ...props }) {
 }
 
 function MainSidebarContent(props) {
-	const { user } = props;
+	const { user, priceRangeComponent } = props;
 
 	const handleFilter = (filter, path) => {
 		props.dispatch(filterSearchResultAction(filter));
@@ -41,14 +42,14 @@ function MainSidebarContent(props) {
 								key={route.name}
 								className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
 							>
-								{/* {window.location.pathname === "/home/search" && ( */}
-								<button
-									onClick={handleClear}
-									className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-								>
-									<span className="m-4 z-10">{route.name}</span>
-								</button>
-								{/* )} */}
+								{priceRangeComponent && (
+									<button
+										onClick={handleClear}
+										className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+									>
+										<span className="m-4 z-10">{route.name}</span>
+									</button>
+								)}
 							</div>
 						) : (
 							<div
@@ -84,13 +85,22 @@ function MainSidebarContent(props) {
 					)
 				)}
 			</ul>
-			{window.location.pathname === "/home/search" && (
+			{priceRangeComponent && (
 				<div className="flex-col py-5 px-5">
 					<div className="inline-flex items-center w-full text-lg font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 pb-5">
 						{/* <ClearRefinements /> */}
 					</div>
 					<div className="w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-						<NumericMenu
+						{/* <NumericMenu
+							attribute="base_price"
+							items={[
+								{ label: "<= ₹50000", end: 50000 },
+								{ label: "₹50000 - ₹100000", start: 50000, end: 100000 },
+								{ label: "₹100000 - ₹200000", start: 100000, end: 200000 },
+								{ label: ">= ₹200000", start: 200000 },
+							]}
+						/> */}
+						<CustomNumericMenu
 							attribute="base_price"
 							items={[
 								{ label: "<= ₹50000", end: 50000 },
@@ -111,6 +121,7 @@ function MainSidebarContent(props) {
 const mapStateToProps = (state) => {
 	return {
 		user: state.user,
+		priceRangeComponent: state.priceRangeComponent,
 	};
 };
 
