@@ -2,52 +2,58 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import FilterCheckBox from "../../Shared/filterCheckbox";
 import ProductDetail from "../../Shared/ProductDetails";
-import { getProductAction } from "../../../redux/actions/productActions";
+//import { getProductAction } from "../../../redux/actions/productActions";
+import { getProductPerUserAction,getProductAction } from "../../../redux/actions/productActions";
+
 import Loader from "../../Shared/Loader";
 
 const ProductPage = (props) => {
-	const productdata = props.product;
+  const productdata = props.product;
+//   console.log('from' , productdata)
+  useEffect(() => {
+    let product_id = props.match.params.id;
+    let user_id = localStorage.getItem("user_id");
+    props.getProduct(product_id, user_id);
+  }, []);
 
-	useEffect(() => {
-		let id = props.match.params.id;
-		props.getProduct(id);
-	}, []);
-
-	if (productdata !== undefined) {
-		return (
-			<>
-				<div className="col-start-1 row-start-2 col-span-1 row-span-4 ">
-					<h1></h1>
-				</div>
-				<div className="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
-					<ProductDetail
-						title={productdata.title}
-						base_price={productdata.base_price}
-						highest_bid={27000}
-						// start_time={productdata.start_time._seconds}
-						// end_time={productdata.end_time._seconds}
-						bids_registered={7}
-						product_description={productdata.description}
-						product_picture={productdata.product_picture}
-						id={props.match.params.id}
-					/>
-				</div>
-			</>
-		);
-	} //end of if
-	else return <Loader />;
+  if (props.product !== undefined || props.product !== null) {
+    return (
+      <>
+        <div className="col-start-1 row-start-2 col-span-1 row-span-4 ">
+          <h1></h1>
+        </div>
+        <div className="col-start-1 row-start-1 col-span-5 row-span-4 flex justify-center">
+		  <ProductDetail
+            title={productdata.propduct.title}
+            base_price={productdata.propduct.base_price}
+			bid_price={productdata.bid.bid_price}
+            highest_bid={productdata.highest_bid}
+            // start_time={productdata.start_time._seconds}
+            // end_time={productdata.end_time._seconds}
+            bids_registered={productdata.highest_bid %100}
+            product_description={productdata.propduct.description}
+            product_picture={productdata.propduct.product_picture}
+            id={props.match.params.id}
+			wishlist={productdata.wishlist}
+          />
+        </div>
+      </>
+    );
+  } //end of if
+  else return <Loader />;
 };
 
 const mapStateToProps = (state) => {
-	return {
-		product: state.productReducer,
-	};
+  return {
+    product: state.productPerUserReducer,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-	return {
-		getProduct: (id) => dispatch(getProductAction(id)),
-	};
+  return {
+    getProduct: (product_id, user_id) =>
+      dispatch(getProductPerUserAction(product_id, user_id)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);

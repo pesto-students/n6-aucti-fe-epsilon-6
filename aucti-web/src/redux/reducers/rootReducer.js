@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { productsReducer } from "./productsReducer";
 import { productReducer } from "./productReducer";
+import { productPerUserReducer } from './productPerUserReducer'
 import { wishlistReducer } from "./wishlistReducer";
 import { userReducer } from "./userReducer";
 import { alertReducer } from "./alertReducer";
@@ -43,6 +44,7 @@ const rootReducer = combineReducers({
 	buyerCompleted: buyerCompletedReducer,
 	productReducer,
 	productsReducer,
+	productPerUserReducer,
 	wishlistReducer,
 	bidproduct: bidProductReducer,
 	sideBar: sideBarReducer,
