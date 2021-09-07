@@ -120,7 +120,7 @@ function ProductDetails(props) {
 
 const mapStateToProps = (state) =>{
   return {
-    wishlistadded : state.wishlistReducer,
+//    wishlistadded : state.wishlistReducer,
     bidplaced : state.bidReducer,
   }
 }

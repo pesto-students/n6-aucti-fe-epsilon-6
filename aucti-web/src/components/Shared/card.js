@@ -10,7 +10,7 @@ function Card(props) {
        return <Redirect to={url}/>
     }
     return (
-        <div className="font-sofia max-w-sm max-h-sm rounded-md border overflow-hidden hover:shadow-lg pd-2 pt-2 mx-2 mb-2" onClick={cardClick}>
+        <div data-testid="card" className="font-sofia max-w-sm max-h-sm rounded-md border overflow-hidden hover:shadow-lg pd-2 pt-2 mx-2 mb-2" onClick={cardClick}>
             <img src={props.img_url} 
             alt="img"
             className="object-scale-down px-2 h-60 w-full"

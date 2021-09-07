@@ -9,7 +9,7 @@ import Main from "./Main";
 
 import Loader from "../../Shared/Loader";
 import { connect } from "react-redux";
-const Page404 = lazy(() => import("../PageNotFound"));
+const Page404 = lazy(() => import("../ErrorPage/PageNotFound"));
 
 // import { SidebarContext } from "../context/SidebarContext";
 

@@ -5,8 +5,8 @@ const CustomSearchBox = ({ refine }) => {
   const history = useHistory();
   return (
     <>
-      <div className="flex font-sofia text-xlm-2 mx-2   inline-block ">
-        <input
+      <div data-testid="global-search"  className="flex font-sofia text-xlm-2 mx-2   inline-block ">
+        <input 
           className="font-sofia px-4 w-2/3"
           type="text"
           placeholder="enter seach value"

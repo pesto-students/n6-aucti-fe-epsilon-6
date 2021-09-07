@@ -16,8 +16,7 @@ const searchClient = algoliasearch(
 	"DZTA0M5OD8",
 	"bfcc29ed9a87db03544730c93ed22ac2"
 );
-import PageNotFound from "./components/Pages/PageNotFound";
-
+import PageNotFound from "./components/Pages/ErrorPage/PageNotFound";
 import Dashboard from "./components/Pages/Dashboards/Dashboard";
 import Login from "./components/Pages/Auth/Login/Login";
 import Signup from "./components/Pages/Auth/Signup/Signup";

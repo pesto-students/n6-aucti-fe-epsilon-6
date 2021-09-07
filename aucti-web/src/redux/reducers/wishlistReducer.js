@@ -6,7 +6,6 @@ export const wishlistReducer = (state = initialState, action)=>{
              return action.added
         default : 
              return state;
-
     }
 
 }
