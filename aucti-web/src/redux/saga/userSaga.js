@@ -19,7 +19,7 @@ function* login({ role }) {
 				bg_color: "bg-blue-100",
 			})
 		);
-		history.push("/");
+		history.goBack();
 		// if (result?.additionalUserInfo?.isNewUser) {
 		// 	console.log("new user");
 		// 	console.log(history);

@@ -7,13 +7,17 @@ import FilterList from "../../Shared/filterList";
 import Footer from "../../Layouts/Footer";
 import { Banner } from "../../Shared/Banner";
 import Pagination from "../../Shared/Pagination/Pagination";
+import Loader from "../../Shared/Loader";
+import ProductCard from "../../Shared/ProductCard";
 
 function LandingPage(props) {
-	const productlist = props.products;
+	const { products } = props;
 	useEffect(() => {
 		props.getProducts();
 	}, []);
-
+	if (!products) {
+		return <Loader></Loader>;
+	}
 	return (
 		<>
 			<div
@@ -22,7 +26,9 @@ function LandingPage(props) {
 			>
 				<Banner></Banner>
 
-				<Cardlist productlist={productlist} />
+				{products.map((item) => {
+					return <ProductCard key={item.id} bidproduct={item}></ProductCard>;
+				})}
 			</div>
 			<div className="grid justify-items-end p-4">
 				<Pagination

@@ -38,7 +38,50 @@ exports.fetchAllProducts = () =>
 				// const data = dataRef.filter(
 				// 	(n) => n.auction_status === auction_status.LIVE
 				// );
-				resolve(dataRef);
+				Promise.all(
+					dataRef.map((product) =>
+						bids
+							.where("product_id", "==", product.id)
+							.get()
+							.then((querySnapshot) => {
+								const data = querySnapshotData(querySnapshot);
+
+								let maxValue = 0;
+								if (data.length > 0) {
+									maxValue = Math.max.apply(
+										Math,
+										data.map(function (o) {
+											return parseInt(o.bid_price);
+										})
+									);
+								}
+
+								return {
+									...product,
+									highest_price: maxValue,
+									bids: data.length,
+								};
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							})
+					)
+				)
+					.then((finalList) => {
+						// const length = finalList.length;
+
+						// const filteredlist = finalList.slice(firstPageIndex, lastPageIndex);
+
+						// resolve({ data: filteredlist, length: length });
+						resolve(finalList);
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve User bids";
+						console.log(err);
+						reject(msg);
+					});
 			})
 			.catch((err) => {
 				let msg = "Unable to retrieve Products!";
@@ -57,8 +100,44 @@ exports.fetchProduct = (productId) =>
 			.then((querySnapshot) => {
 				let product = querySnapshot.data();
 				product.id = querySnapshot.id;
+				bids
+					.where("product_id", "==", product.id)
+					.get()
+					.then((querySnapshot) => {
+						const data = querySnapshotData(querySnapshot);
+						let maxValue = 0;
+						if (data.length > 0) {
+							maxValue = Math.max.apply(
+								Math,
+								data.map(function (o) {
+									return parseInt(o.bid_price);
+								})
+							);
+						}
 
-				resolve(product);
+						db.doc(`/users/${product.seller_id}`)
+							.get()
+							.then((querySnapshot) => {
+								let user = querySnapshot.data();
+
+								resolve({
+									...product,
+									seller: user.name,
+									highest_bid: maxValue,
+									bids: data.length,
+								});
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve  product";
+								console.log(err);
+								reject(msg);
+							});
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve  product";
+						console.log(err);
+						reject(msg);
+					});
 			})
 			.catch((err) => {
 				let msg = "Unable to retrieve  product";
@@ -442,17 +521,19 @@ exports.addProduct = (req) =>
 		products
 			.add(data)
 			.then((docRef) => {
-				index
-					.saveObject({
-						title,
-						base_price,
-						description,
-						product_picture,
-						objectID: docRef.id,
-					})
-					.then(({ objectID }) => {
-						resolve({ ...data, id: objectID });
-					});
+				resolve({ ...data, id: docRef.id });
+				// index
+				// .saveObject({
+				// 	title,
+				// 	base_price,
+				// 	description,
+				// 	product_category,
+				// 	product_picture,
+				// 	objectID: docRef.id,
+				// })
+				// .then(({ objectID }) => {
+
+				// });
 			})
 			.catch((err) => {
 				console.log(err);
@@ -488,15 +569,15 @@ exports.updateProduct = (product) =>
 				index
 					.saveObject({
 						title: product.title,
-						base_price: product.base_price,
+						base_price: parseInt(product.base_price),
 						description: product.description,
+						product_category: product.product_category,
 						product_picture: product.product_picture,
 						objectID: product.id,
 					})
 					.then(() => {
 						bids
 							.where("product_id", "==", product.id)
-							// .orderBy("createdAt", "desc")
 							.get()
 							.then((querySnapshot) => {
 								const data = querySnapshotData(querySnapshot);

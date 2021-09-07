@@ -21,9 +21,10 @@ import { sellerCompletedReducer } from "./sellerCompletedReducer";
 import { buyerCompletedReducer } from "./buyerCompletedReducer";
 import { bidProductReducer } from "./bidProductReducer";
 import { sideBarReducer } from "./sideBarReducer";
+import { filterReducer } from "./filterReducer";
+import { priceRangeReducer } from "./priceRangeReducer";
 
 const rootReducer = combineReducers({
-	// product: productReducer,
 	user: userReducer,
 	alert: alertReducer,
 	bids: bidReducer,
@@ -46,5 +47,7 @@ const rootReducer = combineReducers({
 	wishlistReducer,
 	bidproduct: bidProductReducer,
 	sideBar: sideBarReducer,
+	searchFilter: filterReducer,
+	priceRangeComponent: priceRangeReducer,
 });
 export default rootReducer;

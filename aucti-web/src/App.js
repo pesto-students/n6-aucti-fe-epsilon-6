@@ -12,10 +12,7 @@ import SearchPage from "./components/Pages/SearchPage/SearchPage";
 
 import algoliasearch from "algoliasearch";
 import { InstantSearch } from "react-instantsearch-dom";
-const searchClient = algoliasearch(
-	"DZTA0M5OD8",
-	"bfcc29ed9a87db03544730c93ed22ac2"
-);
+
 import PageNotFound from "./components/Pages/PageNotFound";
 
 import Dashboard from "./components/Pages/Dashboards/Dashboard";
@@ -30,7 +27,10 @@ import BuyerRoute from "./routes/BuyerRoute";
 import SellerRoute from "./routes/SellerRoute";
 import BuyerPayments from "./components/Pages/Dashboards/Buyer/BuyerPayments";
 import Home from "./routes/Home";
-
+const searchClient = algoliasearch(
+	"DZTA0M5OD8",
+	"bfcc29ed9a87db03544730c93ed22ac2"
+);
 function App() {
 	return (
 		<>
@@ -39,7 +39,6 @@ function App() {
 					<Route exact path="/" render={() => <Redirect to="/home" />} />
 					<Route path="/login" component={Login} />
 					<Route path="/home" component={Home} />
-					<Route path="/nav" component={Nav} />
 					<BuyerRoute path="/buyer" component={Dashboard} />
 					<SellerRoute path="/seller" component={Dashboard} />
 					<BuyerRoute path="/payments/:bid_id" component={BuyerPayments} />

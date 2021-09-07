@@ -1,13 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import history from "../../routes/history";
-
+import LazyLoad from "react-lazyload";
 const ProductCard = (props) => {
 	const { bidproduct } = props;
+	console.log(bidproduct);
 	let url = "/home/product/" + bidproduct.id;
 
 	const handleProduct = () => {
 		history.push(url);
+	};
+	const refPlaceholder = React.useRef();
+
+	const removePlaceholder = () => {
+		refPlaceholder.current.remove();
 	};
 
 	return (
@@ -16,25 +22,38 @@ const ProductCard = (props) => {
 				<div className="card flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl">
 					<Link to={url}>
 						<div className="prod-img flex justify-center">
-							<img
-								src={bidproduct?.product_picture}
-								className="object-cover object-center h-40 pb-4"
-								// onClick={handleProduct}
-							/>
+							<LazyLoad>
+								<img
+									src={bidproduct?.product_picture}
+									className="object-cover object-center h-40 pb-4"
+									// onClick={handleProduct}
+								/>
+							</LazyLoad>
 						</div>
 						<div className="prod-title p-1">
 							<p className="text-sm uppercase text-gray-900 font-bold">
 								{bidproduct?.title}
 							</p>
-							{/* <p className="uppercase text-sm text-gray-400  p-1">
-							The best shoes in the marketplace
-						</p> */}
 						</div>
-						<div className="prod-info grid gap-10 p-1">
-							<div className="flex flex-col md:flex-row justify-between items-center text-gray-900">
-								<p className="font-bold text-xl">
+
+						<div className="prod-info grid gap-2 p-1">
+							<div className="flex flex-col text-gray-900">
+								<p className="font-bold text-sm">
 									{"₹ " + bidproduct?.base_price}
 								</p>
+								<p className="uppercase text-sm text-gray-400">Base Price</p>
+							</div>
+							<div className="flex flex-col  text-gray-900">
+								<p className="font-bold text-sm">
+									{"₹ " + bidproduct?.highest_price}
+								</p>
+								<p className="uppercase text-sm text-gray-400">Highest Bid</p>
+							</div>
+							<div className="flex flex-row  text-gray-900">
+								<p className="uppercase text-sm text-gray-400 mr-2">
+									Number of bids:
+								</p>
+								<p className="font-bold text-sm">{bidproduct?.bids}</p>
 							</div>
 						</div>
 					</Link>
