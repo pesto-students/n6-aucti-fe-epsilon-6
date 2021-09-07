@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { auth, firebase } from "./config/firebase";
 
-//-----router
+
 
 import LandingPage from "./components/Pages/LandingPage/LandingPage";
 

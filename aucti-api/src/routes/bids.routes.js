@@ -2,24 +2,31 @@ const express = require("express");
 const router = express.Router();
 
 const {
-	addBid,
-	deleteBid,
-	fetchAllBids,
-	fetchUserBids,
-	updateBid,
-	fetchUserInsights,
-	fetchBuyerBidHistory,
-	fetchProductBids,
-	selectHighestBid,
-	makePayment,
-	fetchBuyerBidCompleted,
-	getBidPaymentProduct,
+  addBid,
+  deleteBid,
+  fetchAllBids,
+  fetchUserIdBids,
+  fetchUserBids,
+  updateBid,
+  fetchUserInsights,
+  fetchBuyerBidHistory,
+  fetchProductBids,
+  selectHighestBid,
+  makePayment,
+  fetchBuyerBidCompleted,
+  getBidPaymentProduct,
 } = require("../services/bids.service");
 
 router.get("/", (req, res) => {
-	fetchAllBids()
-		.then((data) => res.json(data))
-		.catch((err) => res.status(500).send(err));
+  fetchAllBids()
+    .then((data) => res.json(data))
+    .catch((err) => res.status(500).send(err));
+});
+router.get("/:user_id", (req, res) => {
+  const user_id  = req.params.user_id;
+  fetchUserIdBids(user_id)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(500).send(err));
 });
 
 router.get("/:user_id,:firstPageIndex,:lastPageIndex", (req, res) => {

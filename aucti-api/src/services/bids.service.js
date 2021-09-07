@@ -44,6 +44,28 @@ exports.fetchAllBids = () =>
 			});
 	});
 
+exports.fetchUserIdBids = (req) =>
+  new Promise((resolve, reject) => {
+    const user_id  =req;
+    if (!user_id) {
+      let msg = "User id is empty";
+      reject(msg);
+    }
+    bids
+      .where("user_id", "==", user_id)
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((querySnapshot) => {
+        const data = querySnapshotData(querySnapshot);
+        console.log(data);
+        resolve(data);
+      })
+      .catch((err) => {
+        let msg = "Unable to retrieve Bids";
+        reject(msg);
+      });
+  });
+
 exports.fetchUserBids = (req) =>
 	new Promise((resolve, reject) => {
 		const { user_id, firstPageIndex, lastPageIndex } = req;
@@ -399,12 +421,9 @@ exports.addBid = (req) =>
 				const filter = dataBid.filter((n) => n.product_id === product_id);
 
 				if (filter.length > 0) {
-					console.log(
-						"here---------------------------------------------------------->"
-					);
-					console.log(filter);
+
 					const bid = filter[0];
-					console.log(bid);
+
 					bids
 						.doc(filter[0].id)
 						.set({ ...bid, bid_price }, { merge: true })
@@ -542,10 +561,6 @@ exports.updateBid = (bid) =>
 			let msg = "Bid price must not be empty";
 			reject(msg);
 		}
-		// else if (bid.bid_price.isNaN()) {
-		// 	let msg = "Bid price must be number";
-		// 	reject(msg);
-		// }
 		bids
 			.doc(bid.id)
 			.set({ ...bid }, { merge: true })
