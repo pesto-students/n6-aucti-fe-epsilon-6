@@ -272,3 +272,19 @@ export const disputeConfirmedActionCompleted = (product) => {
 		product,
 	};
 };
+
+export const addBidAction = (product_id, bid_price, user_id) => {
+	return {
+		type: BUYER.ADD_BID,
+		product_id,
+		bid_price,
+		user_id,
+	};
+};
+
+export const bidAddedAction = (product) => {
+	return {
+		type: BUYER.BID_ADDED,
+		product,
+	};
+};

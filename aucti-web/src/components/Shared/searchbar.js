@@ -2,35 +2,41 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CustomSearchBox from "./CustomSearchBox";
 import CustomHitsComponent from "./CustomHitsComponent";
-function Searchbar(props) {
-  const dropdownRef = useRef();
-  const initialState = true;
-  const [showdropdown, setshowdropdown] = useState(initialState);
+import { Configure, connectSearchBox } from "react-instantsearch-dom";
 
-  // const handleClick = (event) => {
-  //   if (dropdownRef && !dropdownRef.current.contains(event.target)) {
-  //     setshowdropdown(!showdropdown);
-  //   }
-  // };
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClick);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClick);
-  //   };
-  // }, []);
+function Searchbar({ refine }) {
+	const dropdownRef = useRef(null);
 
-  return (
-    <div ref={dropdownRef} className="flex-col justify-center pt-3">
-      <CustomSearchBox />
-      <div>
-        {window.location.pathname === "/search" ? (
-          <></>
-        ) : (
-          <CustomHitsComponent show={showdropdown} />
-        )}
-      </div>
-    </div>
-  );
+	const [showdropdown, setshowdropdown] = useState(true);
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				dropdownRef.current != null &&
+				!dropdownRef.current.contains(event.target)
+			) {
+				setshowdropdown(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+	}, [dropdownRef]);
+
+	const handleType = (e) => {
+		refine(e.currentTarget.value);
+		setshowdropdown(true);
+	};
+
+	return (
+		<div ref={dropdownRef} className="flex-col justify-center pt-3">
+			<CustomSearchBox handleType={handleType} />
+			<div>
+				{window.location.pathname === "/home/search" ? (
+					<></>
+				) : (
+					<CustomHitsComponent show={showdropdown} />
+				)}
+			</div>
+		</div>
+	);
 }
 
-export default Searchbar;
+export default connectSearchBox(Searchbar);

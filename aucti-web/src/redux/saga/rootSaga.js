@@ -8,16 +8,17 @@ import { productPerUserSaga } from "./productPerUserSaga";
 import { wishlistSaga } from "./wishlistSaga";
 import { bidSaga } from "./bidSaga";
 
+
 export default function* rootSaga() {
-  yield all([
-    productsSaga(),
-    productSaga(),
-    productPerUserSaga(),
-    wishlistSaga(),
-    productSaga(),
-    userSaga(),
-    buyerSaga(),
-    sellerSaga(),
-    bidSaga(),
-  ]);
+	yield all([
+		productsSaga(),
+		productSaga(),
+		wishlistSaga(),
+		productSaga(),
+		userSaga(),
+		buyerSaga(),
+		sellerSaga(),
+		bidSaga(),
+        productPerUserSaga(),
+	]);
 }
