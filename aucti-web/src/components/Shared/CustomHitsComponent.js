@@ -11,16 +11,15 @@ const CustomHitsComponent = ({ props, searchState, searchResults }) => {
 				</p>
 			)}
 			{searchResults?.hits.length > 0 && validQuery && props.show && (
-				<ol className="absolute w-auto top-20 border -mt-6 bg-white shadow rounded-lg p-5">
+				<ol className="absolute top-20 border -mt-6 bg-white shadow rounded-lg p-5">
 					{searchResults.hits.map((hit) => (
-						<Link key={hit.objectID} to={`/home/product/${hit.objectID}`}>
-							<li
-								className="font-semibold p-1 border-b overflow-ellipsis hover:text-black"
-								key={hit.objectID}
-							>
-								{hit.title}
-							</li>
-						</Link>
+						<button
+							className="w-full font-semibold text-left p-1 border-b overflow-ellipsis hover:text-black"
+							key={hit.objectID}
+							onClick={() => props.handleClick(hit.objectID)}
+						>
+							<li key={hit.objectID}>{hit.title}</li>
+						</button>
 					))}
 				</ol>
 			)}

@@ -17,6 +17,8 @@ import {
 	showpriceRange,
 	showpriceRangeAction,
 } from "../../../redux/actions/userActions";
+import CustomSortBy from "../../Shared/CustomSortBy";
+import CustomPagination from "../../Shared/CustomPagination";
 
 const SearchPage = (props) => {
 	const { searchFilter } = props;
@@ -40,14 +42,14 @@ const SearchPage = (props) => {
 				/>
 			)}
 			<div className="flex justify-end p-4">
-				{/* <SortBy
+				<CustomSortBy
 					defaultRefinement="aucti_products"
 					items={[
 						{ value: "aucti_products", label: "Featured" },
-						{ value: "aucti_products", label: "Price asc." },
-						{ value: "aucti_products", label: "Price desc." },
+						{ value: "instant_search_price_asc", label: "Price asc." },
+						{ value: "instant_search_price_desc", label: "Price desc." },
 					]}
-				/> */}
+				/>
 			</div>
 
 			<div className="grid xl:px-6 xs:px-0  items-start xl:grid-cols-3 md:grid-cols-2 gap-1  xs:grid-cols-1">
@@ -55,7 +57,24 @@ const SearchPage = (props) => {
 			</div>
 			<div className="flex justify-end p-4">
 				{" "}
-				<Pagination />
+				<CustomPagination
+				// translations={{
+				// 	previous: "‹",
+				// 	next: "›",
+				// 	first: "«",
+				// 	last: "»",
+				// 	page(currentRefinement) {
+				// 		return currentRefinement;
+				// 	},
+				// 	ariaPrevious: "Previous page",
+				// 	ariaNext: "Next page",
+				// 	ariaFirst: "First page",
+				// 	ariaLast: "Last page",
+				// 	ariaPage(currentRefinement) {
+				// 		return `Page ${currentRefinement}`;
+				// 	},
+				// }}
+				/>
 			</div>
 		</>
 	);

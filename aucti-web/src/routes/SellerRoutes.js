@@ -32,10 +32,10 @@ const SellerRoutes = [
 		path: "/auctions",
 		component: History,
 	},
-	{
-		path: "/reports",
-		component: Reports,
-	},
+	// {
+	// 	path: "/reports",
+	// 	component: Reports,
+	// },
 	{
 		path: "/profile",
 		component: Profile,

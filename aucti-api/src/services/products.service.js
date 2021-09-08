@@ -28,10 +28,10 @@ const querySnapshotData = (querySnapshot) => {
 	}));
 };
 
-exports.fetchAllProducts = () =>
+exports.fetchAllProducts = (req) =>
 	new Promise((resolve, reject) => {
+		const { firstPageIndex, lastPageIndex } = req;
 		products
-			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
 				const dataRef = querySnapshotData(querySnapshot);
@@ -70,12 +70,137 @@ exports.fetchAllProducts = () =>
 					)
 				)
 					.then((finalList) => {
-						// const length = finalList.length;
+						const length = finalList.length;
 
-						// const filteredlist = finalList.slice(firstPageIndex, lastPageIndex);
+						const filteredlist = finalList.slice(firstPageIndex, lastPageIndex);
 
-						// resolve({ data: filteredlist, length: length });
-						resolve(finalList);
+						resolve({ data: filteredlist, length: length });
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve User bids";
+						console.log(err);
+						reject(msg);
+					});
+			})
+			.catch((err) => {
+				let msg = "Unable to retrieve Products!";
+				reject(msg);
+			});
+	});
+
+exports.fetchAllLatestProducts = (req) =>
+	new Promise((resolve, reject) => {
+		const { firstPageIndex, lastPageIndex } = req;
+		products
+			.orderBy("createdAt", "desc")
+			.get()
+			.then((querySnapshot) => {
+				const data = querySnapshotData(querySnapshot);
+				const dataRef = data.filter(
+					(n) => n.auction_status === auction_status.LIVE
+				);
+				Promise.all(
+					dataRef.map((product) =>
+						bids
+							.where("product_id", "==", product.id)
+							.get()
+							.then((querySnapshot) => {
+								const data = querySnapshotData(querySnapshot);
+
+								let maxValue = 0;
+								if (data.length > 0) {
+									maxValue = Math.max.apply(
+										Math,
+										data.map(function (o) {
+											return parseInt(o.bid_price);
+										})
+									);
+								}
+
+								return {
+									...product,
+									highest_price: maxValue,
+									bids: data.length,
+								};
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							})
+					)
+				)
+					.then((finalList) => {
+						const length = finalList.length;
+
+						const filteredlist = finalList.slice(firstPageIndex, lastPageIndex);
+
+						resolve({ data: filteredlist, length: length });
+					})
+					.catch((err) => {
+						let msg = "Unable to retrieve User bids";
+						console.log(err);
+						reject(msg);
+					});
+			})
+			.catch((err) => {
+				let msg = "Unable to retrieve Products!";
+				reject(msg);
+			});
+	});
+
+exports.fetchAllHotProducts = (req) =>
+	new Promise((resolve, reject) => {
+		const { firstPageIndex, lastPageIndex } = req;
+		products
+			.orderBy("createdAt", "desc")
+			.get()
+			.then((querySnapshot) => {
+				const data = querySnapshotData(querySnapshot);
+				const dataRef = data.filter(
+					(n) => n.auction_status === auction_status.LIVE
+				);
+				Promise.all(
+					dataRef.map((product) =>
+						bids
+							.where("product_id", "==", product.id)
+							.get()
+							.then((querySnapshot) => {
+								const data = querySnapshotData(querySnapshot);
+
+								let maxValue = 0;
+								if (data.length > 0) {
+									maxValue = Math.max.apply(
+										Math,
+										data.map(function (o) {
+											return parseInt(o.bid_price);
+										})
+									);
+								}
+
+								return {
+									...product,
+									highest_price: maxValue,
+									bids: data.length,
+								};
+							})
+							.catch((err) => {
+								let msg = "Unable to retrieve User bids";
+								console.log(err);
+								reject(msg);
+							})
+					)
+				)
+					.then((finalList) => {
+						const finalListSorted = finalList.sort((a, b) => b.bids - a.bids);
+						const length = finalListSorted.length;
+
+						const filteredlist = finalListSorted.slice(
+							firstPageIndex,
+							lastPageIndex
+						);
+
+						resolve({ data: filteredlist, length: length });
 					})
 					.catch((err) => {
 						let msg = "Unable to retrieve User bids";
@@ -167,31 +292,47 @@ exports.fetchProductPerUser = (req) =>
 					.then((querySnapshotBid) => {
 						const data = querySnapshotData(querySnapshotBid);
 						const filteredBid = data.filter((n) => n.user_id === userId);
-						let maxValue = Math.max.apply(
-							Math,
-							data.map(function (o) {
-								return parseInt(o.bid_price);
-							})
-						);
+						let maxValue = 0;
+						if (data.length > 0) {
+							maxValue = Math.max.apply(
+								Math,
+								data.map(function (o) {
+									return parseInt(o.bid_price);
+								})
+							);
+						}
+
 						wishlist
 							.where("user_id", "==", userId)
 							.get()
 							.then((querySnapshotWish) => {
-								const data = querySnapshotData(querySnapshotWish);
-								const filteredWishList = data.filter(
+								const dataWish = querySnapshotData(querySnapshotWish);
+								const filteredWishList = dataWish.filter(
 									(n) => n.product_id === productId
 								);
-								let bid = {};
+								let bid = null;
 								if (filteredBid.length > 0) {
 									bid = filteredBid[0];
 								}
+								db.doc(`/users/${product.seller_id}`)
+									.get()
+									.then((querySnapshot) => {
+										let user = querySnapshot.data();
 
-								resolve({
-									bid: bid,
-									propduct: product,
-									highest_bid: maxValue,
-									wishlist: filteredWishList.length > 0 ? true : false,
-								});
+										resolve({
+											...product,
+											seller: user.name,
+											highest_bid: maxValue,
+											bids: data.length,
+											bid: bid,
+											wishlist: filteredWishList.length > 0 ? true : false,
+										});
+									})
+									.catch((err) => {
+										let msg = "Unable to retrieve  product";
+										console.log(err);
+										reject(msg);
+									});
 							})
 							.catch((err) => {
 								let msg = "Unable to retrieve User bids";
