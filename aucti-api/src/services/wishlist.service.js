@@ -65,7 +65,7 @@ exports.fetchUserWishlist = (user_id) =>
 									.get()
 									.then((querySnapshot) => {
 										const data = querySnapshotData(querySnapshot);
-										console.log(data);
+
 										let maxValue = 0;
 										if (data.length > 0) {
 											maxValue = Math.max.apply(

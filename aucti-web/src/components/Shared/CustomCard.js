@@ -14,19 +14,17 @@ const CustomCard = (props) => {
 							className="object-cover object-center h-40 pb-4"
 						/>
 					</div>
-					<div className="prod-title p-1">
+					<div className="flex justify-center prod-title p-1">
 						<p className="text-sm uppercase text-gray-900 font-bold">
 							{bidproduct?.title}
 						</p>
-						{/* <p className="uppercase text-sm text-gray-400  p-1">
-							The best shoes in the marketplace
-						</p> */}
 					</div>
 					<div className="prod-info grid gap-10 p-1">
-						<div className="flex flex-col md:flex-row justify-between items-center text-gray-900">
+						<div className="flex flex-col  justify-center items-center text-gray-900">
 							<p className="font-bold text-xl">
 								{"₹ " + bidproduct?.base_price}
 							</p>
+							<p className="uppercase text-sm text-gray-400  p-1">Your bid</p>
 						</div>
 					</div>
 				</div>

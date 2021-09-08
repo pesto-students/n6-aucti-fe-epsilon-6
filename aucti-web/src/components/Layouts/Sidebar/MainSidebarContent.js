@@ -11,6 +11,7 @@ import {
 	RefinementList,
 } from "react-instantsearch-dom";
 import CustomNumericMenu from "../../Shared/CustomNumericMenu ";
+import { useState } from "react";
 // import "./Sidebar.css";
 // import "instantsearch.css/themes/reset.css";
 
@@ -21,15 +22,18 @@ function Icon({ icon, ...props }) {
 
 function MainSidebarContent(props) {
 	const { user, priceRangeComponent } = props;
+	const [filter, setFilter] = useState("");
 
 	const handleFilter = (filter, path) => {
 		props.dispatch(filterSearchResultAction(filter));
 		history.push(path);
+		setFilter(filter);
 	};
 
 	const handleClear = (filter, path) => {
 		props.dispatch(filterSearchResultAction(null));
 		history.push(path);
+		setFilter("");
 	};
 
 	return (
@@ -64,7 +68,9 @@ function MainSidebarContent(props) {
 							<button
 								key={route.path}
 								// to={route.path}
-								className="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+								className={`inline-flex items-center w-full text-sm ${
+									filter === route.tag ? "font-bold" : "font-semibold"
+								} transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200`}
 								// activeClassName="text-gray-800 dark:text-gray-100"
 								onClick={() => handleFilter(route.tag, route.path)}
 							>
@@ -86,20 +92,12 @@ function MainSidebarContent(props) {
 				)}
 			</ul>
 			{priceRangeComponent && (
-				<div className="flex-col py-5 px-5">
-					<div className="inline-flex items-center w-full text-lg font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 pb-5">
-						{/* <ClearRefinements /> */}
+				<div className="flex-col py-5 px-4">
+					<div className="inline-flex items-center w-full text-lg font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+						<span>Price Range</span>
 					</div>
+					<div className="inline-flex items-center w-full text-lg font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 pb-5"></div>
 					<div className="w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
-						{/* <NumericMenu
-							attribute="base_price"
-							items={[
-								{ label: "<= ₹50000", end: 50000 },
-								{ label: "₹50000 - ₹100000", start: 50000, end: 100000 },
-								{ label: "₹100000 - ₹200000", start: 100000, end: 200000 },
-								{ label: ">= ₹200000", start: 200000 },
-							]}
-						/> */}
 						<CustomNumericMenu
 							attribute="base_price"
 							items={[
@@ -109,8 +107,6 @@ function MainSidebarContent(props) {
 								{ label: ">= ₹200000", start: 200000 },
 							]}
 						/>
-
-						{/* <RefinementList attribute="product_category" /> */}
 					</div>
 				</div>
 			)}

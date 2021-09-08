@@ -26,6 +26,9 @@ const SellerAddProduct = (props) => {
 		} else if (!base_price) {
 			setError("Base Price cannot be blank");
 			valid = false;
+		} else if (base_price.isNaN()) {
+			setError("Base Price cannot be text");
+			valid = false;
 		} else if (!product_category) {
 			setError("Product category cannot be blank");
 			valid = false;

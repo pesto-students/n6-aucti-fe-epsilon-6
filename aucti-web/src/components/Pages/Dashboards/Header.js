@@ -87,32 +87,32 @@ function Header(props) {
 									alt="profile-picture"
 								/>
 							) : (
-								<img
-									className="inline object-cover w-12 h-12 mr-2 rounded-full"
-									src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
-									alt="profile-picture"
-								/>
-							)}
-						</button>
-
-						<Dropdown
-							align="right"
-							isOpen={isProfileMenuOpen}
-							onClose={() => setIsProfileMenuOpen(false)}
-						>
-							{user && (
-								<Link to={`/${user.role}`}>
-									<DropdownItem className="hover:bg-auctiLight">
-										<OutlinePersonIcon
-											className="w-4 h-4 mr-3"
-											aria-hidden="true"
-										/>
-
-										<span>Dashboard</span>
-									</DropdownItem>
+								<Link to={"/login"}>
+									<span className="text-sm font-medium text-gray-900 dark:text-purple-400 hover:underline hover:text-purple-600">
+										Login
+									</span>
 								</Link>
 							)}
-							{user ? (
+						</button>
+						{user && (
+							<Dropdown
+								align="right"
+								isOpen={isProfileMenuOpen}
+								onClose={() => setIsProfileMenuOpen(false)}
+							>
+								{user && (
+									<Link to={`/${user.role}`}>
+										<DropdownItem className="hover:bg-auctiLight">
+											<OutlinePersonIcon
+												className="w-4 h-4 mr-3"
+												aria-hidden="true"
+											/>
+
+											<span>Dashboard</span>
+										</DropdownItem>
+									</Link>
+								)}
+
 								<DropdownItem
 									onClick={handleLogout}
 									className="hover:bg-auctiLight"
@@ -123,19 +123,8 @@ function Header(props) {
 									/>
 									<span>Log out</span>
 								</DropdownItem>
-							) : (
-								<Link to={"/login"}>
-									<DropdownItem className="hover:bg-auctiLight">
-										<OutlineLogoutIcon
-											className="w-4 h-4 mr-3"
-											aria-hidden="true"
-										/>
-
-										<span>Login</span>
-									</DropdownItem>
-								</Link>
-							)}
-						</Dropdown>
+							</Dropdown>
+						)}
 					</li>
 				</ul>
 			</div>

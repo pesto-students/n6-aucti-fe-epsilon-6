@@ -15,6 +15,9 @@ const {
 	updateProductRecieved,
 	updateProductDispute,
 	cancelAuction,
+	fetchProductPerUser,
+	fetchAllLatestProducts,
+	fetchAllHotProducts,
 } = require("../services/products.service.js");
 
 // const multer = Multer({
@@ -27,8 +30,20 @@ const {
 // const isAuthenticated = require('../middlewares');
 // router.use(isAuthenticated);
 
-router.get("/", (req, res) => {
-	fetchAllProducts()
+router.get("/all/:firstPageIndex,:lastPageIndex", (req, res) => {
+	fetchAllProducts(req.params)
+		.then((data) => res.json(data))
+		.catch((err) => res.status(500).send(err));
+});
+
+router.get("/latest/:firstPageIndex,:lastPageIndex", (req, res) => {
+	fetchAllLatestProducts(req.params)
+		.then((data) => res.json(data))
+		.catch((err) => res.status(500).send(err));
+});
+
+router.get("/hot/:firstPageIndex,:lastPageIndex", (req, res) => {
+	fetchAllHotProducts(req.params)
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));
 });
