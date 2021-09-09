@@ -1,8 +1,7 @@
 import { combineReducers } from "redux";
 import { productsReducer } from "./productsReducer";
 import { productReducer } from "./productReducer";
-import { productPerUserReducer } from './productPerUserReducer'
-import { wishlistReducer } from "./wishlistReducer";
+import { productPerUserReducer } from "./productPerUserReducer";
 import { userReducer } from "./userReducer";
 import { alertReducer } from "./alertReducer";
 import { bidReducer } from "./bidReducer";
@@ -26,30 +25,29 @@ import { filterReducer } from "./filterReducer";
 import { priceRangeReducer } from "./priceRangeReducer";
 
 const rootReducer = combineReducers({
-	user: userReducer,
-	alert: alertReducer,
-	bids: bidReducer,
-	buyerBids: buyerBidReducer,
-	insights: buyerInsightsReducer,
-	wishlist: buyerWishlistReducer,
-	buyerHistory: buyerHistoryReducer,
-	notifications: buyerNotificationReducer,
-	addresses: addressReducer,
-	sellerProducts: sellerProductReducer,
-	sellerInsights: sellerInsightsReducer,
-	addProductUpdate: sellerAddProductReducer,
-	bidsWithUsers: sellerBidsUserReducer,
-	paymentMessage: paymentReducer,
-	sellerHistory: sellerHistoryReducer,
-	sellerCompleted: sellerCompletedReducer,
-	buyerCompleted: buyerCompletedReducer,
-	productReducer,
-	productsReducer,
-	productPerUserReducer,
-	wishlistReducer,
-	bidproduct: bidProductReducer,
-	sideBar: sideBarReducer,
-	searchFilter: filterReducer,
-	priceRangeComponent: priceRangeReducer,
+  user: userReducer,
+  alert: alertReducer,
+  bids: bidReducer,
+  buyerBids: buyerBidReducer,
+  insights: buyerInsightsReducer,
+  wishlist: buyerWishlistReducer,
+  buyerHistory: buyerHistoryReducer,
+  notifications: buyerNotificationReducer,
+  addresses: addressReducer,
+  sellerProducts: sellerProductReducer,
+  sellerInsights: sellerInsightsReducer,
+  addProductUpdate: sellerAddProductReducer,
+  bidsWithUsers: sellerBidsUserReducer,
+  paymentMessage: paymentReducer,
+  sellerHistory: sellerHistoryReducer,
+  sellerCompleted: sellerCompletedReducer,
+  buyerCompleted: buyerCompletedReducer,
+  productReducer,
+  productsReducer,
+  productPerUserReducer,
+  bidproduct: bidProductReducer,
+  sideBar: sideBarReducer,
+  searchFilter: filterReducer,
+  priceRangeComponent: priceRangeReducer,
 });
 export default rootReducer;
