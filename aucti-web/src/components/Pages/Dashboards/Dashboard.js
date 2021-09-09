@@ -28,8 +28,6 @@ function Dashboard(props) {
 		routes = buyerRoutes;
 	} else if (user && user.role === "seller") {
 		routes = sellerRoutes;
-	} else {
-		routes = buyerRoutes;
 	}
 	return (
 		<div

@@ -37,10 +37,10 @@ const BuyerRoutes = [
 	// 	path: "/ratings",
 	// 	component: Ratings,
 	// },
-	{
-		path: "/notifications",
-		component: Notifications,
-	},
+	// {
+	// 	path: "/notifications",
+	// 	component: Notifications,
+	// },
 	{
 		path: "/profile",
 		component: Profile,

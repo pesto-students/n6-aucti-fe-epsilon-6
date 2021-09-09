@@ -1,5 +1,4 @@
 import * as types from "../types";
-
 export const addWishlistAction = (user_id, product_id) => {
   return {
     type: types.ADD_WISHLIST,

@@ -45,29 +45,30 @@ exports.fetchAllBids = () =>
 	});
 
 exports.fetchUserIdBids = (req) =>
-  new Promise((resolve, reject) => {
-    const user_id  =req;
-    if (!user_id) {
-      let msg = "User id is empty";
-      reject(msg);
-    }
-    bids
-      .where("user_id", "==", user_id)
-      .orderBy("createdAt", "desc")
-      .get()
-      .then((querySnapshot) => {
-        const data = querySnapshotData(querySnapshot);
-        console.log(data);
-        resolve(data);
-      })
-      .catch((err) => {
-        let msg = "Unable to retrieve Bids";
-        reject(msg);
-      });
-  });
+	new Promise((resolve, reject) => {
+		const user_id = req;
+		if (!user_id) {
+			let msg = "User id is empty";
+			reject(msg);
+		}
+		bids
+			.where("user_id", "==", user_id)
+			.orderBy("createdAt", "desc")
+			.get()
+			.then((querySnapshot) => {
+				const data = querySnapshotData(querySnapshot);
+				console.log(data);
+				resolve(data);
+			})
+			.catch((err) => {
+				let msg = "Unable to retrieve Bids";
+				reject(msg);
+			});
+	});
 
 exports.fetchUserBids = (req) =>
 	new Promise((resolve, reject) => {
+		console.log(req);
 		const { user_id, firstPageIndex, lastPageIndex } = req;
 		if (!user_id) {
 			let msg = "User id is empty";
@@ -421,7 +422,6 @@ exports.addBid = (req) =>
 				const filter = dataBid.filter((n) => n.product_id === product_id);
 
 				if (filter.length > 0) {
-
 					const bid = filter[0];
 
 					bids
@@ -439,39 +439,11 @@ exports.addBid = (req) =>
 											return parseInt(o.bid_price);
 										})
 									);
-									db.doc(`/products/${product_id}`)
-										.get()
-										.then((querySnapshotProduct) => {
-											let product = querySnapshotProduct.data();
-											product.id = querySnapshotProduct.id;
-											db.doc(`/users/${product.seller_id}`)
-												.get()
-												.then((querySnapshotUser) => {
-													let user = querySnapshotUser.data();
-													console.log({
-														...product,
-														seller: user.name,
-														highest_bid: maxValue,
-														bids: dataProd.length,
-													});
-													resolve({
-														...product,
-														seller: user.name,
-														highest_bid: maxValue,
-														bids: dataProd.length,
-													});
-												})
-												.catch((err) => {
-													let msg = "Unable to add bid";
-													console.log(err);
-													reject(msg);
-												});
-										})
-										.catch((err) => {
-											let msg = "Unable to add bid";
-											console.log(err);
-											reject(msg);
-										});
+									resolve({
+										highest_bid: maxValue,
+										bids: dataProd.length,
+										bid: { ...bid, bid_price },
+									});
 								})
 								.catch((err) => {
 									let msg = "Unable to add bid";
@@ -487,45 +459,27 @@ exports.addBid = (req) =>
 					bids
 						.add(data)
 						.then((docRef) => {
+							const bid = { ...data, id: docRef.id };
 							bids
 								.where("product_id", "==", data.product_id)
 								.get()
 								.then((querySnapshot) => {
 									const dataProd = querySnapshotData(querySnapshot);
-									let maxValue = Math.max.apply(
-										Math,
-										dataProd.map(function (o) {
-											return parseInt(o.bid_price);
-										})
-									);
-									db.doc(`/products/${product_id}`)
-										.get()
-										.then((querySnapshot) => {
-											let product = querySnapshot.data();
-											product.id = querySnapshot.id;
-											db.doc(`/users/${product.seller_id}`)
-												.get()
-												.then((querySnapshot) => {
-													let user = querySnapshot.data();
+									let maxValue = 0;
+									if (dataProd.length > 0) {
+										maxValue = Math.max.apply(
+											Math,
+											dataProd.map(function (o) {
+												return parseInt(o.bid_price);
+											})
+										);
+									}
 
-													resolve({
-														...product,
-														seller: user.name,
-														highest_bid: maxValue,
-														bids: dataProd.length,
-													});
-												})
-												.catch((err) => {
-													let msg = "Unable to add bid";
-													console.log(err);
-													reject(msg);
-												});
-										})
-										.catch((err) => {
-											let msg = "Unable to add bid";
-											console.log(err);
-											reject(msg);
-										});
+									resolve({
+										highest_bid: maxValue,
+										bids: dataProd.length,
+										bid: bid,
+									});
 								})
 								.catch((err) => {
 									let msg = "Unable to add bid";

@@ -1,33 +1,37 @@
 import { connectNumericMenu } from "react-instantsearch-dom";
 
-const CustomNumericMenu = ({ items, refine, createURL }) => (
-	<ul>
-		{items.map((item) => (
-			<li key={item.value}>
-				<input
-					type="checkbox"
-					name="checked-demo"
-					className="form-tick appearance-none bg-white bg-check h-6 w-6 border border-gray-300 rounded-md checked:bg-yellow-500 checked:border-transparent focus:outline-none"
-					// checked={props.checked.includes(n.id)}
-					// disabled={!props.checked.includes(n.id) && props.checked.length > 0}
-					// onChange={() => props.handleSelectBid(n.id)}
-				/>
-				<span className="text-gray-700 dark:text-white font-normal">
-					Select Bid
-				</span>
-				<a
-					href={createURL(item.value)}
-					style={{ fontWeight: item.isRefined ? "bold" : "" }}
-					onClick={(event) => {
-						event.preventDefault();
-						refine(item.value);
-					}}
-				>
-					{item.label}
-				</a>
-			</li>
-		))}
-	</ul>
-);
+const CustomNumericMenu = ({ items, refine, createURL }) => {
+	const handleChange = (item) => {
+		// event.preventDefault();
+		item.isRefined = true;
+		refine(item.value);
+	};
 
+	return (
+		<ul>
+			{items.map((item) => (
+				<li key={item.value}>
+					<div className="flex flex-row ml-2">
+						<input
+							type="checkbox"
+							name="checked-demo"
+							className="form-tick mb-6 appearance-none bg-white bg-check h-4 w-4 border border-gray-300 rounded-md checked:bg-gray-800 checked:border-transparent focus:outline-none"
+							checked={item.isRefined}
+							onChange={() => {
+								handleChange(item);
+							}}
+						/>
+						<span
+							className={`ml-4  text-gray-900 dark:text-white ${
+								item.isRefined ? "font-bold" : "font-semibold"
+							}`}
+						>
+							{item.label}
+						</span>
+					</div>
+				</li>
+			))}
+		</ul>
+	);
+};
 export default connectNumericMenu(CustomNumericMenu);

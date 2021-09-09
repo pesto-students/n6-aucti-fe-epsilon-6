@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import CustomSearchBox from "./CustomSearchBox";
 import CustomHitsComponent from "./CustomHitsComponent";
 import { Configure, connectSearchBox } from "react-instantsearch-dom";
+import { useDispatch } from "react-redux";
+import { filterSearchResultAction } from "../../redux/actions/userActions";
+import history from "../../routes/history";
 
 function Searchbar({ refine }) {
 	const dropdownRef = useRef(null);
 
 	const [showdropdown, setshowdropdown] = useState(true);
+	const dispatch = useDispatch();
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (
@@ -21,8 +25,15 @@ function Searchbar({ refine }) {
 	}, [dropdownRef]);
 
 	const handleType = (e) => {
+		dispatch(filterSearchResultAction(null));
 		refine(e.currentTarget.value);
 		setshowdropdown(true);
+	};
+
+	const onClick = (id) => {
+		// to={`/home/product/${id}`}
+		history.push(`/home/product/${id}`);
+		setshowdropdown(false);
 	};
 
 	return (
@@ -32,7 +43,7 @@ function Searchbar({ refine }) {
 				{window.location.pathname === "/home/search" ? (
 					<></>
 				) : (
-					<CustomHitsComponent show={showdropdown} />
+					<CustomHitsComponent handleClick={onClick} show={showdropdown} />
 				)}
 			</div>
 		</div>

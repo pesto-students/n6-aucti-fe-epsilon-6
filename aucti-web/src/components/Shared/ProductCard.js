@@ -4,16 +4,11 @@ import history from "../../routes/history";
 import LazyLoad from "react-lazyload";
 const ProductCard = (props) => {
 	const { bidproduct } = props;
-	console.log(bidproduct);
+
 	let url = "/home/product/" + bidproduct.id;
 
 	const handleProduct = () => {
 		history.push(url);
-	};
-	const refPlaceholder = React.useRef();
-
-	const removePlaceholder = () => {
-		refPlaceholder.current.remove();
 	};
 
 	return (

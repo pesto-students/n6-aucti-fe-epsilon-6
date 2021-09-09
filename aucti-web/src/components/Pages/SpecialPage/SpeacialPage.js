@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { getProductsAction } from "../../../redux/actions/productActions";
+import {
+	getHotProductsAction,
+	getLatestProductsAction,
+	getProductsAction,
+} from "../../../redux/actions/productActions";
 import Cardlist from "../../Shared/cardlist";
 import Quicklink from "../../Shared/Quicklink";
 import FilterList from "../../Shared/filterList";
@@ -9,25 +13,34 @@ import { Banner } from "../../Shared/Banner";
 import Pagination from "../../Shared/Pagination/Pagination";
 import Loader from "../../Shared/Loader";
 import ProductCard from "../../Shared/ProductCard";
-let PageSize = 8;
-function LandingPage(props) {
-	const { products } = props;
-	// const productsFiltered = products?.data;
+let PageSize = 6;
+function SpeacialPage(props) {
+	const { specialProducts } = props;
+
 	const [currentPage, setCurrentPage] = useState(1);
 	const [loading, setLoading] = useState(true);
-	const [productsFiltered, setProductsFiltered] = useState(products.data);
+	const [productsFiltered, setProductsFiltered] = useState(
+		specialProducts.data
+	);
+
 	useEffect(() => {
 		const { firstPageIndex, lastPageIndex } = currentTableData;
-
-		props.getProducts(firstPageIndex, lastPageIndex);
-	}, [currentPage]);
+		const category = props.match.params.category;
+		if (category === "hot_auctions") {
+			props.getHotProducts(firstPageIndex, lastPageIndex);
+		} else if (category === "latest") {
+			props.getLatestProducts(firstPageIndex, lastPageIndex);
+		} else {
+			props.getLatestProducts(firstPageIndex, lastPageIndex);
+		}
+	}, [currentPage, props.match.params.category]);
 
 	useEffect(() => {
-		if (products && products?.data !== productsFiltered) {
-			setProductsFiltered(products.data);
+		if (specialProducts && specialProducts?.data !== productsFiltered) {
+			setProductsFiltered(specialProducts.data);
 			setLoading(false);
 		}
-	}, [products]);
+	}, [specialProducts]);
 
 	const onNext = () => {
 		setLoading(true);
@@ -58,8 +71,6 @@ function LandingPage(props) {
 				id="main"
 				className="grid items-start xl:grid-cols-3 md:grid-cols-2 gap-1  xs:grid-cols-1"
 			>
-				<Banner></Banner>
-
 				{productsFiltered !== null &&
 					productsFiltered.map((item) => {
 						return <ProductCard key={item.id} bidproduct={item}></ProductCard>;
@@ -68,7 +79,7 @@ function LandingPage(props) {
 			<div className="grid justify-items-end p-4">
 				<Pagination
 					currentPage={currentPage}
-					totalCount={products.length}
+					totalCount={specialProducts.length}
 					pageSize={PageSize}
 					onPageChange={(page) => setCurrentPage(page)}
 					onNext={onNext}
@@ -82,15 +93,17 @@ function LandingPage(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		products: state.productsReducer,
+		specialProducts: state.specialProducts,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		getProducts: (firstPageIndex, lastPageIndex) =>
-			dispatch(getProductsAction(firstPageIndex, lastPageIndex)),
+		getLatestProducts: (firstPageIndex, lastPageIndex) =>
+			dispatch(getLatestProductsAction(firstPageIndex, lastPageIndex)),
+		getHotProducts: (firstPageIndex, lastPageIndex) =>
+			dispatch(getHotProductsAction(firstPageIndex, lastPageIndex)),
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(SpeacialPage);
