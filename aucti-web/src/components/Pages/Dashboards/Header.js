@@ -24,7 +24,7 @@ import Usericon from "../../Shared/usericon";
 import history from "../../../routes/history";
 import Searchbar from "../../Shared/searchbar";
 
-function Header(props) {
+export const Header = (props)=> {
 	const { user } = props;
 
 	// const { toggleSidebar } = useState(false);
