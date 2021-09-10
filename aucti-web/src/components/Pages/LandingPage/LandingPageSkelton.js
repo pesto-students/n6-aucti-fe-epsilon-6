@@ -12,8 +12,8 @@ const LandingPageSkelton = () => {
 				<BannerSkelton />
 				{Array(8)
 					.fill()
-					.map((n) => (
-						<ProductCardSkelton key={n} />
+					.map((n, key) => (
+						<ProductCardSkelton key={key} />
 					))}
 			</div>
 		</div>

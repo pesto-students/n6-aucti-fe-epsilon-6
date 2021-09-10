@@ -1,18 +1,10 @@
-import React, { useState, Suspense, useEffect, lazy } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Switch, Route, Redirect, useLocation } from "react-router-dom";
-import buyerRoutes from "../../routes/BuyerRoute";
-import sellerRoutes from "../../routes/SellerRoutes";
+import { useLocation } from "react-router-dom";
 
 import Sidebar from "../Layouts/Sidebar/MainSidebar";
 import Header from "../Pages/Dashboards/Header";
 import Main from "../Pages/Dashboards/Main";
-import Dropdown from "../Shared/Dropdown";
-
-import Loader from "../Shared/Loader";
-import Footer from "./Footer";
-
-// import { SidebarContext } from "../context/SidebarContext";
 
 function CustomLayout(props) {
 	const { user } = props;

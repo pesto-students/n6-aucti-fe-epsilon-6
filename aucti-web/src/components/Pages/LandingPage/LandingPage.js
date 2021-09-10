@@ -1,18 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { getProductsAction } from "../../../redux/actions/productActions";
-import Cardlist from "../../Shared/cardlist";
-import Quicklink from "../../Shared/Quicklink";
-import FilterList from "../../Shared/filterList";
-import Footer from "../../Layouts/Footer";
 import { Banner } from "../../Shared/Banner";
 import Pagination from "../../Shared/Pagination/Pagination";
 import Loader from "../../Shared/Loader";
 import ProductCard from "../../Shared/ProductCard";
+import LandingPageSkelton from "./LandingPageSkelton";
+import LazyLoad from "react-lazyload";
+import ProductCardSkelton from "../../Shared/ProductCardSkelton";
+
 let PageSize = 8;
 function LandingPage(props) {
 	const { products } = props;
-	// const productsFiltered = products?.data;
+
 	const [currentPage, setCurrentPage] = useState(1);
 	const [loading, setLoading] = useState(true);
 	const [productsFiltered, setProductsFiltered] = useState(products.data);
@@ -50,7 +50,7 @@ function LandingPage(props) {
 	}, [currentPage]);
 
 	if (loading) {
-		return <Loader></Loader>;
+		return <LandingPageSkelton />;
 	}
 	return (
 		<>
@@ -61,9 +61,9 @@ function LandingPage(props) {
 				<Banner></Banner>
 
 				{productsFiltered !== null &&
-					productsFiltered.map((item) => {
-						return <ProductCard key={item.id} bidproduct={item}></ProductCard>;
-					})}
+					productsFiltered.map((item) => (
+						<ProductCard key={item.id} bidproduct={item}></ProductCard>
+					))}
 			</div>
 			<div className="grid justify-items-end p-4">
 				<Pagination

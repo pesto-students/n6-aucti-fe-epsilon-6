@@ -16,25 +16,43 @@ export const login = (role) => {
 				var token = credential.accessToken;
 				// The signed-in user info.
 				var user = result.user;
-				const userData = {
-					user,
-					token,
-				};
+
 				const uid = user.uid;
 				const userCollection = firestore.collection("users");
-				userCollection
-					.doc(uid)
-					.set({
-						name: user.displayName,
-						email: user.email,
-						role: role,
+				var docRef = userCollection.doc(uid);
+				docRef
+					.get()
+					.then((doc) => {
+						console.log(doc.data().role);
+						if (doc.exists) {
+							localStorage.setItem(
+								"user",
+								JSON.stringify({ user, token, role: doc.data().role })
+							);
+
+							resolve({ ...user, role: doc.data().role });
+						} else {
+							docRef
+								.set({
+									name: user.displayName,
+									email: user.email,
+									role: role,
+								})
+								.then(() => {
+									localStorage.setItem(
+										"user",
+										JSON.stringify({ user, token, role })
+									);
+
+									resolve({ ...user, role });
+								})
+								.catch((err) => reject(err));
+						}
 					})
-					.then(() => {
-						localStorage.setItem("user", JSON.stringify({ user, token, role }));
-						console.log({ user, token, role });
-						resolve(result);
-					})
-					.catch((err) => reject(err));
+					.catch((error) => {
+						console.log("Error getting document:", error);
+						reject(error);
+					});
 			})
 			.catch((error) => {
 				// Handle Errors here.

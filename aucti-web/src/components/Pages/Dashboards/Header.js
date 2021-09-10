@@ -101,7 +101,7 @@ function Header(props) {
 								onClose={() => setIsProfileMenuOpen(false)}
 							>
 								{user && (
-									<Link to={`/${user.role}`}>
+									<Link to={`/${user?.role}`}>
 										<DropdownItem className="hover:bg-auctiLight">
 											<OutlinePersonIcon
 												className="w-4 h-4 mr-3"

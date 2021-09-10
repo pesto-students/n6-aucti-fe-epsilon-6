@@ -10,8 +10,8 @@ const SpecialPageSkelton = () => {
 			>
 				{Array(6)
 					.fill()
-					.map((n) => (
-						<ProductCardSkelton key={n} />
+					.map((n, key) => (
+						<ProductCardSkelton key={key} />
 					))}
 			</div>
 		</div>

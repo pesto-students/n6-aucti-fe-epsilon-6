@@ -13,6 +13,7 @@ import { Banner } from "../../Shared/Banner";
 import Pagination from "../../Shared/Pagination/Pagination";
 import Loader from "../../Shared/Loader";
 import ProductCard from "../../Shared/ProductCard";
+import SpecialPageSkelton from "./SpecialPageSkelton";
 let PageSize = 6;
 function SpeacialPage(props) {
 	const { specialProducts } = props;
@@ -63,7 +64,7 @@ function SpeacialPage(props) {
 	}, [currentPage]);
 
 	if (loading) {
-		return <Loader></Loader>;
+		return <SpecialPageSkelton />;
 	}
 	return (
 		<>
