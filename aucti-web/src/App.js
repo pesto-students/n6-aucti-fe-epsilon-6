@@ -1,14 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { auth, firebase } from "./config/firebase";
-
-
-
-import LandingPage from "./components/Pages/LandingPage/LandingPage";
-
-import Layout from "./components/Layouts/layout";
-import ProductPage from "./components/Pages/ProductPage/ProductPage";
-import SearchPage from "./components/Pages/SearchPage/SearchPage";
 
 import algoliasearch from "algoliasearch";
 import { InstantSearch } from "react-instantsearch-dom";
@@ -17,12 +8,7 @@ import PageNotFound from "./components/Pages/PageNotFound";
 
 import Dashboard from "./components/Pages/Dashboards/Dashboard";
 import Login from "./components/Pages/Auth/Login/Login";
-import Signup from "./components/Pages/Auth/Signup/Signup";
 
-import RegisterForm from "./components/Pages/Auth/Signup/RegisterForm";
-import { connect } from "react-redux";
-import { logoutUserAction, userLoggedIn } from "./redux/actions/userActions";
-import Nav from "./components/Pages/LandingPage/Nav";
 import BuyerRoute from "./routes/BuyerRoute";
 import SellerRoute from "./routes/SellerRoute";
 import BuyerPayments from "./components/Pages/Dashboards/Buyer/BuyerPayments";
