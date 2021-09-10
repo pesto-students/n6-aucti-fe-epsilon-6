@@ -68,7 +68,6 @@ exports.fetchUserIdBids = (req) =>
 
 exports.fetchUserBids = (req) =>
 	new Promise((resolve, reject) => {
-		console.log(req);
 		const { user_id, firstPageIndex, lastPageIndex } = req;
 		if (!user_id) {
 			let msg = "User id is empty";

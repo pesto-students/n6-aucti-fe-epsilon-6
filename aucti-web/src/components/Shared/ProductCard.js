@@ -1,7 +1,11 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import history from "../../routes/history";
-import LazyLoad from "react-lazyload";
+// import LazyLoad from "react-lazyload";
+import LazyLoad from "react-lazy-load";
+
+// import LazyImage from "./LazyImage";
+const LazyImage = lazy(() => import("./LazyImage"));
 const ProductCard = (props) => {
 	const { bidproduct } = props;
 
@@ -11,17 +15,32 @@ const ProductCard = (props) => {
 		history.push(url);
 	};
 
+	const refPlaceholder = React.useRef();
+
+	const removePlaceholder = () => {
+		refPlaceholder.current.remove();
+	};
+
 	return (
 		<div className="w-80 flex justify-center items-center">
 			<div className="w-full p-4">
 				<div className="card flex flex-col justify-center p-10 bg-white rounded-lg shadow-2xl">
 					<Link to={url}>
-						<div className="prod-img flex justify-center">
-							<LazyLoad>
+						<div className="flex justify-center">
+							<div
+								ref={refPlaceholder}
+								className="h-36 w-36 mb-4 bg-gray-200 rounded-tr rounded-tl animate-pulse"
+							></div>
+							<LazyLoad
+								// offsetBottom={-300}
+								height={160}
+							>
 								<img
 									src={bidproduct?.product_picture}
 									className="object-cover object-center h-40 pb-4"
-									// onClick={handleProduct}
+									onLoad={removePlaceholder}
+									onError={removePlaceholder}
+									alt={bidproduct?.title}
 								/>
 							</LazyLoad>
 						</div>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { bidsURL, productURL, userURL } from "../api";
 import { firebase, auth, firestore } from "../../config/firebase";
+import resizer from "../../config/resizer";
 
 export const getSellerProducts = (userId, firstPageIndex, lastPageIndex) => {
 	return axios
@@ -20,11 +21,11 @@ export const getSellerInsights = (userId) => {
 	return axios.get(productURL + "/insights/" + userId).then((res) => res.data);
 };
 
-export const uploadPicture = (product_picture) => {
+export const uploadPicture = async (product_picture) => {
+	let file = await resizer(product_picture);
 	return new Promise((resolve, reject) => {
-		let file = product_picture;
 		var storage = firebase.storage();
-		var storageRef = storage.ref(`/images/${file.name}`);
+		var storageRef = storage.ref(`/images/${product_picture.name}`);
 		var uploadTask = storageRef.put(file);
 
 		uploadTask.on(
@@ -50,7 +51,8 @@ export const uploadPicture = (product_picture) => {
 	});
 };
 
-export const deleteAndUploadPicture = (picture, product_picture) => {
+export const deleteAndUploadPicture = async (picture, product_picture) => {
+	let file = await resizer(product_picture);
 	return new Promise((resolve, reject) => {
 		let name = picture;
 		var storage = firebase.storage();
@@ -58,9 +60,8 @@ export const deleteAndUploadPicture = (picture, product_picture) => {
 		var deleteTask = storageRef.delete();
 		deleteTask
 			.then(() => {
-				let file = product_picture;
 				var storage = firebase.storage();
-				var storageRef = storage.ref(`/images/${file.name}`);
+				var storageRef = storage.ref(`/images/${product_picture.name}`);
 				var uploadTask = storageRef.put(file);
 
 				uploadTask.on(
