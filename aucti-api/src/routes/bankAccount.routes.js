@@ -6,6 +6,9 @@ const {
 } = require("../services/bankAccount.service");
 const router = express.Router();
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/:user", (req, res) => {
 	const { user } = req.params;
 	fetchUserBankDetails(user)
