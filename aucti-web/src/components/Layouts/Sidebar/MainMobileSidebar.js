@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Transition, Backdrop } from "@windmill/react-ui";
 import SidebarContent from "./MainSidebarContent";
 import { connect } from "react-redux";
 import { toggleSidebarAction } from "../../../redux/actions/userActions";
 
 function MainMobileSidebar(props) {
-	const { user, sideBar } = props;
+	const { sideBar } = props;
 	const closeSidebar = () => {
 		props.dispatch(toggleSidebarAction());
 	};

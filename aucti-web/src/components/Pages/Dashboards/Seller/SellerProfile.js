@@ -1,51 +1,67 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { EditIcon, TrashIcon } from "../../../../assets/icons";
+import { TrashIcon } from "../../../../assets/icons";
+
 import {
-	deleteUserAddressAction,
-	loadUserAddressAction,
-	saveUserAddressAction,
-} from "../../../../redux/actions/buyerActions";
+	deleteUserBankAccountAction,
+	loadUserBankAccountAction,
+	saveUserBankAccountAction,
+} from "../../../../redux/actions/sellerActions";
 
 const SellerProfile = (props) => {
-	const { user, addresses } = props;
-	const [address, setAddress] = useState("");
-	const [city, setCity] = useState("");
-	const [state, setState] = useState("");
-	const [zip, setZip] = useState("");
-
-	const handleChangeAddress = (e) => {
-		setAddress(e.target.value);
-	};
-
-	const handleCity = (e) => {
-		setCity(e.target.value);
-	};
-
-	const handleState = (e) => {
-		setState(e.target.value);
-	};
-
-	const handleZip = (e) => {
-		setZip(e.target.value);
-	};
+	const { user, sellerBankAccounts } = props;
+	const [account_name, setAccount_name] = useState("");
+	const [bank_name, setBank_name] = useState("");
+	const [branch_name, setBranch_name] = useState("");
+	const [account_no, setAccount_no] = useState("");
+	const [ifsc_code, setIfsc_code] = useState("");
+	const [error, setError] = useState("");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(user, address, city, state, zip);
-		props.saveUserAddress({ user_id: user.uid, address, city, state, zip });
-		setAddress("");
-		setCity("");
-		setState("");
-		setZip("");
+		let valid = true;
+		if (!account_name) {
+			setError("Account Name cannot be blank");
+			valid = false;
+		} else if (!bank_name) {
+			setError("Bank Name cannot be blank");
+			valid = false;
+		} else if (!branch_name) {
+			setError("Branch Name cannot be blank");
+			valid = false;
+		} else if (!account_no) {
+			setError("Account No cannot be blank");
+			valid = false;
+		} else if (isNaN(account_no)) {
+			setError("Account No cannot be text");
+			valid = false;
+		} else if (!ifsc_code) {
+			setError("IFSC Code cannot be blank");
+			valid = false;
+		} else if (valid) {
+			props.saveUserBankAccount({
+				user_id: user.uid,
+				account_name,
+				bank_name,
+				branch_name,
+				account_no,
+				ifsc_code,
+			});
+			setAccount_name("");
+			setBank_name("");
+			setBranch_name("");
+			setAccount_no("");
+			setIfsc_code("");
+			setError("");
+		}
 	};
 
 	const handleDelete = (id) => {
-		props.deleteUserAddress(id);
+		props.deleteUserBankAccount(id);
 	};
 
 	useEffect(() => {
-		props.loadUserAddress(user.uid);
+		props.loadUserBankAccount(user.uid);
 	}, []);
 
 	return (
@@ -78,8 +94,8 @@ const SellerProfile = (props) => {
 						<form>
 							<div className="overflow-hidden sm:rounded-md border-gray-400 border rounded">
 								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="w-96">
-										<div>
+									<div className="xl:w-96 lg:w-96 md:w-96 xs:w-64">
+										<div className="flex flex-wrap col-span-3">
 											<label
 												htmlFor="email-address"
 												className="block text-sm font-medium text-gray-700"
@@ -97,93 +113,99 @@ const SellerProfile = (props) => {
 											/>
 										</div>
 
-										{/* <div className="flex flex-wrap col-span-3">
+										<div className="flex flex-wrap col-span-3 pt-4">
 											<div className="w-full">
 												<label
-													className="block mb-1"
-													htmlFor="formGridCode_card"
+													htmlFor="account-name"
+													className="block text-sm font-medium text-gray-700"
 												>
-													Card number
+													Account Name
 												</label>
 												<input
-													className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
 													type="text"
-													id="formGridCode_card"
+													name="account_name"
+													id="account_name"
+													className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+													value={account_name}
+													onChange={(e) => setAccount_name(e.target.value)}
 												/>
 											</div>
-										</div> */}
-										{/* <div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0 col-span-3">
-											<div className="w-full px-2 md:w-1/2">
+										</div>
+										<div className="flex flex-wrap col-span-3 pt-4">
+											<div className="w-full ">
 												<label
-													className="block mb-1"
-													htmlFor="formGridCode_name"
+													htmlFor="bank-name"
+													className="block text-sm font-medium text-gray-700"
 												>
-													First name
+													Bank Name
 												</label>
 												<input
-													className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
 													type="text"
-													id="formGridCode_name"
+													name="bank_name"
+													id="bank_name"
+													className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+													value={bank_name}
+													onChange={(e) => setBank_name(e.target.value)}
 												/>
 											</div>
-											<div className="w-full px-2 md:w-1/2 col-span-3">
+										</div>
+										<div className="flex flex-wrap col-span-3 pt-4">
+											<div className="w-full ">
 												<label
-													className="block mb-1"
-													htmlFor="formGridCode_last"
+													htmlFor="branch-name"
+													className="block text-sm font-medium text-gray-700"
 												>
-													Last name
+													Branch Name
 												</label>
 												<input
-													className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
 													type="text"
-													id="formGridCode_last"
+													name="branch_name"
+													id="branch_name"
+													className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+													value={branch_name}
+													onChange={(e) => setBranch_name(e.target.value)}
 												/>
 											</div>
-										</div> */}
-										{/* <div className="flex flex-wrap -mx-2 space-y-4 md:space-y-0 col-span-2">
-											<div className="w-full px-2 md:w-1/3">
+										</div>
+										<div className="flex flex-wrap col-span-3 pt-4">
+											<div className="w-full ">
 												<label
-													className="block mb-1"
-													htmlFor="formGridCode_month"
+													htmlFor="account-no"
+													className="block text-sm font-medium text-gray-700"
 												>
-													Month
+													Account No.
 												</label>
 												<input
-													className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
-													type="text"
-													id="formGridCode_month"
+													type="number"
+													name="account_no"
+													id="account_no"
+													className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+													value={account_no}
+													onChange={(e) => setAccount_no(e.target.value)}
 												/>
 											</div>
-											<div className="w-full px-2 md:w-1/3">
+										</div>
+										<div className="flex flex-wrap col-span-3 pt-4">
+											<div className="w-full ">
 												<label
-													className="block mb-1"
-													htmlFor="formGridCode_year"
+													htmlFor="ifsc-code"
+													className="block text-sm font-medium text-gray-700"
 												>
-													Year
+													IFSC code
 												</label>
 												<input
-													className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
 													type="text"
-													id="formGridCode_year"
+													name="ifsc_code"
+													id="ifsc_code"
+													className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+													value={ifsc_code}
+													onChange={(e) => setIfsc_code(e.target.value)}
 												/>
 											</div>
-											<div className="w-full px-2 md:w-1/3">
-												<label
-													className="block mb-1"
-													htmlFor="formGridCode_cvc"
-												>
-													CVC
-												</label>
-												<input
-													className="w-full h-10 px-3 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline"
-													type="text"
-													id="formGridCode_cvc"
-												/>
-											</div>
-										</div> */}
+										</div>
 									</div>
 								</div>
-								{/* <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+								<div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
 									<button
 										type="submit"
 										className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-900 bg-aucti hover:bg-auctiHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -191,13 +213,66 @@ const SellerProfile = (props) => {
 									>
 										Save
 									</button>
-								</div> */}
+								</div>
+								<div className="text-right sm:px-6">
+									<span
+										data-testid="titleErr"
+										id="titleErr"
+										style={{ color: "red", fontSize: "12px" }}
+									>
+										{error}
+									</span>
+								</div>
 							</div>
 						</form>
+						<div className="mx-10 xl:my-0 md:my-10 xs:my-10 overflow-auto xl:h-96 xs:h-32">
+							<div className="container flex flex-col mx-auto    items-center justify-center">
+								<ul className="flex flex-col">
+									{sellerBankAccounts !== null &&
+										sellerBankAccounts.map((n) => {
+											return (
+												<li
+													key={n.id}
+													className="border-gray-400 flex flex-row mb-2"
+												>
+													<div className="border-gray-400 border rounded select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 justify-between items-center p-4 ">
+														<div className="flex flex-col text-xs">
+															<p>{n.account_name}</p>
+															<p>{n.bank_name}</p>
+															<p>{n.branch_name}</p>
+															<p>{n.account_no}</p>
+															<p>{n.ifsc_code}</p>
+														</div>
+
+														<div className="w-12 text-right flex justify-end hover:text-aucti">
+															<button
+																layout="link"
+																size="icon"
+																aria-label="Delete"
+																onClick={() => handleDelete(n.id)}
+															>
+																<TrashIcon
+																	className="w-5 h-5"
+																	aria-hidden="true"
+																/>
+															</button>
+														</div>
+													</div>
+												</li>
+											);
+										})}
+								</ul>
+								{sellerBankAccounts !== null &&
+									sellerBankAccounts.length === 0 && (
+										<div className="w=full flex justify-center items-center p-8">
+											No bank account details available!
+										</div>
+									)}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			{/** */}
 		</div>
 	);
 };
@@ -205,15 +280,16 @@ const SellerProfile = (props) => {
 const mapStateToProps = (state) => {
 	return {
 		user: state.user,
-		addresses: state.addresses,
+		sellerBankAccounts: state.sellerBankAccounts,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadUserAddress: (id) => dispatch(loadUserAddressAction(id)),
-		saveUserAddress: (address) => dispatch(saveUserAddressAction(address)),
-		deleteUserAddress: (id) => dispatch(deleteUserAddressAction(id)),
+		loadUserBankAccount: (id) => dispatch(loadUserBankAccountAction(id)),
+		saveUserBankAccount: (account) =>
+			dispatch(saveUserBankAccountAction(account)),
+		deleteUserBankAccount: (id) => dispatch(deleteUserBankAccountAction(id)),
 	};
 };
 

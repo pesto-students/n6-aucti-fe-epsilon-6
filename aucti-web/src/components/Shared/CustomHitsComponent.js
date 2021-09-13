@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connectStateResults } from "react-instantsearch-dom";
 const CustomHitsComponent = ({ props, searchState, searchResults }) => {
 	const validQuery = searchState.query?.length >= 3;

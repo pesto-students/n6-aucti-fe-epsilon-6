@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+
 import CustomSearchBox from "./CustomSearchBox";
 import CustomHitsComponent from "./CustomHitsComponent";
-import { Configure, connectSearchBox } from "react-instantsearch-dom";
+import { connectSearchBox } from "react-instantsearch-dom";
 import { useDispatch } from "react-redux";
 import { filterSearchResultAction } from "../../redux/actions/userActions";
 import history from "../../routes/history";

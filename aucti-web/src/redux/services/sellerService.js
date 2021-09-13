@@ -1,10 +1,10 @@
-import axios from "axios";
-import { bidsURL, productURL, userURL } from "../api";
-import { firebase, auth, firestore } from "../../config/firebase";
+import { bankAccountURL, bidsURL, productURL } from "../apis";
+import { firebase } from "../../config/firebase";
 import resizer from "../../config/resizer";
+import api from "../api";
 
 export const getSellerProducts = (userId, firstPageIndex, lastPageIndex) => {
-	return axios
+	return api
 		.get(
 			productURL +
 				"/seller/" +
@@ -18,7 +18,7 @@ export const getSellerProducts = (userId, firstPageIndex, lastPageIndex) => {
 };
 
 export const getSellerInsights = (userId) => {
-	return axios.get(productURL + "/insights/" + userId).then((res) => res.data);
+	return api.get(productURL + "/insights/" + userId).then((res) => res.data);
 };
 
 export const uploadPicture = async (product_picture) => {
@@ -93,31 +93,31 @@ export const deleteAndUploadPicture = async (picture, product_picture) => {
 };
 
 export const addProduct = (product) => {
-	return axios.post(productURL, { product }).then((res) => res.data);
+	return api.post(productURL, { product }).then((res) => res.data);
 };
 
 export const updateProduct = (product) => {
-	return axios.put(productURL, { product }).then((res) => res.data);
+	return api.put(productURL, { product }).then((res) => res.data);
 };
 
 export const updateBid = (bid_id) => {
-	return axios.put(bidsURL + "/highestBid", { bid_id }).then((res) => res.data);
+	return api.put(bidsURL + "/highestBid", { bid_id }).then((res) => res.data);
 };
 
-export const confirmShipment = (product_id) => {
-	return axios
-		.put(productURL + "/shipment", { product_id })
+export const confirmShipment = (product_id, bank_id) => {
+	return api
+		.put(productURL + "/shipment", { product_id, bank_id })
 		.then((res) => res.data);
 };
 
 export const cancelAuction = (product_id) => {
-	return axios
+	return api
 		.put(productURL + "/cancellation", { product_id })
 		.then((res) => res.data);
 };
 
 export const loadBidsWithUsers = (productId, firstPageIndex, lastPageIndex) => {
-	return axios
+	return api
 		.get(
 			bidsURL +
 				"/products/" +
@@ -131,7 +131,7 @@ export const loadBidsWithUsers = (productId, firstPageIndex, lastPageIndex) => {
 };
 
 export const getSellerHistory = (userId, firstPageIndex, lastPageIndex) => {
-	return axios
+	return api
 		.get(
 			productURL +
 				"/history/" +
@@ -145,7 +145,7 @@ export const getSellerHistory = (userId, firstPageIndex, lastPageIndex) => {
 };
 
 export const getSellerCompleted = (userId, firstPageIndex, lastPageIndex) => {
-	return axios
+	return api
 		.get(
 			productURL +
 				"/completed/" +
@@ -156,4 +156,16 @@ export const getSellerCompleted = (userId, firstPageIndex, lastPageIndex) => {
 				lastPageIndex
 		)
 		.then((res) => res.data);
+};
+
+export const saveBankAccount = (account) => {
+	return api.post(bankAccountURL, { account }).then((res) => res.data);
+};
+
+export const getSellerBankAccount = (id) => {
+	return api.get(bankAccountURL + "/" + id).then((res) => res.data);
+};
+
+export const deleteSellerBankAccount = (id) => {
+	return api.delete(bankAccountURL + "/" + id).then((res) => res.data);
 };

@@ -17,6 +17,9 @@ const {
 	getBidPaymentProduct,
 } = require("../services/bids.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllBids()
 		.then((data) => res.json(data))

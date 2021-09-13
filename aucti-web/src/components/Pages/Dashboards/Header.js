@@ -1,17 +1,9 @@
-import { createPopper } from "@popperjs/core/lib/createPopper";
-
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-// import { SidebarContext } from "../context/SidebarContext";
 import {
-	SearchIcon,
-	MoonIcon,
-	SunIcon,
-	BellIcon,
 	MenuIcon,
 	OutlinePersonIcon,
-	OutlineCogIcon,
 	OutlineLogoutIcon,
 	ActiIcon,
 } from "../../../assets/icons";
@@ -20,14 +12,13 @@ import {
 	toggleSidebarAction,
 } from "../../../redux/actions/userActions";
 import { Dropdown, DropdownItem } from "@windmill/react-ui";
-import Usericon from "../../Shared/usericon";
+
 import history from "../../../routes/history";
 import Searchbar from "../../Shared/searchbar";
 
 function Header(props) {
 	const { user } = props;
 
-	// const { toggleSidebar } = useState(false);
 	const toggleSidebar = () => {
 		props.dispatch(toggleSidebarAction());
 	};

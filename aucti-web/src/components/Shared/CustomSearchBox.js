@@ -1,5 +1,5 @@
 import React from "react";
-import { connectSearchBox } from "react-instantsearch-dom";
+
 import { Link } from "react-router-dom";
 import { SearchIcon } from "../../assets/icons";
 import history from "../../routes/history";

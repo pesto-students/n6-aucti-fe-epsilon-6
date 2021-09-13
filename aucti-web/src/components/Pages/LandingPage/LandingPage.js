@@ -3,11 +3,9 @@ import { connect } from "react-redux";
 import { getProductsAction } from "../../../redux/actions/productActions";
 import { Banner } from "../../Shared/Banner";
 import Pagination from "../../Shared/Pagination/Pagination";
-import Loader from "../../Shared/Loader";
+
 import ProductCard from "../../Shared/ProductCard";
 import LandingPageSkelton from "./LandingPageSkelton";
-import LazyLoad from "react-lazyload";
-import ProductCardSkelton from "../../Shared/ProductCardSkelton";
 
 let PageSize = 8;
 function LandingPage(props) {
@@ -52,6 +50,7 @@ function LandingPage(props) {
 	if (loading) {
 		return <LandingPageSkelton />;
 	}
+
 	return (
 		<>
 			<div

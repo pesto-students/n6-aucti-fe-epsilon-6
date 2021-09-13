@@ -211,7 +211,7 @@ function* saveBuyerAddress({ address }) {
 		console.log(e);
 		yield put(
 			alerts.setAlertAction({
-				text: e.msg,
+				text: "Address cannot be save at the momemnt!",
 				text_color: "text-red-700",
 				bg_color: "bg-red-100",
 			})
@@ -248,7 +248,7 @@ function* makePayment({ token, bid_id, address_id }) {
 		yield put(actions.payemntAddedAction(message));
 		yield put(
 			alerts.setAlertAction({
-				text: message,
+				text: message.msg,
 				text_color: "text-blue-700",
 				bg_color: "bg-blue-100",
 			})

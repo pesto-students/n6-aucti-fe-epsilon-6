@@ -1,4 +1,5 @@
 import { firebase, auth, firestore } from "../../config/firebase";
+import { initializeInterceptor } from "../api";
 
 export const login = (role) => {
 	return new Promise((resolve, reject) => {
@@ -11,9 +12,9 @@ export const login = (role) => {
 			.signInWithPopup(provider)
 			.then((result) => {
 				/** @type {firebase.auth.OAuthCredential} */
-				var credential = result.credential;
+				// var credential = result.credential;
 				// This gives you a Google Access Token. You can use it to access the Google API.
-				var token = credential.accessToken;
+				// var token = credential.idToken;
 				// The signed-in user info.
 				var user = result.user;
 
@@ -23,31 +24,47 @@ export const login = (role) => {
 				docRef
 					.get()
 					.then((doc) => {
-						console.log(doc.data().role);
-						if (doc.exists) {
-							localStorage.setItem(
-								"user",
-								JSON.stringify({ user, token, role: doc.data().role })
-							);
-
-							resolve({ ...user, role: doc.data().role });
-						} else {
-							docRef
-								.set({
-									name: user.displayName,
-									email: user.email,
-									role: role,
-								})
-								.then(() => {
+						firebase
+							.auth()
+							.currentUser.getIdToken(/* forceRefresh */ true)
+							.then(function (idToken) {
+								if (doc.exists) {
 									localStorage.setItem(
 										"user",
-										JSON.stringify({ user, token, role })
+										JSON.stringify({
+											user,
+											token: idToken,
+											role: doc.data().role,
+										})
 									);
+									initializeInterceptor(idToken);
+									resolve({ ...user, role: doc.data().role });
+								} else {
+									docRef
+										.set({
+											name: user.displayName,
+											email: user.email,
+											role: role,
+										})
+										.then(() => {
+											initializeInterceptor(idToken);
+											localStorage.setItem(
+												"user",
+												JSON.stringify({ user, token: idToken, role })
+											);
 
-									resolve({ ...user, role });
-								})
-								.catch((err) => reject(err));
-						}
+											resolve({ ...user, role });
+										})
+										.catch((err) => {
+											console.log("Error getting document:", err);
+											reject(err);
+										});
+								}
+							})
+							.catch(function (error) {
+								console.log("Error getting document:", error);
+								reject(error);
+							});
 					})
 					.catch((error) => {
 						console.log("Error getting document:", error);
@@ -56,12 +73,12 @@ export const login = (role) => {
 			})
 			.catch((error) => {
 				// Handle Errors here.
-				var errorCode = error.code;
+
 				var errorMessage = error.message;
 				// The email of the user's account used.
-				var email = error.email;
+
 				// The firebase.auth.AuthCredential type that was used.
-				var credential = error.credential;
+
 				// ...
 				console.log(errorMessage);
 
@@ -77,7 +94,10 @@ export const logout = () => {
 
 export const checkUser = () => {
 	const UserData = JSON.parse(localStorage.getItem("user"));
+
 	if (UserData) {
+		initializeInterceptor(UserData?.token);
+		console.log(UserData?.token);
 		return { ...UserData?.user, role: UserData?.role };
 	}
 	return null;

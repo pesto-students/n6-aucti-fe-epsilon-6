@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import { getStorage } from "firebase/storage";
+// import { getStorage } from "firebase/storage";
 import "firebase/firestore";
 import "firebase/auth";
 
