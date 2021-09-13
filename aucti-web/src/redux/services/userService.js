@@ -12,43 +12,59 @@ export const login = (role) => {
 			.signInWithPopup(provider)
 			.then((result) => {
 				/** @type {firebase.auth.OAuthCredential} */
-				var credential = result.credential;
+				// var credential = result.credential;
 				// This gives you a Google Access Token. You can use it to access the Google API.
-				var token = credential.accessToken;
+				// var token = credential.idToken;
 				// The signed-in user info.
 				var user = result.user;
-				initializeInterceptor(token);
+
 				const uid = user.uid;
 				const userCollection = firestore.collection("users");
 				var docRef = userCollection.doc(uid);
 				docRef
 					.get()
 					.then((doc) => {
-						console.log(doc.data().role);
-						if (doc.exists) {
-							localStorage.setItem(
-								"user",
-								JSON.stringify({ user, token, role: doc.data().role })
-							);
-
-							resolve({ ...user, role: doc.data().role });
-						} else {
-							docRef
-								.set({
-									name: user.displayName,
-									email: user.email,
-									role: role,
-								})
-								.then(() => {
+						firebase
+							.auth()
+							.currentUser.getIdToken(/* forceRefresh */ true)
+							.then(function (idToken) {
+								if (doc.exists) {
 									localStorage.setItem(
 										"user",
-										JSON.stringify({ user, token, role })
+										JSON.stringify({
+											user,
+											token: idToken,
+											role: doc.data().role,
+										})
 									);
+									initializeInterceptor(idToken);
+									resolve({ ...user, role: doc.data().role });
+								} else {
+									docRef
+										.set({
+											name: user.displayName,
+											email: user.email,
+											role: role,
+										})
+										.then(() => {
+											initializeInterceptor(idToken);
+											localStorage.setItem(
+												"user",
+												JSON.stringify({ user, token: idToken, role })
+											);
 
-									resolve({ ...user, role });
-								})
-								.catch((err) => reject(err));
-						}
+											resolve({ ...user, role });
+										})
+										.catch((err) => {
+											console.log("Error getting document:", err);
+											reject(err);
+										});
+								}
+							})
+							.catch(function (error) {
+								console.log("Error getting document:", error);
+								reject(error);
+							});
 					})
 					.catch((error) => {
 						console.log("Error getting document:", error);
@@ -81,6 +97,7 @@ export const checkUser = () => {
 
 	if (UserData) {
 		initializeInterceptor(UserData?.token);
+		console.log(UserData?.token);
 		return { ...UserData?.user, role: UserData?.role };
 	}
 	return null;

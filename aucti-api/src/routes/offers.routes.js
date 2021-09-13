@@ -10,6 +10,9 @@ const {
 	updateOffer,
 } = require("../services/offers.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllOffers()
 		.then((data) => res.json(data))

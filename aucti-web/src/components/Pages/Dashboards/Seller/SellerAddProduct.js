@@ -50,7 +50,6 @@ const SellerAddProduct = (props) => {
 	};
 
 	useEffect(() => {
-		console.log(addProductUpdate.status);
 		if (addProductUpdate.status === 500) {
 			setLoading(false);
 		}
@@ -75,17 +74,17 @@ const SellerAddProduct = (props) => {
 					</p>
 
 					<p className="text-xs text-gray-500">
-						Last Modified: {product_picture?.lastModifiedDate}
+						Last Modified:{" "}
+						{product_picture?.lastModifiedDate.toLocaleDateString()}
 					</p>
 				</div>
 			);
 		} else {
 			return (
-				<></>
-				// <div>
-				// 	<br />
-				// 	<h4>Choose before Pressing the Upload button</h4>
-				// </div>
+				<div>
+					<br />
+					<h4></h4>
+				</div>
 			);
 		}
 	};

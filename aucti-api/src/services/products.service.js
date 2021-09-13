@@ -468,6 +468,8 @@ exports.fetchSellerInsights = (seller_id) =>
 							let msg = "Unable to retrieve Seller products";
 							reject(msg);
 						});
+				} else {
+					resolve({ total_products, total_sales: total });
 				}
 			})
 			.catch((err) => {

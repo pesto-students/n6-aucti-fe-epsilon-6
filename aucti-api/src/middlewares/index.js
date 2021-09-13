@@ -2,6 +2,7 @@ const admin = require("firebase-admin");
 
 const isAuthenticated = (req, res, next) => {
 	const idToken = req.headers.authorization;
+
 	if (!idToken) {
 		return res.status(401).send("Unauthorized");
 	}
@@ -15,7 +16,10 @@ const isAuthenticated = (req, res, next) => {
 			if (user && user !== email) return res.status(401).send("Unauthorized");
 			else next();
 		})
-		.catch(() => res.status(401).send("Unauthorized"));
+		.catch((error) => {
+			console.log(error);
+			res.status(401).send("Unauthorized");
+		});
 };
 
 module.exports = isAuthenticated;

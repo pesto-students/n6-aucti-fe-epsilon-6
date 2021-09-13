@@ -7,7 +7,7 @@ export const addressesURL = "/addresses";
 export const bankAccountURL = "/bank";
 
 export const productsURL = "/products";
-
+export const publicURL = "/public";
 export const getUserWishlistURL = "/wishlists/";
 export const addUserWishlistURL = "/wishlists/";
 

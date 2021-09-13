@@ -9,6 +9,9 @@ const {
 	updateNotification,
 } = require("../services/notifications.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllNotifications()
 		.then((data) => res.json(data))

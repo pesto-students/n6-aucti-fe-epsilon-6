@@ -46,7 +46,6 @@ function* loadsBidsWithUsers({ productId, firstPageIndex, lastPageIndex }) {
 
 function* addProduct({ product, picture }) {
 	try {
-		console.log(product);
 		const picURL = yield call(service.uploadPicture, picture);
 		const productRec = yield call(service.addProduct, {
 			...product,

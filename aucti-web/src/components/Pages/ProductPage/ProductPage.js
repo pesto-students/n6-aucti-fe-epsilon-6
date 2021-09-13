@@ -136,32 +136,39 @@ const ProductPage = (props) => {
 					</div>
 
 					<div className="flex xl:flex-row xs:flex-col justify-between mb-4 text-sm font-medium mt-4">
-						<button
-							type="button"
-							className="py-2 px-4 mr-10 bg-aucti hover:bg-auctiHover focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
-							onClick={handleBidNow}
-						>
-							{productState.bid ? "Edit Your Bid" : "Bid Now"}
-						</button>
-						{productState.wishlist ? (
-							<div className="py-2  flex flex-row text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold ">
-								<svg className="w-5 h-5 mx-1 fill-current" viewBox="0 0 20 20">
-									<path
-										d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-										clipRule="evenodd"
-										fillRule="evenodd"
-									></path>
-								</svg>
-								<span>Already added to wishlist!</span>
-							</div>
-						) : (
-							<button
-								type="button"
-								className="xl:mt-0 xs:mt-4 py-2 px-4  bg-aucti hover:bg-auctiHover focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
-								onClick={handleAddToWishlist}
-							>
-								Add To Wishlist
-							</button>
+						{user && user.role === "buyer" && (
+							<>
+								<button
+									type="button"
+									className="py-2 px-4 mr-10 bg-aucti hover:bg-auctiHover focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
+									onClick={handleBidNow}
+								>
+									{productState.bid ? "Edit Your Bid" : "Bid Now"}
+								</button>
+								{productState.wishlist ? (
+									<div className="py-2  flex flex-row text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold ">
+										<svg
+											className="w-5 h-5 mx-1 fill-current"
+											viewBox="0 0 20 20"
+										>
+											<path
+												d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+												clipRule="evenodd"
+												fillRule="evenodd"
+											></path>
+										</svg>
+										<span>Already added to wishlist!</span>
+									</div>
+								) : (
+									<button
+										type="button"
+										className="xl:mt-0 xs:mt-4 py-2 px-4  bg-aucti hover:bg-auctiHover focus:ring-indigo-500 focus:ring-offset-indigo-200 text-gray-900 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded "
+										onClick={handleAddToWishlist}
+									>
+										Add To Wishlist
+									</button>
+								)}
+							</>
 						)}
 					</div>
 					<p className="text-sm text-gray-500 dark:text-gray-300">

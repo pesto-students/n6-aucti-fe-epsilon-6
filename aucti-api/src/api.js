@@ -13,6 +13,7 @@ const wishlistRouter = require("./routes/wishlist.routes");
 const notificationRouter = require("./routes/notifications.routes");
 const offersRouter = require("./routes/offers.routes");
 const productsRouter = require("./routes/products.routes");
+const publicRouter = require("./routes/public.routes");
 const addressRouter = require("./routes/address.routes");
 const bankAccountRouter = require("./routes/bankAccount.routes");
 
@@ -30,7 +31,7 @@ const corsOptions = {
 
 router.use("/users", usersRouter);
 router.use("/products", productsRouter);
-
+router.use("/public", publicRouter);
 router.use("/bids", bidsRouter);
 router.use("/wishlists", wishlistRouter);
 router.use("/addresses", addressRouter);
