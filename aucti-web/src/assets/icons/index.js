@@ -27,7 +27,7 @@ import { ReactComponent as OutlinePersonIcon } from "./outlinePerson.svg";
 import { ReactComponent as OutlineCogIcon } from "./outlineCog.svg";
 import { ReactComponent as OutlineLogoutIcon } from "./outlineLogout.svg";
 import { ReactComponent as GoogleIcon } from "./icons8-google.svg";
-import { ReactComponent as GoogleLightIcon } from "./icons8-google (1).svg";
+import { ReactComponent as GoogleLightIcon } from "./icons8-googleLight.svg";
 import { ReactComponent as ActiIcon } from "./Logo.svg";
 import { ReactComponent as HistoryIcon } from "./clock-history.svg";
 import { ReactComponent as StarIcon } from "./star.svg";

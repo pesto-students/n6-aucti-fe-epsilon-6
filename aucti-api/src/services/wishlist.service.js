@@ -44,6 +44,7 @@ exports.fetchUserWishlist = (user_id) =>
 								return {
 									...bid,
 									product: {
+										id: product.id,
 										title: product.title,
 										base_price: product.base_price,
 										auction_status: product.auction_status,

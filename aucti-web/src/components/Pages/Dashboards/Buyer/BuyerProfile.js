@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { EditIcon, TrashIcon } from "../../../../assets/icons";
+import { TrashIcon } from "../../../../assets/icons";
 import {
 	deleteUserAddressAction,
 	loadUserAddressAction,
@@ -13,6 +13,7 @@ const BuyerProfile = (props) => {
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
 	const [zip, setZip] = useState("");
+	const [error, setError] = useState("");
 
 	const handleChangeAddress = (e) => {
 		setAddress(e.target.value);
@@ -32,12 +33,29 @@ const BuyerProfile = (props) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(user, address, city, state, zip);
-		props.saveUserAddress({ user_id: user.uid, address, city, state, zip });
-		setAddress("");
-		setCity("");
-		setState("");
-		setZip("");
+		let valid = true;
+		if (!address) {
+			setError("Address cannot be blank");
+			valid = false;
+		} else if (!city) {
+			setError("City cannot be blank");
+			valid = false;
+		} else if (!state) {
+			setError("State  cannot be blank");
+			valid = false;
+		} else if (!zip) {
+			setError("Zip category cannot be blank");
+			valid = false;
+		} else if (isNaN(zip)) {
+			setError("Zip cannot be text");
+			valid = false;
+		} else if (valid) {
+			props.saveUserAddress({ user_id: user.uid, address, city, state, zip });
+			setAddress("");
+			setCity("");
+			setState("");
+			setZip("");
+		}
 	};
 
 	const handleDelete = (id) => {
@@ -202,6 +220,15 @@ const BuyerProfile = (props) => {
 									>
 										Save
 									</button>
+								</div>
+								<div className="text-right sm:px-6">
+									<span
+										data-testid="titleErr"
+										id="titleErr"
+										style={{ color: "red", fontSize: "12px" }}
+									>
+										{error}
+									</span>
 								</div>
 							</div>
 						</form>

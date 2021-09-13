@@ -1,6 +1,6 @@
 import { connectNumericMenu } from "react-instantsearch-dom";
 
-const CustomNumericMenu = ({ items, refine, createURL }) => {
+const CustomNumericMenu = ({ items, refine }) => {
 	const handleChange = (item) => {
 		// event.preventDefault();
 		item.isRefined = true;

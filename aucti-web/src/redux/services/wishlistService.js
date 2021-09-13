@@ -1,14 +1,14 @@
-import axios from "axios";
-import { addUserWishlistURL, getUserWishlistURL } from "../api";
+import api from "../api";
+import { addUserWishlistURL, getUserWishlistURL } from "../apis";
 
 export const getUserWishlist = (user_id) => {
-	return axios
+	return api
 		.get(getUserWishlistURL + user_id)
 		.then((response) => response.data);
 };
 
 export const addUserWishlist = (payload) => {
-	return axios
+	return api
 		.post(addUserWishlistURL, payload)
 		.then((response) => response.data);
 };

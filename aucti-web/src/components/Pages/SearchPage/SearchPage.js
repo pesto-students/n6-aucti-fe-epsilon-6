@@ -1,22 +1,11 @@
 import React, { useEffect } from "react";
 
 import "./Search.css";
-import {
-	ClearRefinements,
-	Configure,
-	connectHits,
-	Hits,
-	Pagination,
-	RefinementList,
-	SortBy,
-} from "react-instantsearch-dom";
-import ProductCard from "../../Shared/ProductCard";
+import { Configure } from "react-instantsearch-dom";
+
 import AlgoliaSearch from "./AlgoliaSearch";
 import { connect } from "react-redux";
-import {
-	showpriceRange,
-	showpriceRangeAction,
-} from "../../../redux/actions/userActions";
+import { showpriceRangeAction } from "../../../redux/actions/userActions";
 import CustomSortBy from "../../Shared/CustomSortBy";
 import CustomPagination from "../../Shared/CustomPagination";
 

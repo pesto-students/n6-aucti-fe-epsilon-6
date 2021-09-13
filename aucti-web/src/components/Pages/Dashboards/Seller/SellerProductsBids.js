@@ -1,17 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import {
-	CartIcon,
-	EditIcon,
-	MoneyIcon,
-	TrashIcon,
-} from "../../../../assets/icons";
-import {
-	deleteBidAction,
-	loadBuyerBidAction,
-	loadBuyerInsightAction,
-	overrideBidAction,
-} from "../../../../redux/actions/buyerActions";
+
 import { loadBidsWithUsersAction } from "../../../../redux/actions/sellerActions";
 import ConfirmModal from "../../../Shared/ConfirmModal";
 import Loader from "../../../Shared/Loader";
@@ -38,15 +27,15 @@ const SellerProductsBids = (props) => {
 		props.loadBidsWithUsers(productId, firstPageIndex, lastPageIndex);
 	}, [currentPage]);
 
-	const handleEdit = (bid) => {
-		setSelectedBidForOverride(bid);
-		setShowModal(true);
-	};
+	// const handleEdit = (bid) => {
+	// 	setSelectedBidForOverride(bid);
+	// 	setShowModal(true);
+	// };
 
-	const handleDelete = (n) => {
-		setSelectedBidForDelete(n);
-		setShowModalDelete(true);
-	};
+	// const handleDelete = (n) => {
+	// 	setSelectedBidForDelete(n);
+	// 	setShowModalDelete(true);
+	// };
 
 	const handlePrice = (e) => {
 		setBidAmount(e.target.value);

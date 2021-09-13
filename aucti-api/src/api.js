@@ -14,6 +14,7 @@ const notificationRouter = require("./routes/notifications.routes");
 const offersRouter = require("./routes/offers.routes");
 const productsRouter = require("./routes/products.routes");
 const addressRouter = require("./routes/address.routes");
+const bankAccountRouter = require("./routes/bankAccount.routes");
 
 const allowedOrigin = process.env.ALLOWED_ORIGIN_URL;
 
@@ -22,8 +23,7 @@ const corsOptions = {
 		if (allowedOrigin === origin) {
 			callback(null, true);
 		} else {
-			// callback(new Error("Not allowed by CORS"));
-			callback(null, true);
+			callback(new Error("Not allowed by CORS"));
 		}
 	},
 };
@@ -35,7 +35,7 @@ router.use("/bids", bidsRouter);
 router.use("/wishlists", wishlistRouter);
 router.use("/addresses", addressRouter);
 router.use("/notifications", notificationRouter);
-router.use("/offers", offersRouter);
+router.use("/bank", bankAccountRouter);
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Profilemenu from "./profilemenu";
 
 function Person(props) {

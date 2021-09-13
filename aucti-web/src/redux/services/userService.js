@@ -1,4 +1,5 @@
 import { firebase, auth, firestore } from "../../config/firebase";
+import { initializeInterceptor } from "../api";
 
 export const login = (role) => {
 	return new Promise((resolve, reject) => {
@@ -16,7 +17,7 @@ export const login = (role) => {
 				var token = credential.accessToken;
 				// The signed-in user info.
 				var user = result.user;
-
+				initializeInterceptor(token);
 				const uid = user.uid;
 				const userCollection = firestore.collection("users");
 				var docRef = userCollection.doc(uid);
@@ -56,12 +57,12 @@ export const login = (role) => {
 			})
 			.catch((error) => {
 				// Handle Errors here.
-				var errorCode = error.code;
+
 				var errorMessage = error.message;
 				// The email of the user's account used.
-				var email = error.email;
+
 				// The firebase.auth.AuthCredential type that was used.
-				var credential = error.credential;
+
 				// ...
 				console.log(errorMessage);
 
@@ -77,7 +78,9 @@ export const logout = () => {
 
 export const checkUser = () => {
 	const UserData = JSON.parse(localStorage.getItem("user"));
+
 	if (UserData) {
+		initializeInterceptor(UserData?.token);
 		return { ...UserData?.user, role: UserData?.role };
 	}
 	return null;

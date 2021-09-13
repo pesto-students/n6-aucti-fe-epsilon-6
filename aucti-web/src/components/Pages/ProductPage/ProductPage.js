@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import FilterCheckBox from "../../Shared/filterCheckbox";
-import ProductDetail from "../../Shared/ProductDetails";
+
 import {
 	getProductAction,
 	getProductsPerUserAction,
 } from "../../../redux/actions/productActions";
-import Loader from "../../Shared/Loader";
+
 import Modal from "../../Shared/Modal";
 import history from "../../../routes/history";
 import { addBidAction } from "../../../redux/actions/buyerActions";
 import { addWishlistAction } from "../../../redux/actions/wishlistActions";
 import ConfirmModal from "../../Shared/ConfirmModal";
-import ProductCardSkelton from "../../Shared/ProductCardSkelton";
+
 import ProductSkeltonPage from "./ProductSkeltonPage";
 
 const ProductPage = (props) => {

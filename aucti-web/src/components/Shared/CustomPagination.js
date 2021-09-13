@@ -1,12 +1,7 @@
 import { useMemo, useState } from "react";
 import { connectPagination } from "react-instantsearch-dom";
 
-const CustomPagination = ({
-	currentRefinement,
-	nbPages,
-	refine,
-	createURL,
-}) => {
+const CustomPagination = ({ currentRefinement, nbPages, refine }) => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const handleSelect = (page) => {
 		refine(page);
@@ -48,9 +43,9 @@ const CustomPagination = ({
 				</li>
 				{new Array(nbPages).fill(null).map((_, index) => {
 					const page = index + 1;
-					const style = {
-						fontWeight: currentRefinement === page ? "bold" : "",
-					};
+					// const style = {
+					// 	fontWeight: currentRefinement === page ? "bold" : "",
+					// };
 
 					// if (pageNumber === DOTS) {
 					// 	return <li className="pagination-item dots">&#8230;</li>;

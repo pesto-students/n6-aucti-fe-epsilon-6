@@ -7,7 +7,7 @@ import Header from "../Pages/Dashboards/Header";
 import Main from "../Pages/Dashboards/Main";
 
 function CustomLayout(props) {
-	const { user } = props;
+	// const { user } = props;
 	const [isSidebarOpen, closeSidebar] = useState(false);
 	let location = useLocation();
 
@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = () => {
 	return {};
 };
 

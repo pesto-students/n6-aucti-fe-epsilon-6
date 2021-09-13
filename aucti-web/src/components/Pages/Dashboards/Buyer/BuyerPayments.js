@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
@@ -25,7 +25,7 @@ const ELEMENTS_OPTIONS = {
 
 const BuyerPayments = (props) => {
 	const { bidproduct } = props;
-	const [loading, setloading] = useState(true);
+	// const [loading, setloading] = useState(true);
 	useEffect(() => {
 		props.loadBidproductDetails(props.match.params.bid_id);
 	}, []);

@@ -27,7 +27,7 @@ const {
 // 	},
 // });
 
-// const isAuthenticated = require('../middlewares');
+// const isAuthenticated = require("../middlewares");
 // router.use(isAuthenticated);
 
 router.get("/all/:firstPageIndex,:lastPageIndex", (req, res) => {
@@ -126,8 +126,8 @@ router.put("/", (req, res) => {
 });
 
 router.put("/shipment", (req, res) => {
-	const { product_id } = req.body;
-	updateProductShipment(product_id)
+	const { product_id, bank_id } = req.body;
+	updateProductShipment(product_id, bank_id)
 		.then((data) => res.status(200).json(data))
 		.catch((err) => res.status(500).json(err));
 });

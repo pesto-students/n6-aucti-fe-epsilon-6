@@ -1,13 +1,21 @@
-import React, { useState } from "react";
-import LazyLoad from "react-lazyload";
+import React, { useEffect, useState } from "react";
+
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { GoogleIcon, ActiIcon } from "../../../../assets/icons";
 import { loginUserAction } from "../../../../redux/actions/userActions";
+import history from "../../../../routes/history";
 
 const Login = (props) => {
+	const { user } = props;
 	const [role, SetRole] = useState("");
 	const [roleErr, SetRoleErr] = useState("");
+
+	useEffect(() => {
+		if (user) {
+			history.push("/");
+		}
+	}, []);
 
 	const handleUser = (role) => {
 		SetRole(role);
@@ -40,7 +48,7 @@ const Login = (props) => {
 					</Link>
 				</div>
 				<div className="flex flex-row justify-center justify-items-center">
-					<div className="flex-1  h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+					<div className="flex-1  h-full max-w-4xl mx-auto overflow-hidden bg-white xl:rounded-lg shadow-xl dark:bg-gray-800">
 						<div className="flex flex-col overflow-y-auto md:flex-row">
 							<div
 								ref={refPlaceholder}
@@ -123,6 +131,8 @@ const Login = (props) => {
 	);
 };
 
+const mapStateToProps = ({ user }) => ({ user });
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		login: (role) => {
@@ -131,4 +141,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

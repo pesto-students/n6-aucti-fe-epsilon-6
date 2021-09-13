@@ -17,15 +17,15 @@ import {
 import ConfirmModal from "../../../Shared/ConfirmModal";
 import LargeModal from "../../../Shared/LargeModal";
 import Loader from "../../../Shared/Loader";
-import Modal from "../../../Shared/Modal";
+
 import Pagination from "../../../Shared/Pagination/Pagination";
-import SellerAddProduct from "./SellerAddProduct";
+
 import SellerProductsBids from "./SellerProductsBids";
 
 let PageSize = 5;
 
 const SellerHome = (props) => {
-	const [bidAmount, setBidAmount] = useState("");
+	// const [bidAmount, setBidAmount] = useState("");
 	const { sellerProducts, user, sellerInsights } = props;
 
 	const sellerProductsFiltered = sellerProducts?.data;
@@ -52,7 +52,6 @@ const SellerHome = (props) => {
 		setShowModalStatus(true);
 	};
 	const handleStatusChange = () => {
-		let productsRef;
 		if (
 			selectedProductForStatus["auction_status"] === "draft" ||
 			selectedProductForStatus["auction_status"] === "hold"
@@ -109,9 +108,9 @@ const SellerHome = (props) => {
 		setShowModalDelete(true);
 	};
 
-	const handlePrice = (e) => {
-		setBidAmount(e.target.value);
-	};
+	// const handlePrice = (e) => {
+	// 	setBidAmount(e.target.value);
+	// };
 
 	const handleSelectBid = (id) => {
 		if (checked.indexOf(id) !== -1) {
@@ -190,14 +189,17 @@ const SellerHome = (props) => {
 		}
 	};
 
-	if (!sellerProductsFiltered) {
+	if (!sellerProducts.data) {
 		return <Loader></Loader>;
 	}
 
 	return (
 		<>
 			<div className="pb-16">
-				<h1 className="my-6 xl:text-2xl xs:text-lg font-semibold text-gray-700 dark:text-gray-200 xl:px-5 xs:px-0 xl:pb-4">
+				<h1
+					data-testid="heading"
+					className="my-6 xl:text-2xl xs:text-lg font-semibold text-gray-700 dark:text-gray-200 xl:px-5 xs:px-0 xl:pb-4"
+				>
 					{"Welcome, " + user?.displayName}
 				</h1>
 
@@ -213,7 +215,10 @@ const SellerHome = (props) => {
 												sellerInsights?.total_products === null ? (
 													""
 												) : (
-													<span className="font-bold text-xl text-gray-900">
+													<span
+														data-testid="seller_total_products"
+														className="font-bold text-xl text-gray-900"
+													>
 														{sellerInsights?.total_products}
 													</span>
 												)}
@@ -317,19 +322,31 @@ const SellerHome = (props) => {
 														<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900">
 															{(currentPage - 1) * PageSize + index + 1}
 														</td>
-														<td className="px-6 py-4  text-sm text-gray-500">
+														<td
+															data-testid="product_title"
+															className="px-6 py-4  text-sm text-gray-500"
+														>
 															{n.product?.title}
 														</td>
-														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+														<td
+															data-testid="base_price"
+															className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														>
 															{n.product?.base_price}
 														</td>
-														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+														<td
+															data-testid="highest_bid"
+															className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														>
 															{n.product?.highest_bid}
 														</td>
 
 														<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 															<div className="flex justify-center items-center space-x-4">
-																<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+																<span
+																	data-testid="auction_status"
+																	className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+																>
 																	{n.product?.auction_status}
 																</span>
 
@@ -370,7 +387,7 @@ const SellerHome = (props) => {
 																</button>
 																{n.product?.auction_status !== "draft" && (
 																	<>
-																		<Link to="/">
+																		<Link to={"/home/product/" + n.product?.id}>
 																			<button
 																				className="hover:text-aucti"
 																				layout="link"

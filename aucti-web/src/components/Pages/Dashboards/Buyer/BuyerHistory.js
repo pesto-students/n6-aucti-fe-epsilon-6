@@ -1,26 +1,17 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-	CartIcon,
-	EditIcon,
-	MoneyIcon,
-	TrashIcon,
-} from "../../../../assets/icons";
+
 import {
 	confirmDisputeAction,
 	confirmRecievedAction,
 	loadBuyerCompletedAction,
 	loadBuyerHistoryAction,
 } from "../../../../redux/actions/buyerActions";
-import {
-	confirmShipmentAction,
-	loadSellerCompletedAction,
-	loadSellerHistoryAction,
-} from "../../../../redux/actions/sellerActions";
+
 import ConfirmModal from "../../../Shared/ConfirmModal";
 import Loader from "../../../Shared/Loader";
-import Modal from "../../../Shared/Modal";
+
 import Pagination from "../../../Shared/Pagination/Pagination";
 import Table from "../../../Shared/Table";
 import Tooltip from "../../../Shared/Tooltip";

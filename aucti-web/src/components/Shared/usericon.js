@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Person from "./Person";
-import Notification from "./Notification";
+
 const Usericon = () => {
 	const popupref = useRef();
 	const show_notification = false;
@@ -9,10 +9,10 @@ const Usericon = () => {
 	const [notification, setnotification] = useState(show_notification);
 	const [profile, setprofile] = useState(show_profile);
 
-	const handlenot = () => {
-		if (profile) setprofile(false);
-		setnotification(!notification);
-	};
+	// const handlenot = () => {
+	// 	if (profile) setprofile(false);
+	// 	setnotification(!notification);
+	// };
 	const handlepro = () => {
 		if (notification) setnotification(false);
 		setprofile(!profile);

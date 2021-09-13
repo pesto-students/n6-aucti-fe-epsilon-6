@@ -1,15 +1,11 @@
 import React from "react";
 import MainSidebarRoutes from "./Routes/MainSidebarRoutes";
-import { Link, NavLink, Route } from "react-router-dom";
+
 import * as Icons from "../../../assets/icons";
 import { connect } from "react-redux";
 import { filterSearchResultAction } from "../../../redux/actions/userActions";
 import history from "../../../routes/history";
-import {
-	ClearRefinements,
-	NumericMenu,
-	RefinementList,
-} from "react-instantsearch-dom";
+
 import CustomNumericMenu from "../../Shared/CustomNumericMenu ";
 import { useState } from "react";
 // import "./Sidebar.css";
@@ -21,7 +17,7 @@ function Icon({ icon, ...props }) {
 }
 
 function MainSidebarContent(props) {
-	const { user, priceRangeComponent } = props;
+	const { priceRangeComponent } = props;
 	const [filter, setFilter] = useState("");
 
 	const handleFilter = (filter, path) => {
