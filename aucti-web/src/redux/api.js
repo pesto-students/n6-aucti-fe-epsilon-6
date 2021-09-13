@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: "https://aucti-api.netlify.app",
+	baseURL: "https://aucti-server.netlify.app/.netlify/functions/api",
 	headers: {
+		"Access-Control-Allow-Origin": "*",
 		"Content-Type": "application/json",
 	},
 	validateStatus: () => true,

@@ -97,7 +97,7 @@ export const checkUser = () => {
 
 	if (UserData) {
 		initializeInterceptor(UserData?.token);
-		console.log(UserData?.token);
+
 		return { ...UserData?.user, role: UserData?.role };
 	}
 	return null;
