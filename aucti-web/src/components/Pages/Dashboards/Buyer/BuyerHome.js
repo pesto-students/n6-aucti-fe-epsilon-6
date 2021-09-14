@@ -88,14 +88,14 @@ const BuyerHome = (props) => {
 	return (
 		<>
 			<div className="pb-16">
-				<h1 className="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200 px-5 pb-4">
+				<h1 className="my-6  xl:text-2xl xs:text-lg font-semibold text-gray-700 dark:text-gray-200 px-5 pb-4">
 					{"Welcome, " + user?.displayName}
 				</h1>
 
-				<div className="md:px-4 mx-auto w-full pb-12">
+				<div className="xl:px-4 md:px-4 xs:p-0 xl:mx-auto xs:m-0 w-full xl:pb-12">
 					<div>
-						<div className="flex flex-wrap ">
-							<div className="w-full lg:w-6/12 xl:w-3/12 sm:w-6/12 xs:w-6/12 mr-8">
+						<div className="flex flex-wrap xl:flex-row xs:flex-col">
+							<div className="w-full xl:w-1/4 xs:w-5/12 mr-8">
 								<div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
 									<div className="flex-auto p-4">
 										<div className="flex flex-wrap">
@@ -121,7 +121,7 @@ const BuyerHome = (props) => {
 									</div>
 								</div>
 							</div>
-							<div className="w-full lg:w-6/12 xl:w-3/12 sm:w-6/12 xs:w-6/12 mr-4">
+							<div className="w-full xl:w-1/4  xs:w-5/12 xl:mr-4">
 								<div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
 									<div className="flex-auto p-4">
 										<div className="flex flex-wrap">
@@ -151,7 +151,7 @@ const BuyerHome = (props) => {
 					</div>
 				</div>
 
-				<div className="flex-1 flex-col px-4 pb-4">
+				<div className="flex-1 flex-col xl:px-4 xl:w-full lg:px-4 lg:w-full md:px-4 md:w-10/12  pb-4 xs:px-0 xs:w-5/12">
 					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg xs:rounded-lg">

@@ -13,6 +13,7 @@ import { addWishlistAction } from "../../../redux/actions/wishlistActions";
 import ConfirmModal from "../../Shared/ConfirmModal";
 
 import ProductSkeltonPage from "./ProductSkeltonPage";
+import Loader from "../../Shared/Loader";
 
 const ProductPage = (props) => {
 	const { product, user } = props;
@@ -21,7 +22,8 @@ const ProductPage = (props) => {
 	const [bidAmount, setBidAmount] = useState("");
 	const [showModalWishlist, setShowshowModalWishlist] = useState(false);
 	const [productState, setproductState] = useState(product);
-	const [loading, setLoading] = useState("");
+	const [loading, setLoading] = useState(true);
+	const [loader, setLoader] = useState(false);
 
 	useEffect(() => {
 		let id = props.match.params.id;
@@ -38,6 +40,7 @@ const ProductPage = (props) => {
 		if (product !== productState) {
 			setproductState(product);
 			setLoading(false);
+			setLoader(false);
 		}
 	}, [product]);
 
@@ -63,19 +66,28 @@ const ProductPage = (props) => {
 		props.addBid(product.id, bidAmount, user.uid);
 		setBidAmount("");
 		setShowModal(false);
+		setLoader(true);
 	};
 
 	const handleAddToWishlist = () => {
+		if (!user) {
+			history.push("/login");
+		}
 		setShowshowModalWishlist(true);
 	};
 
 	const addwishlist = () => {
 		props.addToWishlist(user.uid, product.id);
 		setShowshowModalWishlist(false);
+		setLoader(true);
 	};
 
 	if (loading) {
 		return <ProductSkeltonPage />;
+	}
+
+	if (loader) {
+		return <Loader />;
 	}
 
 	return (
@@ -136,7 +148,9 @@ const ProductPage = (props) => {
 					</div>
 
 					<div className="flex xl:flex-row xs:flex-col justify-between mb-4 text-sm font-medium mt-4">
-						{user && user.role === "buyer" && (
+						{user && user.role === "seller" ? (
+							<></>
+						) : (
 							<>
 								<button
 									type="button"

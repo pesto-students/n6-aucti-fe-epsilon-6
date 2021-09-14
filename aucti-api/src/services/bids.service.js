@@ -178,7 +178,7 @@ exports.fetchProductBids = (req) =>
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
-				console.log(data);
+
 				Promise.all(
 					data.map((bid) =>
 						fetchUser(bid.user_id)
