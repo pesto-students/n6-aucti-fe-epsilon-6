@@ -35,7 +35,6 @@
     "tailwindcss": "^2.2.7",
     "web-vitals": "^1.1.2"
   },
-  
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
@@ -72,19 +71,19 @@
     "prettier": "^2.4.0"
   },
   "husky": {
-  "hooks": {
-    "pre-commit": "lint-staged"
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
   }
-},
-"lint-staged": {
-  "*.{js,jsx}": [
-    "prettier --write",
-    "eslint --fix",
-    "git add"
-  ],
-  "*.{html,css,less,ejs}": [
-    "prettier --write",
-    "git add"
-  ]
-}
 }
