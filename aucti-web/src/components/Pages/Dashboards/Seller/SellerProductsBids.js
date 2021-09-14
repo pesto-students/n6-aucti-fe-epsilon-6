@@ -12,21 +12,28 @@ let PageSize = 5;
 const SellerProductsBids = (props) => {
 	const [bidAmount, setBidAmount] = useState("");
 	const { productId, bidsWithUsers } = props;
-	const bids = bidsWithUsers?.data;
+
 	const [showModal, setShowModal] = useState(false);
 
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedBidForOverride, setSelectedBidForOverride] = useState("");
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
+	const [loading, setLoading] = useState(true);
+	const [bids, setBids] = useState(bidsWithUsers?.data);
 
 	useEffect(() => {
 		const { firstPageIndex, lastPageIndex } = currentTableData;
-		console.log(firstPageIndex, lastPageIndex, productId);
 
 		props.loadBidsWithUsers(productId, firstPageIndex, lastPageIndex);
 	}, [currentPage]);
 
+	useEffect(() => {
+		if (bidsWithUsers && bidsWithUsers?.data !== bids) {
+			setBids(bidsWithUsers?.data);
+			setLoading(false);
+		}
+	}, [bidsWithUsers]);
 	// const handleEdit = (bid) => {
 	// 	setSelectedBidForOverride(bid);
 	// 	setShowModal(true);
@@ -72,7 +79,7 @@ const SellerProductsBids = (props) => {
 		return { firstPageIndex, lastPageIndex };
 	}, [currentPage]);
 
-	if (!bidsWithUsers) {
+	if (loading) {
 		return <Loader></Loader>;
 	}
 
