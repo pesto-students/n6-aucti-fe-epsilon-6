@@ -11,7 +11,7 @@ export const sellerProductReducer = (state = initialState, action) => {
 			const filteredProduts = state.data.filter(
 				(dataRef) => dataRef.product.id !== action.product.product.id
 			);
-
+			console.log(action.product.product.id);
 			return {
 				data: [action.product, ...filteredProduts],
 				length: state.length,

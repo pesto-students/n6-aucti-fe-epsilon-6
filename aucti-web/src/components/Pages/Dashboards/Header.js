@@ -59,7 +59,7 @@ function Header(props) {
 
 				{/* <!-- Search input --> */}
 
-				<div className="flex justify-center flex-1 lg:mr-32  xl:-ml-0 xs:-ml-2">
+				<div className="flex justify-center flex-1 lg:mr-32 -mt-4  xl:-ml-0 xs:-ml-2">
 					<div className="relative w-full max-w-xl mr-6 focus-within:text-gray-400">
 						<Searchbar></Searchbar>
 					</div>
