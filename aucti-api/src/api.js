@@ -20,14 +20,14 @@ const bankAccountRouter = require("./routes/bankAccount.routes");
 const allowedOrigin = process.env.ALLOWED_ORIGIN_URL;
 
 const corsOptions = {
-	origin: function (origin, callback) {
-		if (allowedOrigin === origin) {
-			callback(null, true);
-		} else {
-			// callback(new Error("Not allowed by CORS"));
-			callback(null, true);
-		}
-	},
+  origin: function (origin, callback) {
+    if (allowedOrigin === origin) {
+      callback(null, true);
+    } else {
+      // callback(new Error("Not allowed by CORS"));
+      callback(null, true);
+    }
+  },
 };
 
 router.use("/users", usersRouter);
