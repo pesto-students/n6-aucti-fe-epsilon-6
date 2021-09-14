@@ -75,7 +75,7 @@ const BuyerWishlist = (props) => {
 	return (
 		<>
 			<div className="pt-16 pb-64">
-				<div className="flex-1 flex-col px-4 pb-4">
+				<div className="flex-1 flex-col xl:px-4 xl:w-full lg:px-4 lg:w-full md:px-4 md:w-10/12  pb-4 xs:px-0 xs:w-6/12">
 					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg xs:rounded-lg">

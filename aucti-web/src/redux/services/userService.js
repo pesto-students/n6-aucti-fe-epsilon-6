@@ -96,8 +96,15 @@ export const checkUser = () => {
 	const UserData = JSON.parse(localStorage.getItem("user"));
 
 	if (UserData) {
-		initializeInterceptor(UserData?.token);
+		// firebase.auth().onAuthStateChanged((user) => {
+		// 	if (user !== null && user.emailVerified === true) {
+		// 		user.getIdToken(true).then((idToken) => {
+		// 			initializeInterceptor(idToken);
+		// 		});
+		// 	}
+		// });
 
+		initializeInterceptor(UserData?.token);
 		return { ...UserData?.user, role: UserData?.role };
 	}
 	return null;

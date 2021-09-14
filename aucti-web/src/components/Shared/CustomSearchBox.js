@@ -18,7 +18,7 @@ const CustomSearchBox = (props) => {
 				</Link>
 			</div>
 			<input
-				className="mt-1 xs:w-44 block xl:w-full py-2 xl:px-8 xs:px-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm xs:text-xs"
+				className="mt-1 xs:w-44 block xl:w-full lg:w-full md:w-full py-2 xl:px-8 xs:px-6 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm xs:text-xs"
 				placeholder="Search for products"
 				aria-label="Search"
 				type="text"

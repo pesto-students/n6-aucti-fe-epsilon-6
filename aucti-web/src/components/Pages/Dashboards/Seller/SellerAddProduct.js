@@ -92,12 +92,12 @@ const SellerAddProduct = (props) => {
 	return (
 		<div className="flex flex-col justify-center">
 			<div className="mt-10 sm:mt-0 pt-12 pb-32">
-				<div className="md:grid md:grid-cols-2 md:gap-6">
-					<div className="mt-5 md:mt-0 md:col-span-2 flex xl:flex-row xs:flex-col justify-center">
+				<div className="md:grid md:grid-cols-1 md:gap-6 xs:gap-1">
+					<div className="mt-5 md:mt-0 md:col-span-2 xs:col-span-2 flex xl:flex-row xs:flex-col justify-center">
 						<form>
 							<div className="overflow-hidden sm:rounded-md border-gray-400 border rounded">
 								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-1 gap-16">
+									<div className="grid grid-cols-1 xl:gap-16 xs:gap-4">
 										<div className="col-span-10 ">
 											<label
 												htmlFor="product_title"

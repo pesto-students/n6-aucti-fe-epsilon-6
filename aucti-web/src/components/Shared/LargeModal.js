@@ -6,7 +6,7 @@ const LargeModal = (props) => {
 			{props.showModal ? (
 				<>
 					<div className="justify-center pt-16 items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-						<div className="relative w-auto my-6 mx-auto max-w-6xl">
+						<div className="relative xl:w-auto xl:my-6 xl:mx-auto xl:max-w-6xl md:max-w-3xl xs:max-w-xs xs:mt-48">
 							{/*content*/}
 							<div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
 								{/*header*/}
