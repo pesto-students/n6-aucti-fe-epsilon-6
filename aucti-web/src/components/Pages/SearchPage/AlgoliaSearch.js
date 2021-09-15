@@ -1,6 +1,5 @@
 import React from "react";
-import { connectHits, RefinementList } from "react-instantsearch-dom";
-import ProductCard from "../../Shared/ProductCard";
+import { connectHits } from "react-instantsearch-dom";
 import ProductCardAlgolia from "../../Shared/ProductCardAlgolia";
 
 const AlgoliaSearch = (props) => {

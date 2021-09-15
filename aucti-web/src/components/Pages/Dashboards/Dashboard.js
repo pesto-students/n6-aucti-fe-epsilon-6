@@ -9,71 +9,71 @@ import Main from "./Main";
 
 import Loader from "../../Shared/Loader";
 import { connect } from "react-redux";
-const Page404 = lazy(() => import("../ErrorPage/PageNotFound"));
+const Page404 = lazy(() => import("../PageNotFound"));
 
 // import { SidebarContext } from "../context/SidebarContext";
 
 function Dashboard(props) {
-  const { user } = props;
-  const [isSidebarOpen, closeSidebar] = useState(false);
-  let location = useLocation();
+	const { user } = props;
+	const [isSidebarOpen, closeSidebar] = useState(false);
+	let location = useLocation();
 
-  useEffect(() => {
-    closeSidebar(true);
-  }, [location]);
+	useEffect(() => {
+		closeSidebar(true);
+	}, [location]);
 
-  let routes = [];
+	let routes = [];
 
-  if (user && user.role === "buyer") {
-    routes = buyerRoutes;
-  } else if (user && user.role === "seller") {
-    routes = sellerRoutes;
-  }
-  return (
-    <div
-      className={`flex h-screen bg-gray-50 dark:bg-gray-900
+	if (user && user.role === "buyer") {
+		routes = buyerRoutes;
+	} else if (user && user.role === "seller") {
+		routes = sellerRoutes;
+	}
+	return (
+		<div
+			className={`flex h-screen bg-gray-50 dark:bg-gray-900
 				${isSidebarOpen && "overflow-hidden"}`}
-    >
-      <div className="flex flex-col flex w-full">
-        <Header />
-        <div className="flex flex-row ">
-          <Sidebar />
-          <Main>
-            <Suspense fallback={<Loader />}>
-              <Switch>
-                {routes.map((route, i) => {
-                  return route.component ? (
-                    <Route
-                      key={i}
-                      exact={true}
-                      path={`/${user.role}${route.path}`}
-                      render={(props) => <route.component {...props} />}
-                    />
-                  ) : null;
-                })}
-                <Redirect
-                  exact
-                  from={`/${user.role}`}
-                  to={`/${user.role}/dashboard`}
-                />
-                <Route component={Page404} />
-              </Switch>
-            </Suspense>
-          </Main>
-        </div>
-      </div>
-    </div>
-  );
+		>
+			<div className="flex flex-col flex w-full">
+				<Header />
+				<div className="flex flex-row ">
+					<Sidebar />
+					<Main>
+						<Suspense fallback={<Loader />}>
+							<Switch>
+								{routes.map((route, i) => {
+									return route.component ? (
+										<Route
+											key={i}
+											exact={true}
+											path={`/${user.role}${route.path}`}
+											render={(props) => <route.component {...props} />}
+										/>
+									) : null;
+								})}
+								<Redirect
+									exact
+									from={`/${user.role}`}
+									to={`/${user.role}/dashboard`}
+								/>
+								<Route component={Page404} />
+							</Switch>
+						</Suspense>
+					</Main>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-  };
+	return {
+		user: state.user,
+	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {};
+const mapDispatchToProps = () => {
+	return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

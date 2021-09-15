@@ -1,19 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-	CartIcon,
-	EditIcon,
-	MoneyIcon,
-	TrashIcon,
-} from "../../../../assets/icons";
+import { TrashIcon } from "../../../../assets/icons";
 import {
 	loadBuyerWishlistAction,
 	deleteWishlistAction,
 } from "../../../../redux/actions/buyerActions";
 import ConfirmModal from "../../../Shared/ConfirmModal";
 import Loader from "../../../Shared/Loader";
-import Modal from "../../../Shared/Modal";
+
 import Pagination from "../../../Shared/Pagination/Pagination";
 import Table from "../../../Shared/Table";
 
@@ -79,8 +74,8 @@ const BuyerWishlist = (props) => {
 
 	return (
 		<>
-			<div className="py-16">
-				<div className="flex-1 flex-col px-4 pb-4">
+			<div className="pt-16 pb-64">
+				<div className="flex-1 flex-col xl:px-4 xl:w-full lg:px-4 lg:w-full md:px-4 md:w-10/12  pb-4 xs:px-0 xs:w-6/12">
 					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg xs:rounded-lg">
@@ -88,7 +83,7 @@ const BuyerWishlist = (props) => {
 									{currentTableData() != null &&
 										currentTableData().map((n, index) => {
 											return (
-												<tr key={n.id}>
+												<tr key={n.product?.id}>
 													<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
 														{(currentPage - 1) * PageSize + index + 1}
 													</td>
@@ -110,7 +105,7 @@ const BuyerWishlist = (props) => {
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 														<div className="flex items-center space-x-4">
-															<Link to="/">
+															<Link to={"/home/product/" + n.product?.id}>
 																<button
 																	className="hover:text-aucti"
 																	layout="link"

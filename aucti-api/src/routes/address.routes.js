@@ -8,6 +8,9 @@ const {
 	fetchAllAddress,
 } = require("../services/address.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllAddress()
 		.then((data) => res.json(data))

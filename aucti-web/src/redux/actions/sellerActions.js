@@ -144,10 +144,11 @@ export const sellerCompletedLoadedAction = (completed) => {
 	};
 };
 
-export const confirmShipmentAction = (product_id) => {
+export const confirmShipmentAction = (product_id, bank_id) => {
 	return {
 		type: SELLER.CONFIRM_SHIPMENT,
 		product_id,
+		bank_id,
 	};
 };
 
@@ -155,5 +156,47 @@ export const shipmentConfirmedAction = (product) => {
 	return {
 		type: SELLER.SHIPMENT_CONFIRMED,
 		product,
+	};
+};
+
+export const saveUserBankAccountAction = (account) => {
+	return {
+		type: SELLER.SAVE_SELLER_BANK_ACCOUNT,
+		account,
+	};
+};
+
+export const userBankAccountSavedAction = (account) => {
+	return {
+		type: SELLER.SELLER_BANK_ACCOUNT_SAVED,
+		account,
+	};
+};
+
+export const loadUserBankAccountAction = (id) => {
+	return {
+		type: SELLER.LOAD_USER_BANK_ACCOUNT,
+		id,
+	};
+};
+
+export const userBankAccountLoadedAction = (accounts) => {
+	return {
+		type: SELLER.USER_BANK_ACCOUNT_LOADED_ACTION,
+		accounts,
+	};
+};
+
+export const deleteUserBankAccountAction = (id) => {
+	return {
+		type: SELLER.DELETE_USER_BANK_ACCOUNT,
+		id,
+	};
+};
+
+export const userBankAccountDeletedAction = (id) => {
+	return {
+		type: SELLER.USER_BANK_ACCOUNT_DELETED_ACTION,
+		id,
 	};
 };

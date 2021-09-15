@@ -9,8 +9,8 @@ import * as alert from "../actions/alertActions";
 
 function* login({ role }) {
 	try {
-		const result = yield call(service.login, role);
-		const user = result.user;
+		const user = yield call(service.login, role);
+
 		yield put(actions.userLoggedIn(user));
 		yield put(
 			alert.setAlertAction({
@@ -20,13 +20,6 @@ function* login({ role }) {
 			})
 		);
 		history.goBack();
-		// if (result?.additionalUserInfo?.isNewUser) {
-		// 	console.log("new user");
-		// 	console.log(history);
-		// 	history.push("/register");
-		// } else {
-		// 	history.push("/");
-		// }
 	} catch (e) {
 		yield put(
 			alert.setAlertAction({

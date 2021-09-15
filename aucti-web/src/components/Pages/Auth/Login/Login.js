@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { GoogleIcon, ActiIcon } from "../../../../assets/icons";
 import { loginUserAction } from "../../../../redux/actions/userActions";
+import history from "../../../../routes/history";
 
 const Login = (props) => {
+	const { user } = props;
 	const [role, SetRole] = useState("");
 	const [roleErr, SetRoleErr] = useState("");
+
+	useEffect(() => {
+		if (user) {
+			history.push("/");
+		}
+	}, []);
 
 	const handleUser = (role) => {
 		SetRole(role);
@@ -21,6 +30,11 @@ const Login = (props) => {
 			SetRoleErr("");
 		}
 	};
+	const refPlaceholder = React.useRef();
+
+	const removePlaceholder = () => {
+		refPlaceholder.current.remove();
+	};
 
 	return (
 		<div className="flex items-center justify-center min-h-screen bg-aucti dark:bg-binance-900">
@@ -34,14 +48,20 @@ const Login = (props) => {
 					</Link>
 				</div>
 				<div className="flex flex-row justify-center justify-items-center">
-					<div className="flex-1  h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
+					<div className="flex-1  h-full max-w-4xl mx-auto overflow-hidden bg-white xl:rounded-lg shadow-xl dark:bg-gray-800">
 						<div className="flex flex-col overflow-y-auto md:flex-row">
+							<div
+								ref={refPlaceholder}
+								className="md:h-auto w-screen bg-gray-200 rounded-tl animate-pulse"
+							></div>
 							<div className="h-32 md:h-auto md:w-1/2">
 								<img
 									aria-hidden="true"
-									className="object-cover w-full h-full dark:hidden"
-									src={"https://picsum.photos/1200/800"}
+									className="object-cover w-full h-full"
+									src={"https://picsum.photos/600/400"}
 									alt="Office"
+									onLoad={removePlaceholder}
+									onError={removePlaceholder}
 								/>
 							</div>
 							<main className="flex items-center p-6 sm:p-12 md:w-1/2">
@@ -111,6 +131,8 @@ const Login = (props) => {
 	);
 };
 
+const mapStateToProps = ({ user }) => ({ user });
+
 const mapDispatchToProps = (dispatch) => {
 	return {
 		login: (role) => {
@@ -119,4 +141,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

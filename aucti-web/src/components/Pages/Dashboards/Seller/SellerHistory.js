@@ -1,21 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import {
-	CartIcon,
-	EditIcon,
-	MoneyIcon,
-	TrashIcon,
-} from "../../../../assets/icons";
-import { loadBuyerHistoryAction } from "../../../../redux/actions/buyerActions";
+
 import {
 	confirmShipmentAction,
 	loadSellerCompletedAction,
 	loadSellerHistoryAction,
+	loadUserBankAccountAction,
 } from "../../../../redux/actions/sellerActions";
 import ConfirmModal from "../../../Shared/ConfirmModal";
 import Loader from "../../../Shared/Loader";
-import Modal from "../../../Shared/Modal";
+
 import Pagination from "../../../Shared/Pagination/Pagination";
 import Table from "../../../Shared/Table";
 import Tooltip from "../../../Shared/Tooltip";
@@ -23,7 +18,7 @@ import Tooltip from "../../../Shared/Tooltip";
 let PageSize = 5;
 
 const SellerHistory = (props) => {
-	const { sellerHistory, user, sellerCompleted } = props;
+	const { sellerHistory, user, sellerCompleted, sellerBankAccounts } = props;
 	const sellerHistoryFiltered = sellerHistory?.data;
 
 	const sellerCompletedFiltered = sellerCompleted?.data;
@@ -38,6 +33,7 @@ const SellerHistory = (props) => {
 		const { firstPageIndex2, lastPageIndex2 } = currentTableData2;
 		props.loadSellerHistory(user.uid, firstPageIndex, lastPageIndex);
 		props.loadSellerCompleted(user.uid, firstPageIndex2, lastPageIndex2);
+		props.loadUserBankAccount(user.uid);
 	}, [currentPage]);
 
 	const onNext = () => {
@@ -79,11 +75,27 @@ const SellerHistory = (props) => {
 		setshippedProduct(n.id);
 		setShowModalStatus(true);
 	};
-	const handleConfirmShipped = () => {
-		props.confirmShipment(shippedProduct);
-		setshippedProduct("");
-		setShowModalStatus(false);
+	const [checked, setChecked] = useState([]);
+	const [error, setError] = useState("");
+	const handleSelectBid = (id) => {
+		if (checked.indexOf(id) !== -1) {
+			setChecked(checked.filter((checkBox) => checkBox !== id));
+		} else {
+			setChecked([...checked, id]);
+		}
 	};
+	const handleConfirmShipped = () => {
+		const found = checked.find((n) => n);
+
+		if (!found) {
+			setError("Please select a address before confirm");
+		} else {
+			props.confirmShipment(shippedProduct, found);
+			setshippedProduct("");
+			setShowModalStatus(false);
+		}
+	};
+
 	if (!sellerHistory) {
 		return <Loader></Loader>;
 	}
@@ -114,7 +126,7 @@ const SellerHistory = (props) => {
 	return (
 		<>
 			<div className="py-8">
-				<div className="flex-1 flex-col px-4 pb-4">
+				<div className="flex-1 flex-col xl:px-4 xl:w-full lg:px-4 lg:w-full md:px-0 md:w-8/12  pb-4 xs:px-0 xs:w-4/12">
 					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg xs:rounded-lg">
@@ -129,21 +141,36 @@ const SellerHistory = (props) => {
 													<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
 														{(currentPage - 1) * PageSize + index + 1}
 													</td>
-													<td className="px-6 py-4  text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4  text-sm text-gray-500 "
+														data-testid="product_title_pending"
+													>
 														{n?.title}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														data-testid="base_price_pending"
+													>
 														{n?.base_price}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														data-testid="highest_bid_pending"
+													>
 														{n?.highest_bid}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														data-testid="highest_bidder_pending"
+													>
 														{n?.user_id}
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 														<div className="flex justify-center items-center space-x-4">
-															<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+															<span
+																className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+																data-testid="product_transaction_status_pending"
+															>
 																{n?.product_transaction_status}
 															</span>
 														</div>
@@ -221,7 +248,7 @@ const SellerHistory = (props) => {
 				</div>
 			</div>
 			<div className="pb-16">
-				<div className="flex-1 flex-col px-4 pb-4">
+				<div className="flex-1 flex-col xl:px-4 xl:w-full lg:px-4 lg:w-full md:px-0 md:w-8/12  pb-4 xs:px-0 xs:w-4/12">
 					<div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
 						<div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
 							<div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg xs:rounded-lg">
@@ -236,21 +263,36 @@ const SellerHistory = (props) => {
 													<td className="px-6 py-4 whitespace-nowrap text-bold text-gray-900 ">
 														{(currentPage - 1) * PageSize + index + 1}
 													</td>
-													<td className="px-6 py-4  text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4  text-sm text-gray-500 "
+														data-testid="product_title_completed"
+													>
 														{n?.title}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														data-testid="base_price_completed"
+													>
 														{n?.base_price}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														data-testid="highest_bid_completed"
+													>
 														{n?.highest_bid}
 													</td>
-													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 ">
+													<td
+														className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 "
+														data-testid="highest_bidder_completed"
+													>
 														{n?.user_id}
 													</td>
 													<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
 														<div className="flex justify-center items-center space-x-4">
-															<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+															<span
+																className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+																data-testid="product_transaction_status_completed"
+															>
 																{n?.product_transaction_status}
 															</span>
 														</div>
@@ -332,12 +374,55 @@ const SellerHistory = (props) => {
 									d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
 								/>
 							</svg>
-							{/* <p className="text-gray-800 dark:text-gray-200 text-xl font-bold mt-4">
-									Remove Bid
-								</p> */}
+
 							<p className="text-gray-600 dark:text-gray-400 text-xs py-2 px-6">
-								Please confrim that the product has been shipped?
+								Please select a address and confirm that the product has been
+								shipped?
 							</p>
+							{sellerBankAccounts !== null &&
+								sellerBankAccounts.map((n) => {
+									return (
+										<li
+											key={n.id}
+											className="border-gray-400 flex flex-row mb-2"
+										>
+											<div className="border-gray-400 border rounded select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 justify-between items-center p-4 ">
+												<div className="flex flex-col text-xs">
+													<p>{n.account_name}</p>
+													<p>{n.bank_name}</p>
+													<p>{n.branch_name}</p>
+													<p>{n.account_no}</p>
+													<p>{n.ifsc_code}</p>
+												</div>
+
+												<div className="w-12 text-right flex justify-end hover:text-aucti">
+													<div className="flex items-center space-x-4">
+														<label className="flex items-center space-x-3 mb-3">
+															<input
+																type="checkbox"
+																name="checked-demo"
+																className="form-tick appearance-none bg-white bg-check h-6 w-6 border border-gray-300 rounded-md checked:bg-yellow-500 checked:border-transparent focus:outline-none"
+																checked={checked.includes(n.id)}
+																disabled={
+																	!checked.includes(n.id) && checked.length > 0
+																}
+																onChange={() => handleSelectBid(n.id)}
+															/>
+														</label>
+													</div>
+												</div>
+											</div>
+										</li>
+									);
+								})}
+							{sellerBankAccounts !== null && sellerBankAccounts.length === 0 && (
+								<Link to={"/seller/profile"}>
+									<div className=" flex justify-center  text-red-500 p-8 hover:underline">
+										No bank account details available to select, Please add a
+										bank account on your profile then proceed payment
+									</div>
+								</Link>
+							)}
 							<div className="flex items-center justify-between gap-4 w-full mt-8">
 								<button
 									type="button"
@@ -357,6 +442,15 @@ const SellerHistory = (props) => {
 									Confirm
 								</button>
 							</div>
+							<div className="text-right sm:px-6">
+								<span
+									data-testid="titleErr"
+									id="titleErr"
+									style={{ color: "red", fontSize: "12px" }}
+								>
+									{error}
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -370,6 +464,7 @@ const mapStateToProps = (state) => {
 		user: state.user,
 		sellerHistory: state.sellerHistory,
 		sellerCompleted: state.sellerCompleted,
+		sellerBankAccounts: state.sellerBankAccounts,
 	};
 };
 
@@ -379,8 +474,9 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(loadSellerHistoryAction(id, firstPageIndex, lastPageIndex)),
 		loadSellerCompleted: (id, firstPageIndex, lastPageIndex) =>
 			dispatch(loadSellerCompletedAction(id, firstPageIndex, lastPageIndex)),
-		confirmShipment: (product_id) =>
-			dispatch(confirmShipmentAction(product_id)),
+		confirmShipment: (product_id, bank_id) =>
+			dispatch(confirmShipmentAction(product_id, bank_id)),
+		loadUserBankAccount: (id) => dispatch(loadUserBankAccountAction(id)),
 	};
 };
 

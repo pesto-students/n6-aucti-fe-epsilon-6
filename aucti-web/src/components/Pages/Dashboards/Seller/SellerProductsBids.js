@@ -1,17 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
-import {
-	CartIcon,
-	EditIcon,
-	MoneyIcon,
-	TrashIcon,
-} from "../../../../assets/icons";
-import {
-	deleteBidAction,
-	loadBuyerBidAction,
-	loadBuyerInsightAction,
-	overrideBidAction,
-} from "../../../../redux/actions/buyerActions";
+
 import { loadBidsWithUsersAction } from "../../../../redux/actions/sellerActions";
 import ConfirmModal from "../../../Shared/ConfirmModal";
 import Loader from "../../../Shared/Loader";
@@ -23,30 +12,37 @@ let PageSize = 5;
 const SellerProductsBids = (props) => {
 	const [bidAmount, setBidAmount] = useState("");
 	const { productId, bidsWithUsers } = props;
-	const bids = bidsWithUsers?.data;
+
 	const [showModal, setShowModal] = useState(false);
 
 	const [showModalDelete, setShowModalDelete] = useState(false);
 	const [selectedBidForOverride, setSelectedBidForOverride] = useState("");
 	const [selectedBidForDelete, setSelectedBidForDelete] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
+	const [loading, setLoading] = useState(true);
+	const [bids, setBids] = useState(bidsWithUsers?.data);
 
 	useEffect(() => {
 		const { firstPageIndex, lastPageIndex } = currentTableData;
-		console.log(firstPageIndex, lastPageIndex, productId);
 
 		props.loadBidsWithUsers(productId, firstPageIndex, lastPageIndex);
 	}, [currentPage]);
 
-	const handleEdit = (bid) => {
-		setSelectedBidForOverride(bid);
-		setShowModal(true);
-	};
+	useEffect(() => {
+		if (bidsWithUsers && bidsWithUsers?.data !== bids) {
+			setBids(bidsWithUsers?.data);
+			setLoading(false);
+		}
+	}, [bidsWithUsers]);
+	// const handleEdit = (bid) => {
+	// 	setSelectedBidForOverride(bid);
+	// 	setShowModal(true);
+	// };
 
-	const handleDelete = (n) => {
-		setSelectedBidForDelete(n);
-		setShowModalDelete(true);
-	};
+	// const handleDelete = (n) => {
+	// 	setSelectedBidForDelete(n);
+	// 	setShowModalDelete(true);
+	// };
 
 	const handlePrice = (e) => {
 		setBidAmount(e.target.value);
@@ -83,7 +79,7 @@ const SellerProductsBids = (props) => {
 		return { firstPageIndex, lastPageIndex };
 	}, [currentPage]);
 
-	if (!bidsWithUsers) {
+	if (loading) {
 		return <Loader></Loader>;
 	}
 

@@ -23,6 +23,7 @@ import { sideBarReducer } from "./sideBarReducer";
 import { filterReducer } from "./filterReducer";
 import { priceRangeReducer } from "./priceRangeReducer";
 import { specialProductsReducer } from "./specialProductsReducer";
+import { bankAccountsReducer } from "./bankAccountsReducer";
 
 const rootReducer = combineReducers({
 	user: userReducer,
@@ -49,5 +50,6 @@ const rootReducer = combineReducers({
 	searchFilter: filterReducer,
 	priceRangeComponent: priceRangeReducer,
 	specialProducts: specialProductsReducer,
+	sellerBankAccounts: bankAccountsReducer,
 });
 export default rootReducer;

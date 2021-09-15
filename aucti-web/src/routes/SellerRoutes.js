@@ -11,9 +11,9 @@ const History = lazy(() =>
 	import("../components/Pages/Dashboards/Seller/SellerHistory")
 );
 
-const Reports = lazy(() =>
-	import("../components/Pages/Dashboards/Seller/SellerReports")
-);
+// const Reports = lazy(() =>
+// 	import("../components/Pages/Dashboards/Seller/SellerReports")
+// );
 
 const Profile = lazy(() =>
 	import("../components/Pages/Dashboards/Seller/SellerProfile")

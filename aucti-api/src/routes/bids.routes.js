@@ -17,6 +17,9 @@ const {
 	getBidPaymentProduct,
 } = require("../services/bids.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllBids()
 		.then((data) => res.json(data))
@@ -30,7 +33,6 @@ router.get("/user/:user_id", (req, res) => {
 });
 
 router.get("/:user_id,:firstPageIndex,:lastPageIndex", (req, res) => {
-	console.log(req.params);
 	fetchUserBids(req.params)
 		.then((data) => res.json(data))
 		.catch((err) => res.status(500).send(err));

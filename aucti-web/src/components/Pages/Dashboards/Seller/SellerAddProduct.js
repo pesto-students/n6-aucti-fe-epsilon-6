@@ -26,7 +26,7 @@ const SellerAddProduct = (props) => {
 		} else if (!base_price) {
 			setError("Base Price cannot be blank");
 			valid = false;
-		} else if (base_price.isNaN()) {
+		} else if (isNaN(base_price)) {
 			setError("Base Price cannot be text");
 			valid = false;
 		} else if (!product_category) {
@@ -50,7 +50,6 @@ const SellerAddProduct = (props) => {
 	};
 
 	useEffect(() => {
-		console.log(addProductUpdate.status);
 		if (addProductUpdate.status === 500) {
 			setLoading(false);
 		}
@@ -66,7 +65,7 @@ const SellerAddProduct = (props) => {
 				<div>
 					<h4 className="text-xs text-gray-500">File Details:</h4>
 
-					<p className="text-xs text-gray-500">
+					<p className="text-xs text-gray-500" data-testid="file_name">
 						File Name: {product_picture.name}
 					</p>
 
@@ -75,17 +74,17 @@ const SellerAddProduct = (props) => {
 					</p>
 
 					<p className="text-xs text-gray-500">
-						Last Modified: {product_picture.lastModifiedDate.toDateString()}
+						Last Modified:{" "}
+						{product_picture?.lastModifiedDate.toLocaleDateString()}
 					</p>
 				</div>
 			);
 		} else {
 			return (
-				<></>
-				// <div>
-				// 	<br />
-				// 	<h4>Choose before Pressing the Upload button</h4>
-				// </div>
+				<div>
+					<br />
+					<h4></h4>
+				</div>
 			);
 		}
 	};
@@ -93,15 +92,15 @@ const SellerAddProduct = (props) => {
 	return (
 		<div className="flex flex-col justify-center">
 			<div className="mt-10 sm:mt-0 pt-12 pb-32">
-				<div className="md:grid md:grid-cols-2 md:gap-6">
-					<div className="mt-5 md:mt-0 md:col-span-2 flex xl:flex-row xs:flex-col justify-center">
+				<div className="md:grid md:grid-cols-1 md:gap-6 xs:gap-1">
+					<div className="mt-5 md:mt-0 md:col-span-2 xs:col-span-2 flex xl:flex-row xs:flex-col justify-center">
 						<form>
 							<div className="overflow-hidden sm:rounded-md border-gray-400 border rounded">
 								<div className="px-4 py-5 bg-white sm:p-6">
-									<div className="grid grid-cols-1 gap-16">
+									<div className="grid grid-cols-1 xl:gap-16 xs:gap-4">
 										<div className="col-span-10 ">
 											<label
-												htmlFor="email-address"
+												htmlFor="product_title"
 												className="block text-sm font-medium text-gray-700"
 											>
 												Product Name
@@ -124,15 +123,33 @@ const SellerAddProduct = (props) => {
 											</label>
 											<select
 												className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+												data-testid="select-category"
 												onChange={(e) => setProduct_category(e.target.value)}
 											>
-												<option value={""}>-----Select-----</option>
-												<option value={"antiques_vintages"}>
+												<option data-testid="select-option" value={""}>
+													-----Select-----
+												</option>
+												<option
+													data-testid="select-option"
+													value={"antiques_vintages"}
+												>
 													Antiques and Vintage
 												</option>
-												<option value={"digital_art"}>Digital Art</option>
-												<option value={"autographed"}>Autographed</option>
-												<option value={"Other"}>Other</option>
+												<option
+													data-testid="select-option"
+													value={"digital_art"}
+												>
+													Digital Art
+												</option>
+												<option
+													data-testid="select-option"
+													value={"autographed"}
+												>
+													Autographed
+												</option>
+												<option data-testid="select-option" value={"Other"}>
+													Other
+												</option>
 											</select>
 										</div>
 
@@ -141,10 +158,11 @@ const SellerAddProduct = (props) => {
 												htmlFor="about"
 												className="block text-sm font-medium text-gray-700"
 											>
-												About
+												Product Description
 											</label>
 											<div className="mt-1">
 												<textarea
+													data-testid="product-description"
 													id="description"
 													name="description"
 													rows={3}
@@ -173,6 +191,7 @@ const SellerAddProduct = (props) => {
 													type="number"
 													name="base_price"
 													id="base_price"
+													data-testid="product_base_price"
 													className="mt-1 block w-full pl-7 py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
 													placeholder="0.00"
 													value={base_price}
@@ -257,6 +276,7 @@ const SellerAddProduct = (props) => {
 								</div>
 								<div className="text-right sm:px-6">
 									<span
+										data-testid="titleErr"
 										id="titleErr"
 										style={{ color: "red", fontSize: "12px" }}
 									>

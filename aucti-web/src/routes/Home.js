@@ -1,7 +1,6 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import CustomLayout from "../components/Layouts/CustomLayout";
-import Layout from "../components/Layouts/layout";
 import LandingPage from "../components/Pages/LandingPage/LandingPage";
 import PageNotFound from "../components/Pages/ErrorPage/PageNotFound";
 import ProductPage from "../components/Pages/ProductPage/ProductPage";

@@ -68,7 +68,6 @@ exports.fetchUserIdBids = (req) =>
 
 exports.fetchUserBids = (req) =>
 	new Promise((resolve, reject) => {
-		console.log(req);
 		const { user_id, firstPageIndex, lastPageIndex } = req;
 		if (!user_id) {
 			let msg = "User id is empty";
@@ -179,7 +178,7 @@ exports.fetchProductBids = (req) =>
 			.get()
 			.then((querySnapshot) => {
 				const data = querySnapshotData(querySnapshot);
-				console.log(data);
+
 				Promise.all(
 					data.map((bid) =>
 						fetchUser(bid.user_id)
@@ -229,28 +228,51 @@ exports.fetchUserInsights = (user_id) =>
 			.orderBy("createdAt", "desc")
 			.get()
 			.then((querySnapshot) => {
-				const data = querySnapshotData(querySnapshot);
-				const length = data.length;
+				const bidData = querySnapshotData(querySnapshot);
+				const length = bidData.length;
+				let data;
+				let total = 0;
+				if (length > 0) {
+					data = bidData.filter((n) => n.bid_status === bid_status.SUCCESS);
 
-				bids
-					.where("user_id", "==", user_id)
-					.where("bid_status", "==", bid_status.SUCCESS)
-					.get()
-					.then((querySnapshot) => {
-						const list = querySnapshotData(querySnapshot);
-						let total = 0;
-						if (list.length > 0) {
-							list.forEach((n) => {
-								total += parseInt(n.bid_price);
-							});
-						}
-						resolve({ total_bids: length, total_worth_items: total });
-					})
-					.catch((err) => {
-						let msg = "Unable to retrieve User bids";
-						console.log(err);
-						reject(msg);
-					});
+					Promise.all(
+						data.map((bid) =>
+							fetchProduct(bid.product_id)
+								.then((product) => {
+									if (
+										product.product_transaction_status ===
+										product_transaction_status.SETTLED
+									) {
+										return bid.bid_price;
+									} else {
+										return null;
+									}
+								})
+								.catch((err) => {
+									let msg = "Unable to retrieve User bids";
+									console.log(err);
+									reject(msg);
+								})
+						)
+					)
+						.then((list) => {
+							const filter = list.filter((n) => n !== null);
+							if (filter.length > 0) {
+								filter.forEach((n) => {
+									total += parseInt(n);
+								});
+							}
+
+							resolve({ total_bids: length, total_worth_items: total });
+						})
+						.catch((err) => {
+							let msg = "Unable to retrieve User bids";
+							console.log(err);
+							reject(msg);
+						});
+				} else {
+					resolve({ total_bids: length, total_worth_items: total });
+				}
 			})
 			.catch((err) => {
 				let msg = "Unable to retrieve User bids";
@@ -703,9 +725,10 @@ exports.makePayment = async (req) =>
 																			seller: seller.email,
 																		};
 																		sendPayementConfirmMail(props);
-																		console.log(data);
+
 																		let msg = "Payment Successful";
-																		resolve(msg);
+																		let code = 201;
+																		resolve({ msg, code });
 																	});
 															})
 															.catch((err) => {

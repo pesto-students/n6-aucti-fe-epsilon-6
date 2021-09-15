@@ -12,6 +12,9 @@ const {
 	fetchBidUser,
 } = require("../services/users.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllUsers()
 		.then((data) => res.json(data))

@@ -6,12 +6,12 @@ const Dashboard = lazy(() =>
 const History = lazy(() =>
 	import("../components/Pages/Dashboards/Buyer/BuyerHistory")
 );
-const Ratings = lazy(() =>
-	import("../components/Pages/Dashboards/Buyer/BuyerRating")
-);
-const Notifications = lazy(() =>
-	import("../components/Pages/Dashboards/Buyer/BuyerNotifications")
-);
+// const Ratings = lazy(() =>
+// 	import("../components/Pages/Dashboards/Buyer/BuyerRating")
+// );
+// const Notifications = lazy(() =>
+// 	import("../components/Pages/Dashboards/Buyer/BuyerNotifications")
+// );
 const Wishlist = lazy(() =>
 	import("../components/Pages/Dashboards/Buyer/BuyerWishlist")
 );

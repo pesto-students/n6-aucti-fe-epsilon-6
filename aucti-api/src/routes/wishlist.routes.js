@@ -8,6 +8,9 @@ const {
 	fetchUserWishlist,
 } = require("../services/wishlist.service");
 
+const isAuthenticated = require("../middlewares");
+router.use(isAuthenticated);
+
 router.get("/", (req, res) => {
 	fetchAllWishlist()
 		.then((data) => res.json(data))

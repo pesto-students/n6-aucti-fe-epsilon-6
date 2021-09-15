@@ -1,17 +1,9 @@
-import { createPopper } from "@popperjs/core/lib/createPopper";
-
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-// import { SidebarContext } from "../context/SidebarContext";
 import {
-	SearchIcon,
-	MoonIcon,
-	SunIcon,
-	BellIcon,
 	MenuIcon,
 	OutlinePersonIcon,
-	OutlineCogIcon,
 	OutlineLogoutIcon,
 	ActiIcon,
 } from "../../../assets/icons";
@@ -20,14 +12,13 @@ import {
 	toggleSidebarAction,
 } from "../../../redux/actions/userActions";
 import { Dropdown, DropdownItem } from "@windmill/react-ui";
-import Usericon from "../../Shared/usericon";
+
 import history from "../../../routes/history";
 import Searchbar from "../../Shared/searchbar";
 
 export const Header = (props)=> {
 	const { user } = props;
 
-	// const { toggleSidebar } = useState(false);
 	const toggleSidebar = () => {
 		props.dispatch(toggleSidebarAction());
 	};
@@ -50,7 +41,7 @@ export const Header = (props)=> {
 		<header className="z-50 py-4 bg-white shadow-bottom dark:bg-gray-800">
 			<div className="container flex items-center justify-start h-full xl:px-3 xs:px-0 xl:mx-auto xs:m-0 text-grey-900 dark:text-purple-300">
 				<button
-					className="xs:p-0 xs:m-0 xl:-ml-0 xs:-ml-8"
+					className="xs:p-0 xs:m-0 xl:-ml-0 xs:-ml-12"
 					onClick={handleBackHome}
 				>
 					<ActiIcon className="xl:h-10 xs:h-7"></ActiIcon>
@@ -68,13 +59,13 @@ export const Header = (props)=> {
 
 				{/* <!-- Search input --> */}
 
-				<div className="flex justify-center flex-1 lg:mr-32  xl:-ml-0 xs:-ml-2">
+				<div className="flex justify-center flex-1 lg:mr-32 -mt-4  xl:-ml-0 xs:-ml-2 lg:-ml-0 md:-ml-0">
 					<div className="relative w-full max-w-xl mr-6 focus-within:text-gray-400">
 						<Searchbar></Searchbar>
 					</div>
 				</div>
 
-				<ul className="flex items-center flex-shrink-0 space-x-6 xl:-ml-0 xs:-ml-4 xl:mx-6">
+				<ul className="flex items-center flex-shrink-0 space-x-6 xl:-ml-0 lg:-ml-0 md:-ml-0 xs:-ml-4 xl:mx-6 lg:mx-0 md:mx-0">
 					<li className="relative">
 						<button
 							className="rounded-full focus:shadow-outline-auctiLight focus:outline-none"
@@ -101,7 +92,7 @@ export const Header = (props)=> {
 								onClose={() => setIsProfileMenuOpen(false)}
 							>
 								{user && (
-									<Link to={`/${user.role}`}>
+									<Link to={`/${user?.role}`}>
 										<DropdownItem className="hover:bg-auctiLight">
 											<OutlinePersonIcon
 												className="w-4 h-4 mr-3"
