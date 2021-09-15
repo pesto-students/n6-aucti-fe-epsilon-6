@@ -1,34 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d42ce2a0-3c55-403b-a115-c58e5358bcd3" name="Default Changelist" comment="Merge branch 'main' of https://github.com/pesto-students/n6-aucti-fe-epsilon-6 into main&#10;&#10;# Conflicts:&#10;#&#9;src/components/Pages/ErrorPage/PageNotFound.js&#10;#&#9;src/components/Tests/Auth/Signup/Registerform.test.js&#10;#&#9;src/components/Tests/Dashboards/Dashboard.test.js&#10;#&#9;src/components/Tests/Dashboards/Header.test.js&#10;#&#9;src/components/Tests/Dashboards/Loading.test.js&#10;#&#9;src/components/Tests/Dashboards/Main.test.js&#10;#&#9;src/components/Tests/ErrorPage/PageNotFound.test.js&#10;#&#9;src/components/Tests/LandingPage/LandingPage.test.js&#10;#&#9;src/components/Tests/LandingPage/UserIcon.test.js&#10;#&#9;src/components/Tests/ProductPage/ProductPage.test.js&#10;#&#9;src/components/Tests/Shared/Alert.test.js&#10;#&#9;src/components/Tests/Shared/ProductCard.test.js&#10;#&#9;src/components/Tests/Shared/Tooltip.test.js&#10;#&#9;src/setupTest.js">
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Auth/Signup/Registerform.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Dashboards/Dashboard.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Dashboards/Header.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Dashboards/Loading.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Dashboards/Main.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/ErrorPage/PageNotFound.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/LandingPage/LandingPage.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/LandingPage/UserIcon.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/ProductPage/ProductPage.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Shared/Alert.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Shared/ProductCard.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Tests/Shared/Tooltip.test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/setupTest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboards/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboards/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/ErrorPage/PageNotFound.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/ErrorPage/PageNotFound.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/PageNotFound.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/PageNotFound.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shared/Person.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shared/Person.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Shared/usericon.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Shared/usericon.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions/productActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/productActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/actions/wishlistActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/actions/wishlistActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/reducers/alertReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/reducers/alertReducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/saga/rootSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/saga/rootSaga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/saga/wishlistSaga.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/saga/wishlistSaga.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/setupProxy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/setupProxy.js" afterDir="false" />
+    <list default="true" id="d42ce2a0-3c55-403b-a115-c58e5358bcd3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/assets/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/main.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +81,7 @@
       <workItem from="1631245954596" duration="2554000" />
       <workItem from="1631270227030" duration="40000" />
       <workItem from="1631705550215" duration="787000" />
+      <workItem from="1631706728867" duration="440000" />
     </task>
     <task id="LOCAL-00001" summary="Alert message on one file and export to entire project">
       <created>1629693819289</created>
