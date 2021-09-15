@@ -70,20 +70,20 @@
     "lint-staged": "^11.1.2",
     "prettier": "^2.4.0"
   },
-   "husky": {
-  "hooks": {
-    "pre-commit": "lint-staged"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
   }
-},
-"lint-staged": {
-  "*.{js,jsx}": [
-    "prettier --write",
-    "eslint --fix",
-    "git add"
-  ],
-  "*.{html,css,less,ejs}": [
-    "prettier --write",
-    "git add"
-  ]
-}
 }
