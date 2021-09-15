@@ -130,7 +130,10 @@ const BuyerHistory = (props) => {
 								<p className="p-3 text-md font-semibold text-gray-700 dark:text-gray-200 bg-gray-200">
 									Pending Transactions
 								</p>
+								
+								
 								<Table columns={columns}>
+								
 									{buyerHistoryFiltered != null &&
 										buyerHistoryFiltered.map((n, index) => {
 											return (

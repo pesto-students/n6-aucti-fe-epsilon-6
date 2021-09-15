@@ -3,7 +3,7 @@ module.exports = function (app) {
   app.use(
     proxy('/.netlify/functions/', {
       // target: "http://localhost:9000/",
-      target: 'https://aucti-api.netlify.app/.netlify/functions/api',
+      target: 'https://aucti-be.netlify.app/.netlify/functions/api',
       pathRewrite: {
         '^/\\.netlify/functions': '',
       },

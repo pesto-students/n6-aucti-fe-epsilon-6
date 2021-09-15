@@ -7,6 +7,8 @@
     "@algolia/react-instantsearch-widget-color-refinement-list": "^1.4.1",
     "@firebase/storage": "^0.8.0",
     "@popperjs/core": "2.9.1",
+    "@sentry/react": "^6.12.0",
+    "@sentry/tracing": "^6.12.0",
     "@stripe/react-stripe-js": "^1.4.1",
     "@stripe/stripe-js": "^1.17.1",
     "@tailwindui/react": "^0.1.1",
@@ -41,7 +43,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+    "format": "npx prettier --write \"./src/**/*.js\""
   },
   "eslintConfig": {
     "extends": [
@@ -69,5 +72,21 @@
     "husky": "^7.0.0",
     "lint-staged": "^11.1.2",
     "prettier": "^2.4.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{html,css,less,ejs}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
