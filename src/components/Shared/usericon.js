@@ -34,7 +34,7 @@ const Usericon = () => {
 
 	return (
 		<>
-			<div className="flex justify-end p-4" ref={popupref}>
+			<div data-testid="usericon" className="flex justify-end p-4" ref={popupref}>
 				{/* <div onClick={handlenot}><Notification show={notification}/></div> */}
 				<div onClick={handlepro}>
 					<Person show={profile} />

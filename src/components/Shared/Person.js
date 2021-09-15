@@ -4,7 +4,7 @@ import Profilemenu from "./profilemenu";
 function Person(props) {
 	return (
 		<>
-			<div className="mx-2 border rounded-full p-1">
+			<div data-testid="person" className="mx-2 border rounded-full p-1">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="35"

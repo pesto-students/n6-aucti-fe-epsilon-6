@@ -16,7 +16,7 @@ import { Dropdown, DropdownItem } from "@windmill/react-ui";
 import history from "../../../routes/history";
 import Searchbar from "../../Shared/searchbar";
 
-function Header(props) {
+export const Header = (props)=> {
 	const { user } = props;
 
 	const toggleSidebar = () => {
