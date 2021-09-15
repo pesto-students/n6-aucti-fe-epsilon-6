@@ -1,5 +1,5 @@
 import React from "react";
-import { ForbiddenIcon } from "../../assets/icons";
+import { ForbiddenIcon } from "../../../assets/icons";
 const PageNotFound = () => {
   return (
     <div data-testid="forbidden icon" className=" flex flex-col items-center">
