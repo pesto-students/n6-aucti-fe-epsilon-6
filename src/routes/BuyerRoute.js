@@ -2,8 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 const BuyerRoute = props => {
+  const Component = React.lazy(() =>
+    import('../components/Pages/Dashboards/Dashboard'),
+  );
   if (props.user.role === 'buyer') {
-    return <Route {...props} />;
+    return (
+      <Route {...props}>
+        <Component />
+      </Route>
+    );
   }
   return <Redirect to="/" />;
 };
