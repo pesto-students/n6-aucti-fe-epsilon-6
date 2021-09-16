@@ -27,6 +27,8 @@ const ProductCard = props => {
             <div className="flex justify-center">
               <LazyLoad height={160}>
                 <img
+                  height="40"
+                  width="40"
                   src={bidproduct?.product_picture}
                   className="object-cover object-center h-40 w-40 pb-4"
                   alt={bidproduct?.title}

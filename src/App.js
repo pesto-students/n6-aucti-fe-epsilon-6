@@ -14,6 +14,8 @@ import SellerRoute from './routes/SellerRoute';
 import BuyerPayments from './components/Pages/Dashboards/Buyer/BuyerPayments';
 import Home from './routes/Home';
 import { initializeInterceptor } from './redux/api';
+import { Suspense } from 'react';
+import Loader from './components/Shared/Loader';
 const searchClient = algoliasearch(
   'DZTA0M5OD8',
   'bfcc29ed9a87db03544730c93ed22ac2',
@@ -35,16 +37,18 @@ function App() {
   return (
     <>
       <InstantSearch searchClient={searchClient} indexName="aucti_products">
-        <Switch>
-          <Route exact path="/" render={() => <Redirect to="/home" />} />
-          <Route path="/login" component={Login} />
-          <Route path="/home" component={Home} />
-          <BuyerRoute path="/buyer" component={Dashboard} />
-          <SellerRoute path="/seller" component={Dashboard} />
-          <BuyerRoute path="/payments/:bid_id" component={BuyerPayments} />
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route path="/login" component={Login} />
+            <Route path="/home" component={Home} />
+            <BuyerRoute path="/buyer" component={Dashboard} />
+            <SellerRoute path="/seller" component={Dashboard} />
+            <BuyerRoute path="/payments/:bid_id" component={BuyerPayments} />
 
-          <Route path="/**" component={PageNotFound} />
-        </Switch>
+            <Route path="/**" component={PageNotFound} />
+          </Switch>
+        </Suspense>
       </InstantSearch>
     </>
   );
