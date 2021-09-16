@@ -1,8 +1,8 @@
-import { all, call, put, takeEvery } from "redux-saga/effects";
-import * as types from "../types";
-import * as service from "../services/wishlistService";
-import * as actions from "../actions/wishlistActions";
-import * as alerts from "../actions/alertActions";
+import { all, call, put, takeEvery } from 'redux-saga/effects';
+import * as types from '../types';
+import * as service from '../services/wishlistService';
+import * as actions from '../actions/wishlistActions';
+import * as alerts from '../actions/alertActions';
 
 const already_in_wishlist = (product_id, product_list) => {
   for (let product of product_list) {
@@ -13,15 +13,16 @@ const already_in_wishlist = (product_id, product_list) => {
 function* addWishlist({ user_id, product_id }) {
   try {
     const wishlist = yield call(service.getUserWishlist, user_id);
+    console.log(wishlist);
     if (wishlist.length === 0) {
       yield call(service.addUserWishlist, { user_id, product_id });
       yield put(actions.wishlistAddedAction(true));
       yield put(
         alerts.setAlertAction({
-          text: "Product added to your wishlist!",
-          text_color: "text-blue-700",
-          bg_color: "bg-blue-100",
-        })
+          text: 'Product added to your wishlist!',
+          text_color: 'text-blue-700',
+          bg_color: 'bg-blue-100',
+        }),
       );
     } else {
       const found = already_in_wishlist(product_id, wishlist);
@@ -32,10 +33,10 @@ function* addWishlist({ user_id, product_id }) {
         yield put(actions.wishlistAddedAction(true));
         yield put(
           alerts.setAlertAction({
-            text: "Product added to your wishlist!",
-            text_color: "text-blue-700",
-            bg_color: "bg-blue-100",
-          })
+            text: 'Product added to your wishlist!',
+            text_color: 'text-blue-700',
+            bg_color: 'bg-blue-100',
+          }),
         );
       }
     }
@@ -44,9 +45,9 @@ function* addWishlist({ user_id, product_id }) {
     yield put(
       alerts.setAlertAction({
         text: "We couldn't add to your wishlist at the moment!",
-        text_color: "text-red-700",
-        bg_color: "bg-red-100",
-      })
+        text_color: 'text-red-700',
+        bg_color: 'bg-red-100',
+      }),
     );
   }
 }

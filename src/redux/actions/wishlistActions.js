@@ -1,4 +1,4 @@
-import * as types from "../types";
+import * as types from '../types';
 export const addWishlistAction = (user_id, product_id) => {
   return {
     type: types.ADD_WISHLIST,
@@ -7,7 +7,7 @@ export const addWishlistAction = (user_id, product_id) => {
   };
 };
 
-export const wishlistAddedAction = (added) => {
+export const wishlistAddedAction = added => {
   return {
     type: types.WISHLIST_ADDED,
     added,
