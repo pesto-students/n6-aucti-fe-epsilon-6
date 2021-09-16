@@ -11,10 +11,10 @@ import {
 } from '@testing-library/react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from '../../redux/reducers/rootReducer';
-import SellerHome from '../../components/Pages/Dashboards/Seller/SellerHome';
+import reducer from '../../../redux/reducers/rootReducer';
+import SellerHome from '../../Pages/Dashboards/Seller/SellerHome';
 import { MemoryRouter } from 'react-router-dom';
-import LandingPage from '../../components/Pages/LandingPage/LandingPage';
+import LandingPage from '../../Pages/LandingPage/LandingPage';
 
 describe('Landing Page', () => {
   const renderWithState = (ui, { initialState, ...renderOptions } = {}) => {
