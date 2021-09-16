@@ -33,14 +33,26 @@ const Home = () => {
               path="/home"
               render={() => <Redirect to="/home/landing" />}
             />
-            <Route path="/home/landing" render={() => <LandingPage />} />
+            <Route
+              path="/home/landing"
+              render={props => <LandingPage {...props} />}
+            />
             <Route
               path="/home/special/:category"
-              render={() => <SpeacialPage />}
+              render={props => <SpeacialPage {...props} />}
             />
-            <Route path="/home/product/:id" render={() => <ProductPage />} />
-            <Route path="/home/search" render={() => <SearchPage />} />
-            <Route path="/home/**" render={() => <PageNotFound />} />
+            <Route
+              path="/home/product/:id"
+              render={props => <ProductPage {...props} />}
+            />
+            <Route
+              path="/home/search"
+              render={props => <SearchPage {...props} />}
+            />
+            <Route
+              path="/home/**"
+              render={props => <PageNotFound {...props} />}
+            />
           </Switch>
         </Suspense>
       </CustomLayout>
