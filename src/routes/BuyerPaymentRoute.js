@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-
-const SellerRoute = props => {
+const BuyerRoute = props => {
   const Component = React.lazy(() =>
-    import('../components/Pages/Dashboards/Dashboard'),
+    import('../components/Pages/Dashboards/Buyer/BuyerPayments'),
   );
-
-  if (props.user.role === 'seller') {
+  if (props.user.role === 'buyer') {
     return (
       <Route {...props}>
         <Component />
@@ -17,4 +15,4 @@ const SellerRoute = props => {
   return <Redirect to="/" />;
 };
 
-export default connect(({ user }) => ({ user }))(SellerRoute);
+export default connect(({ user }) => ({ user }))(BuyerRoute);
