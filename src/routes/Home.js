@@ -1,31 +1,48 @@
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-// import { firebase } from '../../src/config/firebase';
-import CustomLayout from '../components/Layouts/CustomLayout';
-import LandingPage from '../components/Pages/LandingPage/LandingPage';
-import PageNotFound from '../components/Pages/PageNotFound';
+import React, { lazy, Suspense } from 'react';
 
-import ProductPage from '../components/Pages/ProductPage/ProductPage';
-import SearchPage from '../components/Pages/SearchPage/SearchPage';
-import SpeacialPage from '../components/Pages/SpecialPage/SpeacialPage';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Loader from '../components/Shared/Loader';
+// import { firebase } from '../../src/config/firebase';
+const CustomLayout = lazy(() => import('../components/Layouts/CustomLayout'));
+const LandingPage = lazy(() =>
+  import('../components/Pages/LandingPage/LandingPage'),
+);
+const PageNotFound = lazy(() => import('../components/Pages/PageNotFound'));
+
+const ProductPage = lazy(() =>
+  import('../components/Pages/ProductPage/ProductPage'),
+);
+const SearchPage = lazy(() =>
+  import('../components/Pages/SearchPage/SearchPage'),
+);
+
+const SpeacialPage = lazy(() =>
+  import('../components/Pages/SpecialPage/SpeacialPage'),
+);
+
 // import { initializeInterceptor } from '../redux/api';
 
 const Home = () => {
   return (
     <>
       <CustomLayout>
-        <Switch>
-          <Route
-            exact
-            path="/home"
-            render={() => <Redirect to="/home/landing" />}
-          />
-          <Route path="/home/landing" component={LandingPage} />
-          <Route path="/home/special/:category" component={SpeacialPage} />
-          <Route path="/home/product/:id" component={ProductPage} />
-          <Route path="/home/search" component={SearchPage} />
-          <Route path="/home/**" component={PageNotFound} />
-        </Switch>
+        <Suspense fallback={<Loader />}>
+          <Switch>
+            <Route
+              exact
+              path="/home"
+              render={() => <Redirect to="/home/landing" />}
+            />
+            <Route path="/home/landing" render={() => <LandingPage />} />
+            <Route
+              path="/home/special/:category"
+              render={() => <SpeacialPage />}
+            />
+            <Route path="/home/product/:id" render={() => <ProductPage />} />
+            <Route path="/home/search" render={() => <SearchPage />} />
+            <Route path="/home/**" render={() => <PageNotFound />} />
+          </Switch>
+        </Suspense>
       </CustomLayout>
     </>
   );
