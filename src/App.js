@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import algoliasearch from 'algoliasearch';
 import { InstantSearch } from 'react-instantsearch-dom';
-
+import { firebase } from '../src/config/firebase';
 import PageNotFound from './components/Pages/PageNotFound';
 
 import Dashboard from './components/Pages/Dashboards/Dashboard';
@@ -13,11 +13,25 @@ import BuyerRoute from './routes/BuyerRoute';
 import SellerRoute from './routes/SellerRoute';
 import BuyerPayments from './components/Pages/Dashboards/Buyer/BuyerPayments';
 import Home from './routes/Home';
+import { initializeInterceptor } from './redux/api';
 const searchClient = algoliasearch(
   'DZTA0M5OD8',
   'bfcc29ed9a87db03544730c93ed22ac2',
 );
 function App() {
+  useEffect(() => {
+    const unsubscibe = firebase.auth().onAuthStateChanged(authUser => {
+      if (authUser) {
+        authUser.getIdToken(true).then(idToken => {
+          initializeInterceptor(idToken);
+        });
+      }
+    });
+    return () => {
+      unsubscibe();
+    };
+  }, []);
+
   return (
     <>
       <InstantSearch searchClient={searchClient} indexName="aucti_products">

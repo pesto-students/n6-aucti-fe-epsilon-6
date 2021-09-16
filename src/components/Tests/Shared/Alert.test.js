@@ -5,9 +5,11 @@ import { Provider } from 'react-redux';
 import { alertReducer } from '../../../redux/reducers/alertReducer';
 
 const initialState = {
-  text_color: 'blue',
-  bg_color: 'red',
-  text: 'hello there',
+  alert: {
+    text_color: 'blue',
+    bg_color: 'red',
+    text: 'hello there',
+  },
 };
 
 const store = createStore(alertReducer, initialState);
@@ -20,5 +22,10 @@ describe('render Alert component', () => {
       <Alert alert={{ text: 'hello', text_color: 'red', bg_color: 'blue' }} />,
       { wrapper: Wrapper },
     );
+  });
+
+  test('check alert text rendered', () => {
+    const alertmessage = screen.findByTestId('alert-component');
+    expect(alertmessage).toBeInTheDocument;
   });
 });

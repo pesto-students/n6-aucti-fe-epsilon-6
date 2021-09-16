@@ -1,97 +1,96 @@
-import React, { useState, useEffect } from "react";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import "./styles.css";
+import React, { useState, useEffect } from 'react';
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import './styles.css';
 import {
-	loadUserAddressAction,
-	makePaymentAction,
-} from "../../../../redux/actions/buyerActions";
-import { connect } from "react-redux";
+  loadUserAddressAction,
+  makePaymentAction,
+} from '../../../../redux/actions/buyerActions';
+import { connect } from 'react-redux';
 
-import CustomCard from "../../../Shared/CustomCard";
-import { Link } from "react-router-dom";
-import history from "../../../../routes/history";
+import CustomCard from '../../../Shared/CustomCard';
+import { Link } from 'react-router-dom';
+import history from '../../../../routes/history';
 
 const CARD_OPTIONS = {
-	iconStyle: "solid",
-	style: {
-		base: {
-			iconColor: "#c4f0ff",
-			color: "#fff",
-			fontWeight: 500,
-			fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-			fontSize: "16px",
-			fontSmoothing: "antialiased",
-			":-webkit-autofill": {
-				color: "#fce883",
-			},
-			"::placeholder": {
-				color: "#87bbfd",
-			},
-		},
-		invalid: {
-			iconColor: "#ffc7ee",
-			color: "#ffc7ee",
-		},
-	},
+  iconStyle: 'solid',
+  style: {
+    base: {
+      iconColor: '#c4f0ff',
+      color: '#fff',
+      fontWeight: 500,
+      fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+      fontSize: '16px',
+      fontSmoothing: 'antialiased',
+      ':-webkit-autofill': {
+        color: '#fce883',
+      },
+      '::placeholder': {
+        color: '#87bbfd',
+      },
+    },
+    invalid: {
+      iconColor: '#ffc7ee',
+      color: '#ffc7ee',
+    },
+  },
 };
 
 const CardField = ({ onChange }) => (
-	<div className="FormRow">
-		<CardElement options={CARD_OPTIONS} onChange={onChange} />
-	</div>
+  <div className="FormRow">
+    <CardElement options={CARD_OPTIONS} onChange={onChange} />
+  </div>
 );
 
 const Field = ({
-	label,
-	id,
-	type,
-	placeholder,
-	required,
-	autoComplete,
-	value,
-	onChange,
+  label,
+  id,
+  type,
+  placeholder,
+  required,
+  autoComplete,
+  value,
+  onChange,
 }) => (
-	<div className="FormRow">
-		<label htmlFor={id} className="FormRowLabel">
-			{label}
-		</label>
-		<input
-			className="FormRowInput payment"
-			id={id}
-			type={type}
-			placeholder={placeholder}
-			required={required}
-			autoComplete={autoComplete}
-			value={value}
-			onChange={onChange}
-		/>
-	</div>
+  <div className="FormRow">
+    <label htmlFor={id} className="FormRowLabel">
+      {label}
+    </label>
+    <input
+      className="FormRowInput payment"
+      id={id}
+      type={type}
+      placeholder={placeholder}
+      required={required}
+      autoComplete={autoComplete}
+      value={value}
+      onChange={onChange}
+    />
+  </div>
 );
 
 const SubmitButton = ({ processing, error, children, disabled }) => (
-	<button
-		className={`payment SubmitButton ${error ? "SubmitButton--error" : ""}`}
-		type="submit"
-		disabled={processing || disabled}
-	>
-		{processing ? "Processing..." : children}
-	</button>
+  <button
+    className={`payment SubmitButton ${error ? 'SubmitButton--error' : ''}`}
+    type="submit"
+    disabled={processing || disabled}>
+    {processing ? 'Processing...' : children}
+  </button>
 );
 
 const ErrorMessage = ({ children }) => (
-	<div className="ErrorMessage" role="alert">
-		<svg width="16" height="16" viewBox="0 0 17 17">
-			<path
-				fill="#FFF"
-				d="M8.5,17 C3.80557963,17 0,13.1944204 0,8.5 C0,3.80557963 3.80557963,0 8.5,0 C13.1944204,0 17,3.80557963 17,8.5 C17,13.1944204 13.1944204,17 8.5,17 Z"
-			/>
-			<path
-				fill="#6772e5"
-				d="M8.5,7.29791847 L6.12604076,4.92395924 C5.79409512,4.59201359 5.25590488,4.59201359 4.92395924,4.92395924 C4.59201359,5.25590488 4.59201359,5.79409512 4.92395924,6.12604076 L7.29791847,8.5 L4.92395924,10.8739592 C4.59201359,11.2059049 4.59201359,11.7440951 4.92395924,12.0760408 C5.25590488,12.4079864 5.79409512,12.4079864 6.12604076,12.0760408 L8.5,9.70208153 L10.8739592,12.0760408 C11.2059049,12.4079864 11.7440951,12.4079864 12.0760408,12.0760408 C12.4079864,11.7440951 12.4079864,11.2059049 12.0760408,10.8739592 L9.70208153,8.5 L12.0760408,6.12604076 C12.4079864,5.79409512 12.4079864,5.25590488 12.0760408,4.92395924 C11.7440951,4.59201359 11.2059049,4.59201359 10.8739592,4.92395924 L8.5,7.29791847 L8.5,7.29791847 Z"
-			/>
-		</svg>
-		{children}
-	</div>
+  <div className="ErrorMessage" role="alert">
+    <svg width="16" height="16" viewBox="0 0 17 17">
+      <path
+        fill="#FFF"
+        d="M8.5,17 C3.80557963,17 0,13.1944204 0,8.5 C0,3.80557963 3.80557963,0 8.5,0 C13.1944204,0 17,3.80557963 17,8.5 C17,13.1944204 13.1944204,17 8.5,17 Z"
+      />
+      <path
+        fill="#6772e5"
+        d="M8.5,7.29791847 L6.12604076,4.92395924 C5.79409512,4.59201359 5.25590488,4.59201359 4.92395924,4.92395924 C4.59201359,5.25590488 4.59201359,5.79409512 4.92395924,6.12604076 L7.29791847,8.5 L4.92395924,10.8739592 C4.59201359,11.2059049 4.59201359,11.7440951 4.92395924,12.0760408 C5.25590488,12.4079864 5.79409512,12.4079864 6.12604076,12.0760408 L8.5,9.70208153 L10.8739592,12.0760408 C11.2059049,12.4079864 11.7440951,12.4079864 12.0760408,12.0760408 C12.4079864,11.7440951 12.4079864,11.2059049 12.0760408,10.8739592 L9.70208153,8.5 L12.0760408,6.12604076 C12.4079864,5.79409512 12.4079864,5.25590488 12.0760408,4.92395924 C11.7440951,4.59201359 11.2059049,4.59201359 10.8739592,4.92395924 L8.5,7.29791847 L8.5,7.29791847 Z"
+      />
+    </svg>
+    {children}
+  </div>
 );
 
 // const ResetButton = ({ onClick }) => (
@@ -105,247 +104,246 @@ const ErrorMessage = ({ children }) => (
 // 	</button>
 // );
 
-const CheckoutForm = (props) => {
-	const { user, bidproduct, addresses, paymentMessage } = props;
-	const stripe = useStripe();
-	const elements = useElements();
-	const [error, setError] = useState(null);
-	const [cardComplete, setCardComplete] = useState(false);
-	const [processing, setProcessing] = useState(false);
-	const [paymentMethod, setPaymentMethod] = useState(null);
-	const [billingDetails, setBillingDetails] = useState({
-		email: "",
-		phone: "",
-		name: "",
-	});
-	const [checked, setChecked] = useState([]);
+const CheckoutForm = props => {
+  const { user, bidproduct, addresses, paymentMessage } = props;
+  const stripe = useStripe();
+  const elements = useElements();
+  const [error, setError] = useState(null);
+  const [cardComplete, setCardComplete] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState(null);
+  const [billingDetails, setBillingDetails] = useState({
+    email: '',
+    phone: '',
+    name: '',
+  });
+  const [checked, setChecked] = useState([]);
 
-	useEffect(() => {
-		// props.loadBidproductDetails(props.bid_id);
-		props.loadUserAddress(user.uid);
-	}, []);
+  useEffect(() => {
+    // props.loadBidproductDetails(props.bid_id);
+    props.loadUserAddress(user.uid);
+  }, []);
 
-	useEffect(() => {
-		console.log(paymentMessage);
-		if (paymentMessage.code === 201) {
-			history.push("/buyer/auctions");
-		}
-	}, [paymentMessage]);
+  useEffect(() => {
+    console.log(paymentMessage);
+    if (paymentMessage.code === 201) {
+      history.push('/buyer/auctions');
+    }
+  }, [paymentMessage]);
 
-	const handleSelectBid = (id) => {
-		if (checked.indexOf(id) !== -1) {
-			setChecked(checked.filter((checkBox) => checkBox !== id));
-		} else {
-			setChecked([...checked, id]);
-		}
-	};
+  const handleSelectBid = id => {
+    if (checked.indexOf(id) !== -1) {
+      setChecked(checked.filter(checkBox => checkBox !== id));
+    } else {
+      setChecked([...checked, id]);
+    }
+  };
 
-	const handleSubmit = async (event) => {
-		event.preventDefault();
-		const found = checked.find((n) => n);
+  const handleSubmit = async event => {
+    event.preventDefault();
+    const found = checked.find(n => n);
 
-		if (!stripe || !elements) {
-			// Stripe.js has not loaded yet. Make sure to disable
-			// form submission until Stripe.js has loaded.
-			return;
-		}
+    if (!stripe || !elements) {
+      // Stripe.js has not loaded yet. Make sure to disable
+      // form submission until Stripe.js has loaded.
+      return;
+    }
 
-		if (error) {
-			elements.getElement("card").focus();
-			return;
-		}
+    if (error) {
+      elements.getElement('card').focus();
+      return;
+    }
 
-		if (cardComplete && found) {
-			setProcessing(true);
-		} else {
-			alert("Please select a address");
-			return;
-		}
+    if (cardComplete && found) {
+      setProcessing(true);
+    } else {
+      alert('Please select a address');
+      return;
+    }
 
-		const payload = await stripe.createPaymentMethod({
-			type: "card",
-			card: elements.getElement(CardElement),
-			billing_details: billingDetails,
-		});
+    const payload = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+      billing_details: billingDetails,
+    });
 
-		setProcessing(false);
+    setProcessing(false);
 
-		if (payload.error) {
-			setError(payload.error);
-		} else {
-			setPaymentMethod(payload.paymentMethod);
-			const found = checked.find((n) => n);
-			const { id } = payload.paymentMethod;
-			props.makePayemnt(id, props.bid_id, found);
-		}
-	};
+    if (payload.error) {
+      setError(payload.error);
+    } else {
+      setPaymentMethod(payload.paymentMethod);
+      const found = checked.find(n => n);
+      const { id } = payload.paymentMethod;
+      props.makePayemnt(id, props.bid_id, found);
+    }
+  };
 
-	// const reset = () => {
-	// 	setError(null);
-	// 	setProcessing(false);
-	// 	setPaymentMethod(null);
-	// 	setBillingDetails({
-	// 		email: "",
-	// 		phone: "",
-	// 		name: "",
-	// 	});
-	// };
+  // const reset = () => {
+  // 	setError(null);
+  // 	setProcessing(false);
+  // 	setPaymentMethod(null);
+  // 	setBillingDetails({
+  // 		email: "",
+  // 		phone: "",
+  // 		name: "",
+  // 	});
+  // };
 
-	return paymentMethod ? (
-		<div className="Result">
-			<div className="ResultTitle" role="alert">
-				Payment successful
-			</div>
-			<div className="ResultMessage">
-				Thanks for trying Stripe Elements. No money was charged, but we
-				generated a PaymentMethod: {paymentMethod.id}
-			</div>
-			{/* <ResetButton onClick={reset} /> */}
-		</div>
-	) : (
-		<div className="flex xl:flex-row md:flex-col xs:flex-col p-8">
-			<div className="xl:h-32 xs:h-32 pr-40 pb-16 pl-16 pt-8">
-				<CustomCard bidproduct={bidproduct}></CustomCard>
-			</div>
-			<div className="xl:h-96 xs:h-32  xl:pr-32 xl:pt-32 md:pt-96 xs:pt-96">
-				<div className="container flex flex-col mx-auto items-center justify-center">
-					<p className="p-3 text-md font-semibold text-gray-700 dark:text-gray-200 bg-gray-200 rounded-lg">
-						Please select a address to ship
-					</p>
+  return paymentMethod ? (
+    <div className="Result">
+      <div className="ResultTitle" role="alert">
+        Payment successful
+      </div>
+      <div className="ResultMessage">
+        Thanks for trying Stripe Elements. No money was charged, but we
+        generated a PaymentMethod: {paymentMethod.id}
+      </div>
+      {/* <ResetButton onClick={reset} /> */}
+    </div>
+  ) : (
+    <div className="flex xl:flex-row md:flex-col xs:flex-col p-8">
+      <div className="xl:h-32 xs:h-32 xl:pr-40 xs:pr-0  xl:pb-16 xs:pb-0 xl:pl-16 xs:pl-0 pt-8">
+        <CustomCard bidproduct={bidproduct}></CustomCard>
+      </div>
+      <div className="xl:h-96 xs:h-32  xl:pr-32 xl:pt-32 md:pt-96 xs:pt-96">
+        <div className="container flex flex-col mx-auto items-center justify-center">
+          <p className="p-3 text-md font-semibold text-gray-700 dark:text-gray-200 bg-gray-200 rounded-lg">
+            Please select a address to ship
+          </p>
 
-					<ul className="flex flex-col pt-5 ">
-						{addresses !== null &&
-							addresses.map((n) => {
-								return (
-									<li key={n.id} className="border-gray-400 flex flex-row mb-2">
-										<div className="border-gray-400 border rounded select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 justify-between items-center p-4 ">
-											<div className="flex flex-col text-xs">
-												<p className="break-words">{n.address}</p>
-												<p>{n.city}</p>
-												<p>{n.state}</p>
-												<p>{n.country}</p>
-												<p>{n.zip}</p>
-											</div>
+          <ul className="flex flex-col pt-5 ">
+            {addresses !== null &&
+              addresses.map(n => {
+                return (
+                  <li key={n.id} className="border-gray-400 flex flex-row mb-2">
+                    <div className="border-gray-400 border rounded select-none cursor-pointer bg-white dark:bg-gray-800 rounded-md flex flex-1 justify-between items-center p-4 ">
+                      <div className="flex flex-col text-xs">
+                        <p className="break-words">{n.address}</p>
+                        <p>{n.city}</p>
+                        <p>{n.state}</p>
+                        <p>{n.country}</p>
+                        <p>{n.zip}</p>
+                      </div>
 
-											<div className="w-12 text-right flex justify-end hover:text-aucti">
-												<div className="flex items-center space-x-4">
-													<label className="flex items-center space-x-3 mb-3">
-														<input
-															type="checkbox"
-															name="checked-demo"
-															className="form-tick appearance-none bg-white bg-check h-6 w-6 border border-gray-300 rounded-md checked:bg-yellow-500 checked:border-transparent focus:outline-none"
-															checked={checked.includes(n.id)}
-															disabled={
-																!checked.includes(n.id) && checked.length > 0
-															}
-															onChange={() => handleSelectBid(n.id)}
-														/>
-													</label>
-												</div>
-											</div>
-										</div>
-									</li>
-								);
-							})}
-					</ul>
-					{addresses !== null && addresses.length === 0 && (
-						<Link to={"/buyer/profile"}>
-							<div className="w-64 flex break-words justify-center items-center p-8 hover:underline">
-								{
-									"No address available to select,\n Please add a address on your profile \n then proceed payment"
-								}
-							</div>
-						</Link>
-					)}
-				</div>
-			</div>
-			<div className="xl:h-96 xs:h-32 pt-32 pr-32 xl:pt-32 md:pt-96 xs:pt-96">
-				<form className="Form" onSubmit={handleSubmit}>
-					<fieldset className="FormGroup">
-						<Field
-							label="Name"
-							id="name"
-							type="text"
-							placeholder="Jane Doe"
-							required
-							autoComplete="name"
-							value={billingDetails.name}
-							onChange={(e) => {
-								setBillingDetails({
-									...billingDetails,
-									name: e.target.value,
-								});
-							}}
-						/>
-						<Field
-							label="Email"
-							id="email"
-							type="email"
-							placeholder="janedoe@gmail.com"
-							required
-							autoComplete="email"
-							value={billingDetails.email}
-							onChange={(e) => {
-								setBillingDetails({
-									...billingDetails,
-									email: e.target.value,
-								});
-							}}
-						/>
-						<Field
-							label="Phone"
-							id="phone"
-							type="tel"
-							placeholder="(941) 555-0123"
-							required
-							autoComplete="tel"
-							value={billingDetails.phone}
-							onChange={(e) => {
-								setBillingDetails({
-									...billingDetails,
-									phone: e.target.value,
-								});
-							}}
-						/>
-					</fieldset>
-					<fieldset className="FormGroup">
-						<CardField
-							onChange={(e) => {
-								setError(e.error);
-								setCardComplete(e.complete);
-							}}
-						/>
-					</fieldset>
-					{error && <ErrorMessage>{error.message}</ErrorMessage>}
-					<SubmitButton
-						processing={processing}
-						error={error}
-						disabled={!stripe}
-					>
-						Pay
-					</SubmitButton>
-				</form>
-			</div>
-		</div>
-	);
+                      <div className="w-12 text-right flex justify-end hover:text-aucti">
+                        <div className="flex items-center space-x-4">
+                          <label className="flex items-center space-x-3 mb-3">
+                            <input
+                              type="checkbox"
+                              name="checked-demo"
+                              className="form-tick appearance-none bg-white bg-check h-6 w-6 border border-gray-300 rounded-md checked:bg-yellow-500 checked:border-transparent focus:outline-none"
+                              checked={checked.includes(n.id)}
+                              disabled={
+                                !checked.includes(n.id) && checked.length > 0
+                              }
+                              onChange={() => handleSelectBid(n.id)}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+          </ul>
+          {addresses !== null && addresses.length === 0 && (
+            <Link to={'/buyer/profile'}>
+              <div className="w-64 flex break-words justify-center items-center p-8 hover:underline">
+                {
+                  'No address available to select,\n Please add a address on your profile \n then proceed payment'
+                }
+              </div>
+            </Link>
+          )}
+        </div>
+      </div>
+      <div className="xl:h-96 xs:h-32 xl:pt-32  xl:pr-32 xs:pr-0  md:pt-96 xs:pt-96">
+        <form className="Form" onSubmit={handleSubmit}>
+          <fieldset className="FormGroup">
+            <Field
+              label="Name"
+              id="name"
+              type="text"
+              placeholder="Jane Doe"
+              required
+              autoComplete="name"
+              value={billingDetails.name}
+              onChange={e => {
+                setBillingDetails({
+                  ...billingDetails,
+                  name: e.target.value,
+                });
+              }}
+            />
+            <Field
+              label="Email"
+              id="email"
+              type="email"
+              placeholder="janedoe@gmail.com"
+              required
+              autoComplete="email"
+              value={billingDetails.email}
+              onChange={e => {
+                setBillingDetails({
+                  ...billingDetails,
+                  email: e.target.value,
+                });
+              }}
+            />
+            <Field
+              label="Phone"
+              id="phone"
+              type="tel"
+              placeholder="(941) 555-0123"
+              required
+              autoComplete="tel"
+              value={billingDetails.phone}
+              onChange={e => {
+                setBillingDetails({
+                  ...billingDetails,
+                  phone: e.target.value,
+                });
+              }}
+            />
+          </fieldset>
+          <fieldset className="FormGroup">
+            <CardField
+              onChange={e => {
+                setError(e.error);
+                setCardComplete(e.complete);
+              }}
+            />
+          </fieldset>
+          {error && <ErrorMessage>{error.message}</ErrorMessage>}
+          <SubmitButton
+            processing={processing}
+            error={error}
+            disabled={!stripe}>
+            Pay
+          </SubmitButton>
+        </form>
+      </div>
+    </div>
+  );
 };
 
-const mapStateToProps = (state) => {
-	return {
-		user: state.user,
-		paymentMessage: state.paymentMessage,
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    paymentMessage: state.paymentMessage,
 
-		addresses: state.addresses,
-	};
+    addresses: state.addresses,
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		loadUserAddress: (id) => dispatch(loadUserAddressAction(id)),
+const mapDispatchToProps = dispatch => {
+  return {
+    loadUserAddress: id => dispatch(loadUserAddressAction(id)),
 
-		makePayemnt: (token, bid_id, address_id) =>
-			dispatch(makePaymentAction(token, bid_id, address_id)),
-	};
+    makePayemnt: (token, bid_id, address_id) =>
+      dispatch(makePaymentAction(token, bid_id, address_id)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CheckoutForm);
