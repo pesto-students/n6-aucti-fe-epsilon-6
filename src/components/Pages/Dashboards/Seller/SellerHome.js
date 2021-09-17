@@ -9,6 +9,7 @@ import {
 } from '../../../../assets/icons';
 import {
   cancelAuctionAction,
+  deleteProductAction,
   loadSellerAction,
   loadSellerInsightAction,
   updateBidAction,
@@ -135,7 +136,7 @@ const SellerHome = props => {
   };
 
   const handleDeleteBid = () => {
-    props.deleteBid(selectedBidForDelete.id);
+    props.deleteProduct(selectedBidForDelete);
     setSelectedBidForDelete('');
     setShowModalDelete(false);
   };
@@ -436,7 +437,7 @@ const SellerHome = props => {
                                     <TrashIcon
                                       className="hover:text-aucti w-5 h-5"
                                       aria-hidden="true"
-                                      onClick={() => handleDelete(n)}
+                                      onClick={() => handleDelete(n.product.id)}
                                     />
                                   </button>
                                 ) : (
@@ -820,6 +821,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(updateProductAction(product, product_picture)),
     selectBidder: bid_id => dispatch(updateBidAction(bid_id)),
     cancelAuction: id => dispatch(cancelAuctionAction(id)),
+    deleteProduct: id => dispatch(deleteProductAction(id)),
   };
 };
 

@@ -7,9 +7,7 @@ const BuyerRoute = props => {
   );
   if (props.user.role === 'buyer') {
     return (
-      <Route {...props}>
-        <Component />
-      </Route>
+      <Route path={props.path} render={props => <Component {...props} />} />
     );
   }
   return <Redirect to="/" />;
