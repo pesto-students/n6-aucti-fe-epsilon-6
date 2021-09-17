@@ -16,6 +16,15 @@ export const sellerProductReducer = (state = initialState, action) => {
         data: [action.product, ...filteredProduts],
         length: state.length,
       };
+    case SELLER.PRODUCT_DELETED:
+      const filteredProdutDel = state.data.filter(
+        dataRef => dataRef.product.id !== action.id,
+      );
+
+      return {
+        data: filteredProdutDel,
+        length: state.length - 1,
+      };
     case SELLER.AUCTION_CANCELLED:
       const filteredProds = state.data.filter(
         dataRef => dataRef.product.id !== action.product.id,
