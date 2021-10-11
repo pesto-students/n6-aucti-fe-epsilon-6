@@ -13,7 +13,7 @@ The website can be reached at :  [https://aucti-fe.netlify.app](https://aucti-fe
 Testing credentials:
 - Seller: 
   - email: selleraucti@gmail.com, password: selleraucti
-- Buyyer: 
+- Buyer: 
   - email: buyeraucti@gmail.com, password: buyeraucti
     
 The Ui is simple and intutive, for seamless interaction with users the website has simple pages like : landing page, search page, product page, quick links(on footer). A user can log into their account as a buyer or a seller and perform actions depending on persona like bidding,add to wishlist, add product, select bid, end auction etc.
