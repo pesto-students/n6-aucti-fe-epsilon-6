@@ -6,6 +6,7 @@ import {
   OutlinePersonIcon,
   OutlineLogoutIcon,
   ActiIcon,
+  PeopleIcon,
 } from '../../../assets/icons';
 import {
   logoutUserAction,
@@ -73,11 +74,18 @@ export const Header = props => {
               className="rounded-full focus:shadow-outline-auctiLight focus:outline-none"
               onClick={handleProfileClick}>
               {user ? (
-                <img
-                  className="inline object-cover xl:w-12 xl:h-12 xs:h-10 xs:w-10 mr-2 rounded-full"
-                  src={user?.photoURL}
-                  alt="profile-picture"
-                />
+                user?.photoURL ? (
+                  <img
+                    className="inline object-cover xl:w-12 xl:h-12 xs:h-10 xs:w-10 mr-2 rounded-full"
+                    src={user?.photoURL}
+                    alt="profile-picture"
+                  />
+                ) : (
+                  <PeopleIcon
+                    className="w-10 h-10 mr-3 text-gray-700"
+                    aria-hidden="true"
+                  />
+                )
               ) : (
                 <Link to={'/login'}>
                   <span className="text-sm font-medium text-gray-900 dark:text-purple-400 hover:underline hover:text-purple-600">
