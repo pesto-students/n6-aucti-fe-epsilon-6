@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { TrashIcon } from '../../../../assets/icons';
+import { PeopleIcon, TrashIcon } from '../../../../assets/icons';
 import {
   deleteUserAddressAction,
   loadUserAddressAction,
@@ -80,11 +80,18 @@ const BuyerProfile = props => {
             </div>
             <div className="relative p-1 flex items-center justify-end w-1/4 ml-5 mr-4 sm:mr-0 sm:right-auto">
               <a href="#" className="block relative">
-                <img
-                  alt="profil"
-                  src={user.photoURL}
-                  className="mx-auto object-cover rounded-full h-10 w-10 "
-                />
+                {user.photoURL ? (
+                  <img
+                    alt="profil"
+                    src={user.photoURL}
+                    className="mx-auto object-cover rounded-full h-10 w-10 "
+                  />
+                ) : (
+                  <PeopleIcon
+                    className="w-10 h-10 mr-3 text-gray-700"
+                    aria-hidden="true"
+                  />
+                )}
               </a>
             </div>
           </div>

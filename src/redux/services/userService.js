@@ -1,15 +1,18 @@
 import { firebase, auth, firestore } from '../../config/firebase';
 import { initializeInterceptor } from '../api';
 
-export const login = role => {
+export const login = (email, password) => {
   return new Promise((resolve, reject) => {
-    if (!role) {
-      reject('No role selected');
+    if (!email) {
+      reject('Email cannot be blank');
+    } else if (!password) {
+      reject('Password cannot be blank');
     }
-    const provider = new firebase.auth.GoogleAuthProvider();
+    // const provider = new firebase.auth.GoogleAuthProvider();
     firebase
       .auth()
-      .signInWithPopup(provider)
+      // .signInWithPopup(provider)
+      .signInWithEmailAndPassword(email, password)
       .then(result => {
         /** @type {firebase.auth.OAuthCredential} */
         // var credential = result.credential;
@@ -35,25 +38,34 @@ export const login = role => {
                       user,
                       token: idToken,
                       role: doc.data().role,
+                      displayName: doc.data().name,
                     }),
                   );
                   initializeInterceptor(idToken);
-                  resolve({ ...user, role: doc.data().role });
+                  resolve({
+                    ...user,
+                    displayName: doc.data().name,
+                    role: doc.data().role,
+                  });
                 } else {
                   docRef
                     .set({
                       name: user.displayName,
                       email: user.email,
-                      role: role,
+                      role: 'seller',
                     })
                     .then(() => {
                       initializeInterceptor(idToken);
                       localStorage.setItem(
                         'user',
-                        JSON.stringify({ user, token: idToken, role }),
+                        JSON.stringify({
+                          user,
+                          token: idToken,
+                          role: 'seller',
+                        }),
                       );
 
-                      resolve({ ...user, role });
+                      resolve({ ...user, role: 'seller' });
                     })
                     .catch(err => {
                       console.log('Error getting document:', err);
@@ -109,7 +121,11 @@ export const checkUser = () => {
     // });
     // initializeInterceptor(token);
     initializeInterceptor(UserData?.token);
-    return { ...UserData?.user, role: UserData?.role };
+    return {
+      ...UserData?.user,
+      role: UserData?.role,
+      displayName: UserData?.displayName,
+    };
   }
   return null;
 };
