@@ -15,8 +15,8 @@ const Login = props => {
   const { user } = props;
   //   const [role, SetRole] = useState('');
   const [roleErr, SetRoleErr] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, SetPassword] = useState('');
+  const [email, setEmail] = useState('buyeraucti@gmail.com');
+  const [password, SetPassword] = useState('buyeraucti');
   //   const [loading, setLoding] = useState(false);
 
   useEffect(() => {
